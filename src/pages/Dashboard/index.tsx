@@ -1,0 +1,33 @@
+import { useAppState, getTotalServings } from '../../hooks/useAppState';
+import { InventorySection } from './InventorySection';
+
+export function Dashboard() {
+  const { state } = useAppState();
+  const totalServings = getTotalServings(state);
+
+  let statusClass = 'bg-green-50 border border-success';
+  if (totalServings <= 2) statusClass = 'bg-red-50 border border-danger';
+  else if (totalServings <= 6) statusClass = 'bg-orange-50 border border-warning';
+
+  return (
+    <div>
+      {/* Header */}
+      <header className="flex items-center justify-between mb-6">
+        <h1 className="text-[28px] font-bold text-primary">Meals</h1>
+      </header>
+
+      {/* Total Summary */}
+      <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+        <div className={`flex justify-between items-center p-4 rounded-sm ${statusClass}`}>
+          <span className="font-medium text-gray-600">Total Food Available</span>
+          <span className="font-semibold text-base">{totalServings} servings</span>
+        </div>
+      </section>
+
+      {/* Inventory Sections */}
+      <InventorySection section="fresh" title="Fresh Food" />
+      <InventorySection section="frozen" title="Frozen Food" />
+      <InventorySection section="dry" title="Dry/Pantry" />
+    </div>
+  );
+}
