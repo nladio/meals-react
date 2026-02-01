@@ -70,6 +70,7 @@ export interface RecipeIngredient {
 export interface Recipe {
   id: string;
   name: string;
+  prepTimeMinutes: number;
   ingredients: RecipeIngredient[];
 }
 

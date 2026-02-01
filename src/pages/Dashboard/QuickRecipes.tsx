@@ -27,11 +27,16 @@ function CompactRecipeCard({ match }: { match: RecipeMatch }) {
 
   return (
     <div className={`bg-white rounded-lg p-3 shadow-sm border-l-4 ${borderColor}`}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <h4 className="font-medium text-gray-800 text-sm">{recipe.name}</h4>
-        <span className={`text-xs px-2 py-0.5 rounded-full ${statusColor}`}>
-          {statusLabel}
-        </span>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">
+            {recipe.prepTimeMinutes} min
+          </span>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${statusColor}`}>
+            {statusLabel}
+          </span>
+        </div>
       </div>
       {status === 'partial' && missingRequired.length > 0 && (
         <p className="mt-1 text-xs text-gray-500 truncate">

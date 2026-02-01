@@ -13,8 +13,6 @@ export function QuickReheatSection() {
     return null;
   }
 
-  const totalQuantity = quickReheat.reduce((sum, { item }) => sum + item.quantity, 0);
-
   return (
     <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
       <button
@@ -30,9 +28,6 @@ export function QuickReheatSection() {
           </h2>
           <span className="text-xs text-gray-400 font-normal">(0-5 min)</span>
         </div>
-        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-          {totalQuantity}
-        </span>
       </button>
 
       {isExpanded && (
@@ -41,7 +36,6 @@ export function QuickReheatSection() {
             <MealCard
               key={item.id}
               name={item.name}
-              quantity={item.quantity}
               prepTimeMinutes={prepTimeMinutes}
               nutritionTags={nutritionTags}
             />

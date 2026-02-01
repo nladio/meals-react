@@ -70,16 +70,6 @@ describe('InstantPrepSection', () => {
     expect(screen.queryByText('Paneer Curry')).not.toBeInTheDocument();
   });
 
-  it('shows total quantity badge', () => {
-    render(<InstantPrepSection />);
-
-    // Total: 1 + 3 + 4 = 8
-    const headerBadge = screen.getAllByText('8').find(el =>
-      el.classList.contains('bg-gray-100')
-    );
-    expect(headerBadge).toBeInTheDocument();
-  });
-
   it('collapses and expands section', () => {
     render(<InstantPrepSection />);
 
@@ -104,13 +94,6 @@ describe('InstantPrepSection', () => {
     expect(screen.getByText('12 min')).toBeInTheDocument();
     expect(screen.getByText('8 min')).toBeInTheDocument();
     expect(screen.getByText('6 min')).toBeInTheDocument();
-  });
-
-  it('shows read-only quantity indicator', () => {
-    render(<InstantPrepSection />);
-    expect(screen.getByText('×1')).toBeInTheDocument();
-    expect(screen.getByText('×3')).toBeInTheDocument();
-    expect(screen.getByText('×4')).toBeInTheDocument();
   });
 
   it('does not show increment/decrement buttons', () => {

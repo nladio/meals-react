@@ -82,4 +82,11 @@ describe('QuickRecipes', () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '#recipes');
   });
+
+  it('shows prep time for each recipe', () => {
+    render(<QuickRecipes />);
+    // Multiple recipes show 20 min (Omelette, Half Fried Egg, Egg Bhurji, Veg Sandwich)
+    const prepTimes = screen.getAllByText('20 min');
+    expect(prepTimes.length).toBeGreaterThan(0);
+  });
 });

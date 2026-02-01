@@ -74,16 +74,6 @@ describe('QuickReheatSection', () => {
     expect(screen.queryByText('Onion')).not.toBeInTheDocument();
   });
 
-  it('shows total quantity badge', () => {
-    render(<QuickReheatSection />);
-
-    // Paneer Curry has quantity 2 - look for the header badge specifically
-    const headerBadge = screen.getAllByText('2').find(el =>
-      el.classList.contains('bg-gray-100')
-    );
-    expect(headerBadge).toBeInTheDocument();
-  });
-
   it('collapses and expands section', () => {
     render(<QuickReheatSection />);
 
@@ -106,11 +96,6 @@ describe('QuickReheatSection', () => {
   it('shows prep time for each item', () => {
     render(<QuickReheatSection />);
     expect(screen.getByText('3 min')).toBeInTheDocument();
-  });
-
-  it('shows read-only quantity indicator', () => {
-    render(<QuickReheatSection />);
-    expect(screen.getByText('×2')).toBeInTheDocument();
   });
 
   it('does not show increment/decrement buttons', () => {
