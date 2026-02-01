@@ -89,6 +89,25 @@ The Dashboard provides the primary interface for viewing and managing food inven
   - **Red**: Item is expired (past expiry date)
   - **Yellow/Orange**: Item is expiring soon (within 3 days)
 
+### FR-DASH-014: Configurable Default Known Items
+
+- The default list of known items shall be stored in a dedicated data file (`src/data/defaultKnownItems.ts`)
+- The data file shall export default items organized by section (Fresh, Frozen, Dry)
+- Each default item shall include:
+  - Item name
+  - Typical quantity
+  - Subcategory (Ready to eat or Ingredients)
+- Developers can modify the default items by editing the data file
+- Default items shall always appear in the dropdown (users cannot remove them)
+
+### FR-DASH-015: User-Added Custom Items
+
+- Users shall be able to add custom items to the known items list via the UI
+- Custom items shall appear in the dropdown alongside default items
+- Custom items shall persist across sessions (stored in localStorage)
+- The system shall prevent duplicate item names within the same section
+- Users cannot remove default items; they can only add new custom items
+
 ## User Interface Requirements
 
 ### UI-DASH-001: Section Layout
