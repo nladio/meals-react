@@ -1,6 +1,7 @@
 import { useAppState, getTotalServings } from '../../hooks/useAppState';
 import { PageHeader } from '../../components/PageHeader';
-import { ReadyToEatSection } from './ReadyToEatSection';
+import { QuickReheatSection } from './QuickReheatSection';
+import { InstantPrepSection } from './InstantPrepSection';
 import { QuickRecipes } from './QuickRecipes';
 import { FoodOrderSection } from './FoodOrderSection';
 
@@ -24,13 +25,16 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* Ready to Eat Items */}
-      <ReadyToEatSection />
+      {/* Quick Reheat (0-5 min) */}
+      <QuickReheatSection />
 
-      {/* Quick Recipes */}
+      {/* Instant Prep (6-15 min) */}
+      <InstantPrepSection />
+
+      {/* Cook (16+ min) */}
       <QuickRecipes />
 
-      {/* Food Ordering Section */}
+      {/* Order (~1 hour) */}
       <FoodOrderSection />
     </div>
   );
