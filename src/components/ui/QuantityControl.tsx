@@ -13,7 +13,7 @@ export function QuantityControl({
   onChange,
   size = 'md',
 }: QuantityControlProps) {
-  const buttonSize = size === 'sm' ? 'w-7 h-7 text-base' : 'w-8 h-8 text-lg';
+  const buttonSize = size === 'sm' ? 'w-10 h-10 text-base' : 'w-11 h-11 text-lg';
   const valueSize = size === 'sm' ? 'text-sm min-w-6' : 'text-base min-w-7';
 
   return (

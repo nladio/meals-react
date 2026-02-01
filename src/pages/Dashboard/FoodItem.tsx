@@ -24,7 +24,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags }: Fo
     >
       <button
         onClick={() => dispatch({ type: 'DECREMENT_ITEM', section, id: item.id })}
-        className="w-9 h-9 flex items-center justify-center bg-red-50 text-danger rounded-full text-xl font-semibold hover:bg-red-100 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-red-50 text-danger rounded-full text-xl font-semibold hover:bg-red-100 transition-all active:scale-95 shrink-0"
       >
         -
       </button>
@@ -68,7 +68,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags }: Fo
 
       <button
         onClick={() => dispatch({ type: 'INCREMENT_ITEM', section, id: item.id })}
-        className="w-9 h-9 flex items-center justify-center bg-green-50 text-success rounded-full text-xl font-semibold hover:bg-green-100 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-green-50 text-success rounded-full text-xl font-semibold hover:bg-green-100 transition-all active:scale-95 shrink-0"
       >
         +
       </button>
