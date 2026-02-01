@@ -1,6 +1,7 @@
 import { useAppState, getTotalServings } from '../../hooks/useAppState';
 import { PageHeader } from '../../components/PageHeader';
-import { InventorySection } from './InventorySection';
+import { ReadyToEatSection } from './ReadyToEatSection';
+import { QuickRecipes } from './QuickRecipes';
 import { FoodOrderSection } from './FoodOrderSection';
 
 export function Dashboard() {
@@ -13,7 +14,7 @@ export function Dashboard() {
 
   return (
     <div>
-      <PageHeader title="Meals" showBackButton={false} />
+      <PageHeader title="What to Eat" showBackButton={false} />
 
       {/* Total Summary */}
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
@@ -23,10 +24,11 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* Inventory Sections */}
-      <InventorySection section="fresh" title="Fresh Food" />
-      <InventorySection section="frozen" title="Frozen Food" />
-      <InventorySection section="dry" title="Dry/Pantry" />
+      {/* Ready to Eat Items */}
+      <ReadyToEatSection />
+
+      {/* Quick Recipes */}
+      <QuickRecipes />
 
       {/* Food Ordering Section */}
       <FoodOrderSection />
