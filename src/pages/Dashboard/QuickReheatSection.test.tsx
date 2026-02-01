@@ -102,4 +102,22 @@ describe('QuickReheatSection', () => {
     // Item should be visible again
     expect(screen.getByText('Paneer Curry')).toBeInTheDocument();
   });
+
+  it('shows prep time for each item', () => {
+    render(<QuickReheatSection />);
+    expect(screen.getByText('3 min')).toBeInTheDocument();
+  });
+
+  it('shows read-only quantity indicator', () => {
+    render(<QuickReheatSection />);
+    expect(screen.getByText('×2')).toBeInTheDocument();
+  });
+
+  it('does not show increment/decrement buttons', () => {
+    render(<QuickReheatSection />);
+    // Only button should be the section header toggle
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0]).toHaveTextContent('Quick Reheat');
+  });
 });
