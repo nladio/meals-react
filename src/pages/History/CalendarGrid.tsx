@@ -59,7 +59,7 @@ export function CalendarGrid({ viewMonth, selectedDate, onSelectDate }: Calendar
     cells.push(
       <div
         key={day}
-        className={`aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-all ${bgClass}`}
+        className={`aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-all active:scale-95 ${bgClass}`}
         onClick={() => onSelectDate(dateStr)}
       >
         <span className={`text-sm ${textClass}`}>{day}</span>

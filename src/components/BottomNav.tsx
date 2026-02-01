@@ -73,7 +73,7 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
               e.preventDefault();
               onNavigate(item.id);
             }}
-            className={`flex flex-col items-center gap-1 px-4 py-2 no-underline transition-all ${
+            className={`flex flex-col items-center gap-1 px-4 py-2 no-underline transition-all active:scale-95 ${
               isActive ? 'text-primary' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
