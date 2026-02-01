@@ -11,19 +11,90 @@ interface NutritionItem {
   nutritionTags: NutritionTag[];
 }
 
-function sectionLabel(section: Section): string {
-  switch (section) {
-    case 'fresh': return 'Fresh';
-    case 'frozen': return 'Frozen';
-    case 'dry': return 'Dry';
-  }
+interface NutritionSectionConfig {
+  badge: string;
+  title: string;
+  emptyMessage: string;
+  emptyIcon: string;
+  badgeBg: string;
+  badgeText: string;
+  borderColor: string;
+  quantityColors: string;
 }
+
+const SECTION_LABEL: Record<Section, string> = {
+  fresh: 'Fresh',
+  frozen: 'Frozen',
+  dry: 'Dry',
+};
+
+interface NutritionSectionProps {
+  config: NutritionSectionConfig;
+  items: NutritionItem[];
+}
+
+function NutritionSection({ config, items }: NutritionSectionProps) {
+  return (
+    <section className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+      <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide flex items-center gap-2">
+        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${config.badgeBg} ${config.badgeText}`}>
+          {config.badge}
+        </span>
+        {config.title}
+      </h2>
+      {items.length === 0 ? (
+        <EmptyState message={config.emptyMessage} icon={config.emptyIcon} />
+      ) : (
+        <div className="flex flex-col gap-2">
+          {items.map(item => (
+            <div
+              key={`${item.section}-${item.name}`}
+              className={`flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] ${config.borderColor}`}
+            >
+              <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-medium text-[15px] truncate">{item.name}</span>
+                  <NutritionBadges tags={item.nutritionTags} />
+                </div>
+                <span className="text-xs text-gray-400">{SECTION_LABEL[item.section]}</span>
+              </div>
+              <span className={`font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 ${config.quantityColors}`}>
+                {item.quantity}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+const PROTEIN_CONFIG: NutritionSectionConfig = {
+  badge: 'P',
+  title: 'High Protein',
+  emptyMessage: 'No high-protein items in stock',
+  emptyIcon: '🥩',
+  badgeBg: 'bg-green-100',
+  badgeText: 'text-green-600',
+  borderColor: 'border-l-green-500',
+  quantityColors: 'text-green-600 border-green-500',
+};
+
+const FIBER_CONFIG: NutritionSectionConfig = {
+  badge: 'F',
+  title: 'High Fiber',
+  emptyMessage: 'No high-fiber items in stock',
+  emptyIcon: '🥬',
+  badgeBg: 'bg-teal-100',
+  badgeText: 'text-teal-600',
+  borderColor: 'border-l-teal-500',
+  quantityColors: 'text-teal-600 border-teal-500',
+};
 
 export function WhatToEat() {
   const { state } = useAppState();
   const knownItems = getMergedKnownItems(state);
 
-  // Collect all in-stock items with nutrition tags
   const nutritionItems: NutritionItem[] = [];
 
   for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
@@ -50,67 +121,8 @@ export function WhatToEat() {
       <PageHeader title="What to Eat" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* High Protein Section */}
-        <section className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-          <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide flex items-center gap-2">
-            <span className="text-[10px] px-2 py-0.5 bg-green-100 text-green-600 rounded-full font-medium">P</span>
-            High Protein
-          </h2>
-          {highProteinItems.length === 0 ? (
-            <EmptyState message="No high-protein items in stock" icon="🥩" />
-          ) : (
-            <div className="flex flex-col gap-2">
-              {highProteinItems.map(item => (
-                <div
-                  key={`${item.section}-${item.name}`}
-                  className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-green-500"
-                >
-                  <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-medium text-[15px] truncate">{item.name}</span>
-                      <NutritionBadges tags={item.nutritionTags} />
-                    </div>
-                    <span className="text-xs text-gray-400">{sectionLabel(item.section)}</span>
-                  </div>
-                  <span className="font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 text-green-600 border-green-500">
-                    {item.quantity}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* High Fiber Section */}
-        <section className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-          <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide flex items-center gap-2">
-            <span className="text-[10px] px-2 py-0.5 bg-teal-100 text-teal-600 rounded-full font-medium">F</span>
-            High Fiber
-          </h2>
-          {highFiberItems.length === 0 ? (
-            <EmptyState message="No high-fiber items in stock" icon="🥬" />
-          ) : (
-            <div className="flex flex-col gap-2">
-              {highFiberItems.map(item => (
-                <div
-                  key={`${item.section}-${item.name}`}
-                  className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-teal-500"
-                >
-                  <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-medium text-[15px] truncate">{item.name}</span>
-                      <NutritionBadges tags={item.nutritionTags} />
-                    </div>
-                    <span className="text-xs text-gray-400">{sectionLabel(item.section)}</span>
-                  </div>
-                  <span className="font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 text-teal-600 border-teal-500">
-                    {item.quantity}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+        <NutritionSection config={PROTEIN_CONFIG} items={highProteinItems} />
+        <NutritionSection config={FIBER_CONFIG} items={highFiberItems} />
       </div>
     </div>
   );

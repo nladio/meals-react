@@ -47,7 +47,6 @@ export function History() {
       <PageHeader title="Shopping History" />
 
       <section className="p-4">
-        {/* Calendar Navigation */}
         <div className="flex items-center justify-between px-4 py-3 bg-white rounded-[12px] mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
           <button
             onClick={() => navigateMonth(-1)}
@@ -68,14 +67,12 @@ export function History() {
           </button>
         </div>
 
-        {/* Calendar Grid */}
         <CalendarGrid
           viewMonth={viewMonth}
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
         />
 
-        {/* Day Detail */}
         {selectedDate && <DayDetail date={selectedDate} />}
       </section>
     </div>

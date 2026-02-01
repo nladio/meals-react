@@ -1,7 +1,15 @@
 import type { InventoryItem, Section, NutritionTag } from '../../types';
-import { formatRelativeDate, getExpiryStatus } from '../../utils/helpers';
+import { formatRelativeDate, getExpiryStatus, type ExpiryStatus } from '../../utils/helpers';
 import { useAppState } from '../../hooks/useAppState';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
+
+function getExpiryColorClass(status: ExpiryStatus): string {
+  switch (status) {
+    case 'expired': return 'text-red-500';
+    case 'expiring-soon': return 'text-amber-500';
+    default: return 'text-gray-400';
+  }
+}
 
 interface FoodItemProps {
   item: InventoryItem;
@@ -44,15 +52,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags }: Fo
         </div>
         <span className="text-xs text-gray-400">{relativeDate}</span>
         {item.expiryDate && (
-          <span
-            className={`text-xs ${
-              expiryStatus === 'expired'
-                ? 'text-red-500'
-                : expiryStatus === 'expiring-soon'
-                  ? 'text-amber-500'
-                  : 'text-gray-400'
-            }`}
-          >
+          <span className={`text-xs ${getExpiryColorClass(expiryStatus)}`}>
             {expiryStatus === 'expired' ? 'Expired' : `Expires: ${new Date(item.expiryDate).toLocaleDateString()}`}
           </span>
         )}
