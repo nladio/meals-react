@@ -159,42 +159,34 @@ export function Shopping() {
     <div>
       <PageHeader title="Shopping List" />
 
-      <section className="py-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
-          {STORE_ORDER.map(store => (
-            <div
-              key={store}
-              className="bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden flex flex-col items-stretch hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 px-6 py-5">
-                <h3 className="text-xl font-bold text-white text-center tracking-wide">
-                  {STORE_LABELS[store]}
-                </h3>
-                <p className="text-slate-300 text-sm text-center mt-2">
-                  {storeGroups[store].length} {storeGroups[store].length === 1 ? 'item' : 'items'} to buy
-                </p>
-              </div>
-              <div className="p-5 flex-1 bg-gradient-to-b from-white to-gray-50">
-                <div className="space-y-3">
-                  {storeGroups[store].length > 0 ? (
-                    storeGroups[store].map(item => (
-                      <ShoppingItem
-                        key={`${store}-${item.section}-${item.name}`}
-                        item={item}
-                        urgency={item.urgency}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-center py-12 text-gray-400 italic">
-                      Nothing needed from here
-                    </div>
-                  )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {STORE_ORDER.map(store => (
+          <section
+            key={store}
+            className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
+          >
+            <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide">
+              {STORE_LABELS[store]}
+            </h2>
+
+            <div className="flex flex-col gap-2">
+              {storeGroups[store].length > 0 ? (
+                storeGroups[store].map(item => (
+                  <ShoppingItem
+                    key={`${store}-${item.section}-${item.name}`}
+                    item={item}
+                    urgency={item.urgency}
+                  />
+                ))
+              ) : (
+                <div className="flex items-center justify-center p-5 bg-gray-50 rounded-sm border-l-[3px] border-l-gray-200 text-gray-400">
+                  <span className="font-medium text-[15px]">Nothing needed from here</span>
                 </div>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
+        ))}
+      </div>
     </div>
   );
 }
