@@ -1,5 +1,6 @@
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import type { AppState, KnownItem, Priority, Section, ShoppingListItem, Store } from '../../types';
+import { PageHeader } from '../../components/PageHeader';
 import { ShoppingItem } from './ShoppingItem';
 
 type Urgency = 'restock' | 'low' | 'variety';
@@ -156,16 +157,7 @@ export function Shopping() {
 
   return (
     <div>
-      <header className="flex items-center justify-between py-4 mb-4">
-        <a
-          href="#dashboard"
-          className="w-10 h-10 flex items-center justify-center text-2xl text-gray-600 no-underline rounded-sm hover:bg-gray-100 transition-colors"
-        >
-          &larr;
-        </a>
-        <h1 className="text-xl font-semibold text-gray-800">Shopping List</h1>
-        <div className="w-10" />
-      </header>
+      <PageHeader title="Shopping List" />
 
       <section className="py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">

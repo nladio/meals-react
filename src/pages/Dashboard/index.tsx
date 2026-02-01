@@ -1,4 +1,5 @@
 import { useAppState, getTotalServings } from '../../hooks/useAppState';
+import { PageHeader } from '../../components/PageHeader';
 import { InventorySection } from './InventorySection';
 import { FoodOrderSection } from './FoodOrderSection';
 
@@ -12,10 +13,7 @@ export function Dashboard() {
 
   return (
     <div>
-      {/* Header */}
-      <header className="flex items-center justify-between mb-6">
-        <h1 className="text-[28px] font-bold text-primary">Meals</h1>
-      </header>
+      <PageHeader title="Meals" showBackButton={false} />
 
       {/* Total Summary */}
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">

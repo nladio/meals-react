@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useAppState } from '../../hooks/useAppState';
+import { PageHeader } from '../../components/PageHeader';
 import { CalendarGrid } from './CalendarGrid';
 import { DayDetail } from './DayDetail';
 
@@ -43,17 +44,7 @@ export function History() {
 
   return (
     <div>
-      {/* Header */}
-      <header className="flex items-center justify-between py-4 mb-4">
-        <a
-          href="#dashboard"
-          className="w-10 h-10 flex items-center justify-center text-2xl text-gray-600 no-underline rounded-sm hover:bg-gray-100 transition-colors"
-        >
-          &larr;
-        </a>
-        <h1 className="text-xl font-semibold text-gray-800">Shopping History</h1>
-        <div className="w-10" />
-      </header>
+      <PageHeader title="Shopping History" />
 
       <section className="p-4">
         {/* Calendar Navigation */}

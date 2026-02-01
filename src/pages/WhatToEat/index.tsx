@@ -1,5 +1,6 @@
 import type { Section, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
+import { PageHeader } from '../../components/PageHeader';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 interface NutritionItem {
@@ -45,17 +46,7 @@ export function WhatToEat() {
 
   return (
     <div>
-      {/* Header */}
-      <header className="flex items-center gap-3 mb-6">
-        <a
-          href="#dashboard"
-          className="text-2xl text-gray-600 no-underline hover:text-gray-800"
-          aria-label="Back to dashboard"
-        >
-          ←
-        </a>
-        <h1 className="text-[28px] font-bold text-primary">What to Eat</h1>
-      </header>
+      <PageHeader title="What to Eat" />
 
       {/* High Protein Section */}
       <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">

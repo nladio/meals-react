@@ -1,6 +1,7 @@
 import { useAppState } from '../../hooks/useAppState';
 import { defaultRecipes } from '../../data/recipes';
 import { getAllRecipeMatches } from '../../utils/recipeMatching';
+import { PageHeader } from '../../components/PageHeader';
 import { RecipeCard } from './RecipeCard';
 
 export function Recipes() {
@@ -13,17 +14,7 @@ export function Recipes() {
 
   return (
     <div>
-      {/* Header */}
-      <header className="flex items-center gap-3 mb-6">
-        <a
-          href="#dashboard"
-          className="text-2xl text-gray-600 no-underline hover:text-gray-800"
-          aria-label="Back to dashboard"
-        >
-          ←
-        </a>
-        <h1 className="text-[28px] font-bold text-primary">Recipes</h1>
-      </header>
+      <PageHeader title="Recipes" />
 
       {/* Summary Card */}
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
