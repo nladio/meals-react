@@ -43,6 +43,7 @@ export function getMergedKnownItems(state: AppState): Record<Section, KnownItem[
         nutritionTags: defaultItem.nutritionTags,
         stores: defaultItem.stores,
         priority: defaultItem.priority,
+        prepTimeMinutes: defaultItem.prepTimeMinutes,
         lastBought: customData?.lastBought ?? null,
         isDefault: true,
       });
