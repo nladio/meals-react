@@ -33,27 +33,25 @@ describe('QuickRecipes', () => {
     expect(screen.getByText('(16+ min)')).toBeInTheDocument();
   });
 
-  it('shows recipes that can be made (full match)', () => {
+  it('shows only ready recipes (full match)', () => {
     render(<QuickRecipes />);
 
-    // Omelette and Half Fried Egg only need Egg
+    // Omelette and Half Fried Egg only need Egg - should show
     expect(screen.getByText('Omelette')).toBeInTheDocument();
     expect(screen.getByText('Half Fried Egg')).toBeInTheDocument();
-  });
 
-  it('shows partial match recipes with missing ingredients', () => {
-    render(<QuickRecipes />);
-
-    // Egg Bhurji needs Egg and Onion (both available) - should show as ready
+    // Egg Bhurji needs Egg and Onion (both available) - should show
     expect(screen.getByText('Egg Bhurji')).toBeInTheDocument();
+
+    // Dal Tadka only needs Toor Dal (available) - should show
+    expect(screen.getByText('Dal Tadka')).toBeInTheDocument();
   });
 
-  it('shows "Ready" badge for full matches', () => {
+  it('does not show partial match recipes', () => {
     render(<QuickRecipes />);
 
-    // Should show multiple Ready badges (one in header + one per recipe)
-    const readyBadges = screen.getAllByText(/ready/i);
-    expect(readyBadges.length).toBeGreaterThan(0);
+    // Veg Sandwich needs many ingredients we don't have - should NOT show
+    expect(screen.queryByText('Veg Sandwich')).not.toBeInTheDocument();
   });
 
   it('collapses and expands the section', () => {
@@ -85,7 +83,7 @@ describe('QuickRecipes', () => {
 
   it('shows prep time for each recipe', () => {
     render(<QuickRecipes />);
-    // Multiple recipes show 20 min (Omelette, Half Fried Egg, Egg Bhurji, Veg Sandwich)
+    // Multiple recipes show 20 min (Omelette, Half Fried Egg, Egg Bhurji)
     const prepTimes = screen.getAllByText('20 min');
     expect(prepTimes.length).toBeGreaterThan(0);
   });
