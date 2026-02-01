@@ -3,6 +3,7 @@ export type Section = 'fresh' | 'frozen' | 'dry';
 export type ItemUsage = 'meal' | 'ingredient';
 
 export type IngredientCategory = 'produce' | 'dairy' | 'protein' | 'condiments' | 'grains' | 'legumes';
+export type MealCategory = 'curries' | 'soups' | 'noodles' | 'snacks' | 'ready-meals';
 
 export interface KnownItem {
   name: string;
@@ -10,6 +11,7 @@ export interface KnownItem {
   typicalQty: number;
   usages: ItemUsage[];
   ingredientCategory?: IngredientCategory;
+  mealCategory?: MealCategory;
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
 }
 

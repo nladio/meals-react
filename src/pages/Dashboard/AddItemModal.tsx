@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import type { Section, KnownItem, IngredientCategory } from '../../types';
+import type { Section, KnownItem, IngredientCategory, MealCategory } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { Modal } from '../../components/ui/Modal';
 import { QuantityControl } from '../../components/ui/QuantityControl';
@@ -47,6 +47,22 @@ const ingredientCategoryOrder: IngredientCategory[] = [
   'legumes',
 ];
 
+const mealCategoryLabels: Record<MealCategory, string> = {
+  curries: 'Curries',
+  soups: 'Soups',
+  noodles: 'Noodles',
+  snacks: 'Snacks',
+  'ready-meals': 'Ready Meals',
+};
+
+const mealCategoryOrder: MealCategory[] = [
+  'curries',
+  'soups',
+  'noodles',
+  'snacks',
+  'ready-meals',
+];
+
 export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalProps) {
   const { state } = useAppState();
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -54,7 +70,7 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
   const [expiryDate, setExpiryDate] = useState('');
 
   // Get available items filtered by section, excluding those already in inventory
-  const { groupedItems, ingredientsByCategory } = useMemo(() => {
+  const { groupedItems, ingredientsByCategory, mealsByCategory } = useMemo(() => {
     const mergedKnownItems = getMergedKnownItems(state);
     const inventoryNames = new Set(state.inventory[section].map(i => i.name));
 
@@ -79,13 +95,27 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
       legumes: [],
     };
 
+    // Group meals by subcategory
+    const mealSubgroups: Record<MealCategory, KnownItem[]> = {
+      curries: [],
+      soups: [],
+      noodles: [],
+      snacks: [],
+      'ready-meals': [],
+    };
+
     for (const item of availableItems) {
       const category = getUsageCategory(item);
       groups[category].push(item);
 
-      // If it's an ingredient (including "Both"), also group by ingredient category
+      // If it's an ingredient, also group by ingredient category
       if (category === 'Ingredients' && item.ingredientCategory) {
         ingredientSubgroups[item.ingredientCategory].push(item);
+      }
+
+      // If it's a meal, also group by meal category
+      if (category === 'Ready to eat' && item.mealCategory) {
+        mealSubgroups[item.mealCategory].push(item);
       }
     }
 
@@ -99,7 +129,16 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
       ingredientSubgroups[category].sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    return { groupedItems: groups, ingredientsByCategory: ingredientSubgroups };
+    // Sort each meal subcategory alphabetically
+    for (const category of Object.keys(mealSubgroups) as MealCategory[]) {
+      mealSubgroups[category].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return {
+      groupedItems: groups,
+      ingredientsByCategory: ingredientSubgroups,
+      mealsByCategory: mealSubgroups,
+    };
   }, [state, section]);
 
   const handleClose = () => {
@@ -127,6 +166,55 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
             const items = groupedItems[category];
             if (items.length === 0) return null;
 
+            // For Ready to eat, render nested subcategories
+            if (category === 'Ready to eat') {
+              const hasSubcategories = mealCategoryOrder.some(
+                sub => mealsByCategory[sub].length > 0
+              );
+
+              if (hasSubcategories) {
+                return (
+                  <div key={category}>
+                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                      {category}
+                    </h3>
+                    <div className="space-y-3 pl-2">
+                      {mealCategoryOrder.map(subCategory => {
+                        const subItems = mealsByCategory[subCategory];
+                        if (subItems.length === 0) return null;
+
+                        return (
+                          <div key={subCategory}>
+                            <h4 className="text-xs font-medium text-gray-400 mb-1.5">
+                              {mealCategoryLabels[subCategory]}
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {subItems.map(item => (
+                                <button
+                                  key={item.name}
+                                  onClick={() => {
+                                    setSelectedItem(item.name);
+                                    setQuantity(item.typicalQty);
+                                  }}
+                                  className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                                    selectedItem === item.name
+                                      ? 'bg-primary text-white'
+                                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                  }`}
+                                >
+                                  {item.name}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+            }
+
             // For Ingredients, render nested subcategories
             if (category === 'Ingredients') {
               return (
@@ -148,7 +236,10 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
                             {subItems.map(item => (
                               <button
                                 key={item.name}
-                                onClick={() => setSelectedItem(item.name)}
+                                onClick={() => {
+                                  setSelectedItem(item.name);
+                                  setQuantity(item.typicalQty);
+                                }}
                                 className={`px-3 py-1.5 rounded-full text-sm transition-all ${
                                   selectedItem === item.name
                                     ? 'bg-primary text-white'
@@ -167,7 +258,7 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
               );
             }
 
-            // For Ready to eat and Both, render flat chip list
+            // For Both (and fallback), render flat chip list
             return (
               <div key={category}>
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
@@ -177,7 +268,10 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
                   {items.map(item => (
                     <button
                       key={item.name}
-                      onClick={() => setSelectedItem(item.name)}
+                      onClick={() => {
+                        setSelectedItem(item.name);
+                        setQuantity(item.typicalQty);
+                      }}
                       className={`px-3 py-1.5 rounded-full text-sm transition-all ${
                         selectedItem === item.name
                           ? 'bg-primary text-white'
