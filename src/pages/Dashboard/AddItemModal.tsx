@@ -195,6 +195,13 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
                                   onClick={() => {
                                     setSelectedItem(item.name);
                                     setQuantity(item.typicalQty);
+                                    if (item.defaultExpiryDays) {
+                                      const expiry = new Date();
+                                      expiry.setDate(expiry.getDate() + item.defaultExpiryDays);
+                                      setExpiryDate(expiry.toISOString().split('T')[0]);
+                                    } else {
+                                      setExpiryDate('');
+                                    }
                                   }}
                                   className={`px-3 py-1.5 rounded-full text-sm transition-all ${
                                     selectedItem === item.name
@@ -239,6 +246,13 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
                                 onClick={() => {
                                   setSelectedItem(item.name);
                                   setQuantity(item.typicalQty);
+                                  if (item.defaultExpiryDays) {
+                                    const expiry = new Date();
+                                    expiry.setDate(expiry.getDate() + item.defaultExpiryDays);
+                                    setExpiryDate(expiry.toISOString().split('T')[0]);
+                                  } else {
+                                    setExpiryDate('');
+                                  }
                                 }}
                                 className={`px-3 py-1.5 rounded-full text-sm transition-all ${
                                   selectedItem === item.name
@@ -271,6 +285,13 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
                       onClick={() => {
                         setSelectedItem(item.name);
                         setQuantity(item.typicalQty);
+                        if (item.defaultExpiryDays) {
+                          const expiry = new Date();
+                          expiry.setDate(expiry.getDate() + item.defaultExpiryDays);
+                          setExpiryDate(expiry.toISOString().split('T')[0]);
+                        } else {
+                          setExpiryDate('');
+                        }
                       }}
                       className={`px-3 py-1.5 rounded-full text-sm transition-all ${
                         selectedItem === item.name
@@ -305,6 +326,7 @@ export function AddItemModal({ section, isOpen, onClose, onAdd }: AddItemModalPr
               <span className="text-sm font-medium text-gray-700">Expiry date</span>
               <input
                 type="date"
+                aria-label="Expiry date"
                 value={expiryDate}
                 onChange={e => setExpiryDate(e.target.value)}
                 className="px-3 py-1.5 border border-gray-200 rounded-sm text-sm bg-white focus:outline-none focus:border-primary"

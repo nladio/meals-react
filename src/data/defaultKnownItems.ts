@@ -9,64 +9,70 @@ export interface DefaultKnownItem {
   usages: ItemUsage[];
   ingredientCategory?: IngredientCategory;
   mealCategory?: MealCategory;
+  defaultExpiryDays?: number; // Days until expiry from purchase
 }
 
 export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
   fresh: [
-    // Ready to eat (meals only)
-    { name: 'Paneer Curry', typicalQty: 2, usages: ['meal'], mealCategory: 'curries' },
-    { name: 'Dal Makhani', typicalQty: 2, usages: ['meal'], mealCategory: 'curries' },
-    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries' },
-    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries' },
-    { name: 'Aloo Gobi', typicalQty: 2, usages: ['meal'], mealCategory: 'curries' },
-    { name: 'Chapatis', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    { name: 'Falafel', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    // Ingredients only
-    { name: 'Onion', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Tomato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Garlic', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Ginger', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Potato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Cucumber', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Spinach', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Lettuce', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Avocado', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Lime', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Green Chillies', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Cilantro', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Lemon', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Curry Leaves', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Mint', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce' },
-    { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein' },
-    { name: 'Tofu', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein' },
-    { name: 'Amul Cheese Cubes', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy' },
-    { name: 'Amul Cheese Slice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy' },
-    { name: 'Butter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy' },
-    { name: 'Yogurt', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy' },
-    { name: 'Egg', typicalQty: 24, usages: ['ingredient'], ingredientCategory: 'protein' },
-    { name: 'Chicken', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein' },
-    { name: 'Hummus', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments' },
-    { name: 'Tzatziki', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments' },
-    { name: 'Green Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments' },
-    { name: 'Tamarind Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments' },
-    { name: 'Pickle', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments' },
-    { name: 'Bread', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    { name: 'Naan', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    { name: 'Roti', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    { name: 'Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
-    { name: 'Ragi Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
-    { name: 'Idli Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
+    // Ready to eat (meals only) - prepared foods, ~5 days
+    { name: 'Paneer Curry', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Dal Makhani', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Aloo Gobi', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Chapatis', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
+    { name: 'Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
+    // Ingredients only - produce ~7 days, herbs ~5 days
+    { name: 'Onion', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
+    { name: 'Tomato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
+    { name: 'Garlic', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
+    { name: 'Ginger', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
+    { name: 'Potato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 21 },
+    { name: 'Cucumber', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
+    { name: 'Spinach', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Lettuce', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Avocado', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Lime', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
+    { name: 'Green Chillies', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
+    { name: 'Cilantro', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Lemon', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
+    { name: 'Curry Leaves', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
+    { name: 'Mint', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    // Protein - paneer/tofu ~7-10 days, chicken ~3 days
+    { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10 },
+    { name: 'Tofu', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10 },
+    // Dairy - ~14 days
+    { name: 'Amul Cheese Cubes', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
+    { name: 'Amul Cheese Slice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
+    { name: 'Butter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 30 },
+    { name: 'Yogurt', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
+    // Eggs ~21 days, chicken ~3 days
+    { name: 'Egg', typicalQty: 24, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 21 },
+    { name: 'Chicken', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 3 },
+    // Condiments/dips - ~7-14 days
+    { name: 'Hummus', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 10 },
+    { name: 'Tzatziki', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 7 },
+    { name: 'Green Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 7 },
+    { name: 'Tamarind Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 14 },
+    { name: 'Pickle', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 30 },
+    // Breads - ~5 days
+    { name: 'Bread', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
+    { name: 'Naan', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
+    { name: 'Roti', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
+    // Batters - ~5-7 days
+    { name: 'Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5 },
+    { name: 'Ragi Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5 },
+    { name: 'Idli Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5 },
   ],
   frozen: [
-    // Ready to eat (meals only)
-    { name: 'TJs Orange Chicken', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals' },
-    { name: 'Frozen Samosas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks' },
-    { name: 'Frozen Parathas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks' },
-    // Dual-use: can be eaten as meal or used as ingredient
-    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein' },
+    // Frozen items - 90 days (3 months)
+    { name: 'TJs Orange Chicken', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', defaultExpiryDays: 90 },
+    { name: 'Frozen Samosas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90 },
+    { name: 'Frozen Parathas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90 },
+    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 90 },
   ],
   dry: [
-    // Ready to eat (meals only)
+    // Dry goods - long shelf life, 180 days (6 months) or omit
     { name: 'Tomato Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups' },
     { name: 'Sweet & Sour Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups' },
     { name: 'Vegetable Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups' },
@@ -75,9 +81,9 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'MTR Upma', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals' },
     { name: 'MTR Idli', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals' },
     { name: 'MTR Sambhar', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals' },
-    // Dual-use: can be eaten as meal or used as ingredient
-    { name: 'Tortillas', typicalQty: 1, usages: ['meal', 'ingredient'] },
-    // Ingredients only
+    // Tortillas - shorter shelf life than most dry goods
+    { name: 'Tortillas', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 14 },
+    // Dry ingredients - very long shelf life, omit defaultExpiryDays
     { name: 'Rice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
     { name: 'Atta', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
     { name: 'Thick Poha', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },

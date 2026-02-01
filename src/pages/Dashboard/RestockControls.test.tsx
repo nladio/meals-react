@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { RestockControls } from './RestockControls';
 
@@ -17,7 +17,7 @@ vi.mock('../../hooks/useAppState', () => ({
     dispatch: mockDispatch,
   }),
   getMergedKnownItems: () => ({
-    fresh: [{ name: 'Test Item', lastBought: null, typicalQty: 1, isDefault: true }],
+    fresh: [{ name: 'Test Item', lastBought: null, typicalQty: 1, usages: ['meal'], isDefault: true, defaultExpiryDays: 7 }],
     frozen: [],
     dry: [],
   }),
@@ -25,59 +25,60 @@ vi.mock('../../hooks/useAppState', () => ({
 
 describe('RestockControls', () => {
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-01-15'));
     mockDispatch.mockClear();
   });
 
-  it('renders date input field', () => {
-    render(<RestockControls section="fresh" />);
-
-    const dateInput = screen.getByTitle('Expiry date (optional)');
-    expect(dateInput).toBeInTheDocument();
-    expect(dateInput).toHaveAttribute('type', 'date');
-    expect(dateInput).toHaveValue('');
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
-  it('includes expiryDate in dispatch when date is set', () => {
+  it('renders Add Item button', () => {
     render(<RestockControls section="fresh" />);
 
-    // Select the item
-    const select = screen.getByRole('combobox');
-    fireEvent.change(select, { target: { value: 'Test Item' } });
-
-    // Set the expiry date
-    const dateInput = screen.getByTitle('Expiry date (optional)');
-    fireEvent.change(dateInput, { target: { value: '2025-02-15' } });
-
-    // Click add button
-    const addButton = screen.getByRole('button', { name: 'Add' });
-    fireEvent.click(addButton);
-
-    // Check that ADD_TO_INVENTORY was dispatched with expiryDate
-    const addToInventoryCall = mockDispatch.mock.calls.find(
-      (call) => call[0].type === 'ADD_TO_INVENTORY'
-    );
-    expect(addToInventoryCall).toBeDefined();
-    expect(addToInventoryCall![0].expiryDate).toBe('2025-02-15');
+    const addButton = screen.getByRole('button', { name: '+ Add Item' });
+    expect(addButton).toBeInTheDocument();
   });
 
-  it('sends undefined expiryDate when date input is empty', () => {
+  it('opens modal when Add Item is clicked', () => {
     render(<RestockControls section="fresh" />);
 
-    // Select the item
-    const select = screen.getByRole('combobox');
-    fireEvent.change(select, { target: { value: 'Test Item' } });
-
-    // Don't set expiry date (leave it empty)
-
-    // Click add button
-    const addButton = screen.getByRole('button', { name: 'Add' });
+    const addButton = screen.getByRole('button', { name: '+ Add Item' });
     fireEvent.click(addButton);
 
-    // Check that ADD_TO_INVENTORY was dispatched with undefined expiryDate
-    const addToInventoryCall = mockDispatch.mock.calls.find(
-      (call) => call[0].type === 'ADD_TO_INVENTORY'
+    // Modal should open with the item available
+    expect(screen.getByText('Add to Fresh Food')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Test Item' })).toBeInTheDocument();
+  });
+
+  it('dispatches ADD_TO_INVENTORY with expiryDate when item is added from modal', () => {
+    render(<RestockControls section="fresh" />);
+
+    // Open modal
+    fireEvent.click(screen.getByRole('button', { name: '+ Add Item' }));
+
+    // Select item (this should also set the expiry date based on defaultExpiryDays)
+    fireEvent.click(screen.getByRole('button', { name: 'Test Item' }));
+
+    // Add the item
+    fireEvent.click(screen.getByRole('button', { name: 'Add Test Item' }));
+
+    // Check that both RECORD_PURCHASE and ADD_TO_INVENTORY were dispatched
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'RECORD_PURCHASE',
+      })
     );
-    expect(addToInventoryCall).toBeDefined();
-    expect(addToInventoryCall![0].expiryDate).toBeUndefined();
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'ADD_TO_INVENTORY',
+        section: 'fresh',
+        name: 'Test Item',
+        qty: 1,
+        expiryDate: '2025-01-22', // 2025-01-15 + 7 days
+      })
+    );
   });
 });

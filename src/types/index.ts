@@ -13,6 +13,7 @@ export interface KnownItem {
   ingredientCategory?: IngredientCategory;
   mealCategory?: MealCategory;
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
+  defaultExpiryDays?: number; // Days until expiry from purchase
 }
 
 export interface InventoryItem {
