@@ -34,14 +34,15 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - Quantity shall not decrease below zero
 - Quantity changes shall be reflected immediately in the UI
 
-### FR-DASH-005: Add New Items to Inventory
+### FR-DASH-005: Add Items to Inventory
 
-- The user shall be able to add new items to any section
-- New items shall require:
-  - Item name
+- The user shall be able to add items to any section from the predefined known items list
+- Adding an item shall require:
+  - Item selection (from known items not currently in inventory)
   - Initial quantity
   - Section assignment (Fresh, Frozen, or Dry)
-- New items shall be assigned a "last updated" timestamp upon creation
+  - Optional expiry date
+- Added items shall be assigned a "last updated" timestamp upon creation
 
 ### FR-DASH-006: Default Known Items
 
@@ -100,13 +101,32 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - Developers can modify the default items by editing the data file
 - Default items shall always appear in the dropdown (users cannot remove them)
 
-### FR-DASH-015: User-Added Custom Items
+### FR-DASH-015: User-Added Custom Items `[removed]`
 
-- Users shall be able to add custom items to the known items list via the UI
-- Custom items shall appear in the dropdown alongside default items
-- Custom items shall persist across sessions (stored in localStorage)
-- The system shall prevent duplicate item names within the same section
-- Users cannot remove default items; they can only add new custom items
+~~- Users shall be able to add custom items to the known items list via the UI~~
+~~- Custom items shall appear in the dropdown alongside default items~~
+~~- Custom items shall persist across sessions (stored in localStorage)~~
+~~- The system shall prevent duplicate item names within the same section~~
+~~- Users cannot remove default items; they can only add new custom items~~
+
+*Removed to simplify UX. Users can only add items from the predefined known items list.*
+
+### FR-DASH-016: Add Item via Categorized Modal `[unimplemented]`
+
+- The system shall provide a single "+ Add Item" button per section (replacing inline dropdown)
+- Tapping the button shall open a modal displaying available items organized by usage category:
+  - **Ready to eat**: Items used as complete meals
+  - **Ingredients**: Items used for cooking
+  - **Both**: Dual-use items (displayed in both categories or a separate section)
+- Users shall tap an item to select it
+- After selection, the modal shall display quantity and optional expiry date controls
+- Confirming adds the item to inventory and closes the modal
+
+### FR-DASH-017: Simplified Section Add Controls `[unimplemented]`
+
+- Each section shall display only a single "+ Add Item" button (no inline form fields)
+- The dropdown, quantity stepper, date picker, and "+ New" button shall be removed from the section view
+- All add functionality shall be accessed through the categorized modal (FR-DASH-016)
 
 ## User Interface Requirements
 
@@ -129,9 +149,21 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - The dashboard shall be usable on both desktop and mobile devices
 - Touch-friendly controls for quantity adjustment on mobile
 
-## Out of Scope - Subcategories (MVP)
+### UI-DASH-004: Add Item Modal `[unimplemented]`
+
+- The modal shall display a header with the section name (e.g., "Add to Fresh Food")
+- The modal shall include a close button (X) in the header
+- Items shall be grouped under category headers ("Ready to eat", "Ingredients", "Both")
+- Each item shall be displayed as a tappable row/button
+- Selected item shall be visually highlighted
+- Quantity control and expiry date input shall appear after item selection
+- "Add Item" confirmation button shall be prominently displayed
+- Modal shall close upon successful add or when close button is tapped
+
+## Out of Scope (MVP)
 
 - User-defined custom subcategories
 - Changing subcategory of existing items
 - Subcategory-based filtering on Shopping page
 - More than 2 subcategory types
+- User-added custom items (removed in favor of predefined known items only)
