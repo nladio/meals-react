@@ -68,8 +68,9 @@ export function QuickRecipes() {
             ▶
           </span>
           <h2 className="text-base font-semibold text-gray-600 uppercase tracking-wide">
-            Quick Recipes
+            Cook
           </h2>
+          <span className="text-xs text-gray-400 font-normal">(16+ min)</span>
         </div>
         {fullMatchCount > 0 && (
           <span className="text-xs bg-green-50 text-green-600 px-2 py-0.5 rounded-full">

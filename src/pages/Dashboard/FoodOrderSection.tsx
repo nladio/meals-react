@@ -16,7 +16,10 @@ export function FoodOrderSection() {
           <span className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
             ▶
           </span>
-          <h2 className="text-lg font-semibold text-primary">Food Ordering</h2>
+          <h2 className="text-base font-semibold text-gray-600 uppercase tracking-wide">
+            Order
+          </h2>
+          <span className="text-xs text-gray-400 font-normal">(~1 hour)</span>
         </div>
       </button>
 

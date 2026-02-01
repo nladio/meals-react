@@ -27,9 +27,10 @@ vi.mock('../../hooks/useAppState', () => ({
 }));
 
 describe('QuickRecipes', () => {
-  it('renders the Quick Recipes heading', () => {
+  it('renders the Cook heading with time subtitle', () => {
     render(<QuickRecipes />);
-    expect(screen.getByText('Quick Recipes')).toBeInTheDocument();
+    expect(screen.getByText('Cook')).toBeInTheDocument();
+    expect(screen.getByText('(16+ min)')).toBeInTheDocument();
   });
 
   it('shows recipes that can be made (full match)', () => {
@@ -62,13 +63,13 @@ describe('QuickRecipes', () => {
     expect(screen.getByText('Omelette')).toBeInTheDocument();
 
     // Click to collapse
-    fireEvent.click(screen.getByText('Quick Recipes'));
+    fireEvent.click(screen.getByText('Cook'));
 
     // Recipes should be hidden
     expect(screen.queryByText('Omelette')).not.toBeInTheDocument();
 
     // Click to expand
-    fireEvent.click(screen.getByText('Quick Recipes'));
+    fireEvent.click(screen.getByText('Cook'));
 
     // Recipes should be visible again
     expect(screen.getByText('Omelette')).toBeInTheDocument();
