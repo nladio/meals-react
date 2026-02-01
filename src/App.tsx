@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
+import { Inventory } from './pages/Inventory';
 import { Shopping } from './pages/Shopping';
 import { History } from './pages/History';
 import { Recipes } from './pages/Recipes';
@@ -21,6 +22,8 @@ function App() {
 
   const renderPage = () => {
     switch (page) {
+      case 'inventory':
+        return <Inventory />;
       case 'shopping':
         return <Shopping />;
       case 'history':
