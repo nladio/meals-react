@@ -1,29 +1,60 @@
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
-import type { Section, ShoppingListItem, PurchaseItem } from '../../types';
+import type { Section, ShoppingListItem, PurchaseItem, Store, Priority, KnownItem } from '../../types';
 import { ShoppingItem } from './ShoppingItem';
 import { Button } from '../../components/ui/Button';
+
+type Urgency = 'restock' | 'low' | 'variety';
+
+interface StoreShoppingItem extends ShoppingListItem {
+  urgency: Urgency;
+  priority: Priority;
+}
+
+const STORE_LABELS: Record<Store, string> = {
+  'indian-store': 'Indian Store',
+  'costco': 'Costco',
+  'grocery': 'Grocery',
+};
+
+const STORE_ORDER: Store[] = ['indian-store', 'costco', 'grocery'];
+
+const PRIORITY_ORDER: Record<Priority, number> = {
+  high: 0,
+  medium: 1,
+  low: 2,
+};
+
+const URGENCY_ORDER: Record<Urgency, number> = {
+  restock: 0,
+  low: 1,
+  variety: 2,
+};
 
 export function Shopping() {
   const { state, dispatch } = useAppState();
 
-  // Get shopping list items
-  const { needRestock, runningLow, forVariety } = getShoppingListItems();
+  // Get all shopping items with their store and priority info
+  const storeGroups = getStoreGroupedItems();
 
-  function getShoppingListItems() {
-    const needRestock: ShoppingListItem[] = [];
-    const runningLow: ShoppingListItem[] = [];
-    const forVariety: ShoppingListItem[] = [];
+  function getStoreGroupedItems(): Record<Store, StoreShoppingItem[]> {
+    const allItems: ShoppingListItem[] = [];
+    const itemKnownMap = new Map<string, KnownItem>();
 
     const now = new Date();
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const mergedKnownItems = getMergedKnownItems(state);
 
+    // Collect all items that need to be on the shopping list
     for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
       // Check inventory items
       for (const item of state.inventory[section]) {
+        const knownItem = mergedKnownItems[section].find(k => k.name === item.name);
+        if (knownItem) {
+          itemKnownMap.set(item.name, knownItem);
+        }
+
         if (item.quantity === 0) {
-          const knownItem = mergedKnownItems[section].find(k => k.name === item.name);
-          needRestock.push({
+          allItems.push({
             name: item.name,
             section,
             currentQty: 0,
@@ -31,8 +62,7 @@ export function Shopping() {
             lastBought: knownItem?.lastBought || null,
           });
         } else if (item.quantity <= 2) {
-          const knownItem = mergedKnownItems[section].find(k => k.name === item.name);
-          runningLow.push({
+          allItems.push({
             name: item.name,
             section,
             currentQty: item.quantity,
@@ -45,9 +75,11 @@ export function Shopping() {
       // Check known items not in inventory
       const inventoryNames = state.inventory[section].map(i => i.name);
       for (const knownItem of mergedKnownItems[section]) {
+        itemKnownMap.set(knownItem.name, knownItem);
+
         if (!inventoryNames.includes(knownItem.name)) {
           if (knownItem.lastBought) {
-            needRestock.push({
+            allItems.push({
               name: knownItem.name,
               section,
               currentQty: 0,
@@ -55,39 +87,15 @@ export function Shopping() {
               lastBought: knownItem.lastBought,
             });
           } else {
-            forVariety.push({
-              name: knownItem.name,
-              section,
-              currentQty: 0,
-              suggestedQty: knownItem.typicalQty || 1,
-              lastBought: null,
-            });
-          }
-        }
-      }
-    }
-
-    // Add variety items (not already in lists)
-    const restockNames = new Set(needRestock.map(i => i.name));
-    const lowNames = new Set(runningLow.map(i => i.name));
-
-    for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
-      for (const knownItem of mergedKnownItems[section]) {
-        if (restockNames.has(knownItem.name) || lowNames.has(knownItem.name)) continue;
-
-        const lastBought = knownItem.lastBought ? new Date(knownItem.lastBought) : null;
-        if (!lastBought || lastBought < sevenDaysAgo) {
-          const existing = forVariety.find(v => v.name === knownItem.name);
-          if (!existing) {
-            const currentQty =
-              state.inventory[section].find(i => i.name === knownItem.name)?.quantity || 0;
-            if (currentQty <= 2) {
-              forVariety.push({
+            // Check if should show as variety (never bought or not bought recently)
+            const lastBought = knownItem.lastBought ? new Date(knownItem.lastBought) : null;
+            if (!lastBought || lastBought < sevenDaysAgo) {
+              allItems.push({
                 name: knownItem.name,
                 section,
-                currentQty,
+                currentQty: 0,
                 suggestedQty: knownItem.typicalQty || 1,
-                lastBought: knownItem.lastBought,
+                lastBought: null,
               });
             }
           }
@@ -95,27 +103,95 @@ export function Shopping() {
       }
     }
 
-    // Sort variety by last bought (oldest first)
-    forVariety.sort((a, b) => {
-      if (!a.lastBought && !b.lastBought) return 0;
-      if (!a.lastBought) return 1;
-      if (!b.lastBought) return -1;
-      return new Date(a.lastBought).getTime() - new Date(b.lastBought).getTime();
+    // Dedupe by name (keep first occurrence)
+    const seenNames = new Set<string>();
+    const uniqueItems = allItems.filter(item => {
+      if (seenNames.has(item.name)) return false;
+      seenNames.add(item.name);
+      return true;
     });
 
-    return { needRestock, runningLow, forVariety: forVariety.slice(0, 5) };
+    // Determine urgency for each item
+    const itemsWithUrgency = uniqueItems.map(item => {
+      let urgency: Urgency;
+      if (item.currentQty === 0 && item.lastBought !== null) {
+        urgency = 'restock';
+      } else if (item.currentQty > 0 && item.currentQty <= 2) {
+        urgency = 'low';
+      } else {
+        urgency = 'variety';
+      }
+      return { ...item, urgency };
+    });
+
+    // Limit variety items to 5
+    const restockAndLow = itemsWithUrgency.filter(i => i.urgency !== 'variety');
+    const variety = itemsWithUrgency
+      .filter(i => i.urgency === 'variety')
+      .sort((a, b) => {
+        if (!a.lastBought && !b.lastBought) return 0;
+        if (!a.lastBought) return 1;
+        if (!b.lastBought) return -1;
+        return new Date(a.lastBought).getTime() - new Date(b.lastBought).getTime();
+      })
+      .slice(0, 5);
+
+    const finalItems = [...restockAndLow, ...variety];
+
+    // Group by store
+    const groups: Record<Store, StoreShoppingItem[]> = {
+      'indian-store': [],
+      'costco': [],
+      'grocery': [],
+    };
+
+    for (const item of finalItems) {
+      const knownItem = itemKnownMap.get(item.name);
+      const stores = knownItem?.stores || ['grocery'];
+      const priority = knownItem?.priority || 'medium';
+
+      const storeItem: StoreShoppingItem = {
+        ...item,
+        priority,
+        urgency: item.urgency,
+      };
+
+      // Add to each store where available
+      for (const store of stores) {
+        groups[store].push({ ...storeItem });
+      }
+    }
+
+    // Sort each store group by priority then urgency
+    for (const store of STORE_ORDER) {
+      groups[store].sort((a, b) => {
+        const priorityDiff = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
+        if (priorityDiff !== 0) return priorityDiff;
+        return URGENCY_ORDER[a.urgency] - URGENCY_ORDER[b.urgency];
+      });
+    }
+
+    return groups;
   }
 
   const handleAddToInventory = () => {
     const checkedItems: PurchaseItem[] = [];
+    const processedNames = new Set<string>();
 
-    // Collect checked items
-    const allItems = [...needRestock, ...runningLow, ...forVariety];
-    for (const item of allItems) {
-      const checkboxId = `shop-${item.section}-${item.name.replace(/\s+/g, '-')}`;
-      if (state.shoppingChecked[checkboxId]) {
-        const qty = (state.shoppingChecked[`${checkboxId}-qty`] as number) || item.suggestedQty;
-        checkedItems.push({ name: item.name, section: item.section, qty });
+    // Collect checked items from all store groups
+    for (const store of STORE_ORDER) {
+      for (const item of storeGroups[store]) {
+        // Use a unified checkbox ID based on item name only (not store)
+        const checkboxId = `shop-${item.section}-${item.name.replace(/\s+/g, '-')}`;
+
+        // Only process each item once (even if checked in multiple stores)
+        if (processedNames.has(item.name)) continue;
+
+        if (state.shoppingChecked[checkboxId]) {
+          processedNames.add(item.name);
+          const qty = (state.shoppingChecked[`${checkboxId}-qty`] as number) || item.suggestedQty;
+          checkedItems.push({ name: item.name, section: item.section, qty });
+        }
       }
     }
 
@@ -160,49 +236,31 @@ export function Shopping() {
       </header>
 
       <section className="p-4">
-        {/* Need to Restock */}
-        <div className="mb-6">
-          <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 px-3 py-2 rounded-sm bg-red-50 text-danger">
-            Need to Restock (0 left)
-          </h3>
-          <div className="flex flex-col gap-2">
-            {needRestock.length > 0 ? (
-              needRestock.map(item => (
-                <ShoppingItem key={`${item.section}-${item.name}`} item={item} />
-              ))
-            ) : (
-              <div className="text-center py-5 text-gray-400 italic">All stocked up!</div>
-            )}
-          </div>
+        {/* Store sections in a responsive grid */}
+        <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 mb-6">
+          {STORE_ORDER.map(store => (
+            <div key={store} className="bg-gray-50 rounded-lg p-3 min-w-[200px]">
+              <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 px-2 py-1.5 rounded bg-gray-200 text-gray-700">
+                {STORE_LABELS[store]}
+              </h3>
+              <div className="flex flex-col gap-2">
+                {storeGroups[store].length > 0 ? (
+                  storeGroups[store].map(item => (
+                    <ShoppingItem
+                      key={`${store}-${item.section}-${item.name}`}
+                      item={item}
+                      urgency={item.urgency}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-4 text-gray-400 italic text-sm">
+                    Nothing needed from here
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-
-        {/* Running Low */}
-        {runningLow.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 px-3 py-2 rounded-sm bg-orange-50 text-orange-800">
-              Running Low
-            </h3>
-            <div className="flex flex-col gap-2">
-              {runningLow.map(item => (
-                <ShoppingItem key={`${item.section}-${item.name}`} item={item} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* For Variety */}
-        {forVariety.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 px-3 py-2 rounded-sm bg-blue-50 text-blue-800">
-              For Variety (haven't bought lately)
-            </h3>
-            <div className="flex flex-col gap-2">
-              {forVariety.map(item => (
-                <ShoppingItem key={`${item.section}-${item.name}`} item={item} />
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Add to Inventory Button */}
         <Button variant="primary" className="w-full gap-2" onClick={handleAddToInventory}>

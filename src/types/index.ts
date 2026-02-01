@@ -4,6 +4,10 @@ export type ItemUsage = 'meal' | 'ingredient';
 
 export type NutritionTag = 'high-protein' | 'high-fiber';
 
+export type Priority = 'low' | 'medium' | 'high';
+
+export type Store = 'indian-store' | 'costco' | 'grocery';
+
 export type IngredientCategory = 'produce' | 'dairy' | 'protein' | 'condiments' | 'grains' | 'legumes';
 export type MealCategory = 'curries' | 'soups' | 'noodles' | 'snacks' | 'ready-meals';
 
@@ -17,6 +21,8 @@ export interface KnownItem {
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
   defaultExpiryDays?: number; // Days until expiry from purchase
   nutritionTags?: NutritionTag[];
+  priority?: Priority; // default: 'medium'
+  stores?: Store[]; // default: ['grocery']
 }
 
 export interface InventoryItem {
