@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem } from '../types';
+import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage } from '../types';
 import { generateId } from '../utils/helpers';
 import { defaultKnownItems, getDefaultItemNames } from '../data/defaultKnownItems';
 
@@ -36,7 +36,7 @@ export function getMergedKnownItems(state: AppState): Record<Section, KnownItem[
       merged[section].push({
         name: defaultItem.name,
         typicalQty: customData?.typicalQty ?? defaultItem.typicalQty,
-        subcategory: defaultItem.subcategory,
+        usages: defaultItem.usages,
         lastBought: customData?.lastBought ?? null,
         isDefault: true,
       });
@@ -62,7 +62,7 @@ type Action =
   | { type: 'INCREMENT_ITEM'; section: Section; id: string }
   | { type: 'DECREMENT_ITEM'; section: Section; id: string }
   | { type: 'ADD_TO_INVENTORY'; section: Section; name: string; qty: number; expiryDate?: string }
-  | { type: 'ADD_KNOWN_ITEM'; section: Section; name: string; subcategory?: string }
+  | { type: 'ADD_KNOWN_ITEM'; section: Section; name: string; usages?: ItemUsage[] }
   | { type: 'SET_SHOPPING_CHECKED'; key: string; value: boolean | number }
   | { type: 'CLEAR_SHOPPING_CHECKED' }
   | { type: 'RECORD_PURCHASE'; date: string; items: PurchaseItem[] }
@@ -136,7 +136,7 @@ export function reducer(state: AppState, action: Action): AppState {
             ...state.customKnownItems,
             [action.section]: [
               ...state.customKnownItems[action.section],
-              { name: action.name, lastBought: null, typicalQty: action.qty },
+              { name: action.name, lastBought: null, typicalQty: action.qty, usages: ['meal'] as ItemUsage[] },
             ],
           };
 
@@ -165,7 +165,7 @@ export function reducer(state: AppState, action: Action): AppState {
           ...state.customKnownItems,
           [action.section]: [
             ...state.customKnownItems[action.section],
-            { name: action.name, lastBought: null, typicalQty: 1, subcategory: action.subcategory },
+            { name: action.name, lastBought: null, typicalQty: 1, usages: action.usages || ['meal'] },
           ],
         },
       };
@@ -272,92 +272,60 @@ export function reducer(state: AppState, action: Action): AppState {
   }
 }
 
-// Migrate old subcategories to new simplified categories
-function migrateSubcategory(oldSubcategory: string | undefined, itemName: string, section: Section): string | undefined {
-  // If already using new categories, keep as-is
-  if (oldSubcategory === 'Ready to eat' || oldSubcategory === 'Ingredients') {
-    return oldSubcategory;
-  }
-
-  // Check if item exists in defaultKnownItems and use its subcategory
-  const defaultItem = defaultKnownItems[section].find(d => d.name === itemName);
-  if (defaultItem?.subcategory) {
-    return defaultItem.subcategory;
-  }
-
-  // Map old subcategories to new ones
-  const oldToNew: Record<string, string> = {
-    'Curries': 'Ready to eat',
-    'Breads': 'Ready to eat',
-    'Ready Meals': 'Ready to eat',
-    'Snacks & Sides': 'Ready to eat',
-    'Quick Meals': 'Ready to eat',
-    'Staples': 'Ingredients',
-  };
-
-  if (oldSubcategory && oldToNew[oldSubcategory]) {
-    return oldToNew[oldSubcategory];
-  }
-
-  // Default to 'Ready to eat' for unknown categories
-  return oldSubcategory ? 'Ready to eat' : undefined;
+// Migrate v2 subcategory to v3 usages
+function migrateSubcategoryToUsages(subcategory: string | undefined): ItemUsage[] {
+  if (subcategory === 'Ready to eat') return ['meal'];
+  if (subcategory === 'Ingredients') return ['ingredient'];
+  return ['meal']; // default
 }
 
 // Load state from localStorage
 function loadState(): AppState {
   try {
-    const saved = localStorage.getItem('meals-app-state-v2');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-
-      // Check if we need to migrate from old knownItems to new customKnownItems format
-      const hasOldFormat = parsed.knownItems && !parsed.customKnownItems;
-
-      if (hasOldFormat) {
-        // Migrate from old knownItems format to new customKnownItems format
-        const migratedCustomKnownItems: Record<Section, KnownItem[]> = {
-          fresh: [],
-          frozen: [],
-          dry: [],
-        };
-
-        for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
-          const items = parsed.knownItems?.[section] || [];
-          const defaultNames = getDefaultItemNames(section);
-
-          for (const item of items) {
-            const itemObj: KnownItem = typeof item === 'string'
-              ? { name: item, lastBought: null, typicalQty: 1 }
-              : item;
-
-            // Migrate subcategory
-            const subcategory = migrateSubcategory(itemObj.subcategory, itemObj.name, section);
-
-            // Only add to customKnownItems if it's a custom item OR has user data (lastBought)
-            const isDefault = defaultNames.has(itemObj.name);
-            if (!isDefault || itemObj.lastBought) {
-              migratedCustomKnownItems[section].push({
-                name: itemObj.name,
-                lastBought: itemObj.lastBought,
-                typicalQty: itemObj.typicalQty || 1,
-                subcategory: isDefault ? undefined : subcategory,
-              });
-            }
-          }
-        }
-
-        return {
-          customKnownItems: migratedCustomKnownItems,
-          inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
-          shoppingChecked: parsed.shoppingChecked || {},
-          purchaseHistory: parsed.purchaseHistory || [],
-          historyViewMonth: parsed.historyViewMonth || null,
-        };
-      }
-
-      // Already in new format
+    // Try v3 first
+    const savedV3 = localStorage.getItem('meals-app-state-v3');
+    if (savedV3) {
+      const parsed = JSON.parse(savedV3);
       return {
         customKnownItems: parsed.customKnownItems || DEFAULT_STATE.customKnownItems,
+        inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
+        shoppingChecked: parsed.shoppingChecked || {},
+        purchaseHistory: parsed.purchaseHistory || [],
+        historyViewMonth: parsed.historyViewMonth || null,
+      };
+    }
+
+    // Try v2 and migrate to v3
+    const savedV2 = localStorage.getItem('meals-app-state-v2');
+    if (savedV2) {
+      const parsed = JSON.parse(savedV2);
+
+      // Migrate customKnownItems from subcategory to usages
+      const migratedCustomKnownItems: Record<Section, KnownItem[]> = {
+        fresh: [],
+        frozen: [],
+        dry: [],
+      };
+
+      for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
+        const items = parsed.customKnownItems?.[section] || [];
+        const defaultNames = getDefaultItemNames(section);
+
+        for (const item of items) {
+          const isDefault = defaultNames.has(item.name);
+          // For custom items, migrate subcategory to usages
+          // For default items with user data, just keep name/lastBought/typicalQty
+          migratedCustomKnownItems[section].push({
+            name: item.name,
+            lastBought: item.lastBought,
+            typicalQty: item.typicalQty || 1,
+            usages: isDefault ? [] : migrateSubcategoryToUsages(item.subcategory),
+          });
+        }
+      }
+
+      return {
+        customKnownItems: migratedCustomKnownItems,
         inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
@@ -385,7 +353,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Save to localStorage on every state change
   useEffect(() => {
     try {
-      localStorage.setItem('meals-app-state-v2', JSON.stringify(state));
+      localStorage.setItem('meals-app-state-v3', JSON.stringify(state));
     } catch (e) {
       console.error('Failed to save state:', e);
     }

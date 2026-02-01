@@ -1,4 +1,4 @@
-import type { Section, InventoryItem } from '../../types';
+import type { Section, InventoryItem, KnownItem } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { SubcategoryGroup } from './SubcategoryGroup';
 import { RestockControls } from './RestockControls';
@@ -8,25 +8,46 @@ interface InventorySectionProps {
   title: string;
 }
 
+interface GroupedItem {
+  item: InventoryItem;
+  isDualUse: boolean;
+}
+
 export function InventorySection({ section, title }: InventorySectionProps) {
   const { state } = useAppState();
   const items = state.inventory[section];
   const knownItems = getMergedKnownItems(state)[section];
 
-  // Group items by subcategory
-  const groupedItems = items.reduce((groups, item) => {
-    const knownItem = knownItems.find(k => k.name === item.name);
-    const subcategory = knownItem?.subcategory || 'Other';
-    if (!groups[subcategory]) groups[subcategory] = [];
-    groups[subcategory].push(item);
-    return groups;
-  }, {} as Record<string, InventoryItem[]>);
+  // Helper to get usages for an item
+  const getItemUsages = (itemName: string): KnownItem['usages'] => {
+    const knownItem = knownItems.find(k => k.name === itemName);
+    return knownItem?.usages || ['meal'];
+  };
 
-  const sortedSubcategories = Object.keys(groupedItems).sort((a, b) => {
-    if (a === 'Other') return 1;
-    if (b === 'Other') return -1;
-    return a.localeCompare(b);
-  });
+  // Group items by usage (meal = "Ready to eat", ingredient = "Ingredients")
+  // Items with both usages appear in both groups
+  const mealItems: GroupedItem[] = [];
+  const ingredientItems: GroupedItem[] = [];
+
+  for (const item of items) {
+    const usages = getItemUsages(item.name);
+    const isDualUse = usages.includes('meal') && usages.includes('ingredient');
+
+    if (usages.includes('meal')) {
+      mealItems.push({ item, isDualUse });
+    }
+    if (usages.includes('ingredient')) {
+      ingredientItems.push({ item, isDualUse });
+    }
+  }
+
+  const groups: { label: string; items: GroupedItem[] }[] = [];
+  if (mealItems.length > 0) {
+    groups.push({ label: 'Ready to eat', items: mealItems });
+  }
+  if (ingredientItems.length > 0) {
+    groups.push({ label: 'Ingredients', items: ingredientItems });
+  }
 
   return (
     <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
@@ -40,11 +61,11 @@ export function InventorySection({ section, title }: InventorySectionProps) {
             <span className="font-medium text-[15px]">No items stocked</span>
           </div>
         ) : (
-          sortedSubcategories.map(subcategory => (
+          groups.map(group => (
             <SubcategoryGroup
-              key={subcategory}
-              subcategory={subcategory}
-              items={groupedItems[subcategory]}
+              key={group.label}
+              subcategory={group.label}
+              groupedItems={group.items}
               section={section}
             />
           ))

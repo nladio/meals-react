@@ -2,15 +2,20 @@ import { useState } from 'react';
 import type { InventoryItem, Section } from '../../types';
 import { FoodItem } from './FoodItem';
 
+interface GroupedItem {
+  item: InventoryItem;
+  isDualUse: boolean;
+}
+
 interface SubcategoryGroupProps {
   subcategory: string;
-  items: InventoryItem[];
+  groupedItems: GroupedItem[];
   section: Section;
 }
 
-export function SubcategoryGroup({ subcategory, items, section }: SubcategoryGroupProps) {
+export function SubcategoryGroup({ subcategory, groupedItems, section }: SubcategoryGroupProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalQuantity = groupedItems.reduce((sum, { item }) => sum + item.quantity, 0);
 
   return (
     <div className="mb-3">
@@ -31,8 +36,8 @@ export function SubcategoryGroup({ subcategory, items, section }: SubcategoryGro
 
       {isExpanded && (
         <div className="flex flex-col gap-2 pt-2">
-          {items.map(item => (
-            <FoodItem key={item.id} item={item} section={section} />
+          {groupedItems.map(({ item, isDualUse }) => (
+            <FoodItem key={item.id} item={item} section={section} isDualUse={isDualUse} />
           ))}
         </div>
       )}

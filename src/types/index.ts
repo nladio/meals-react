@@ -1,10 +1,12 @@
 export type Section = 'fresh' | 'frozen' | 'dry';
 
+export type ItemUsage = 'meal' | 'ingredient';
+
 export interface KnownItem {
   name: string;
   lastBought: string | null;
   typicalQty: number;
-  subcategory?: string;
+  usages: ItemUsage[];
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
 }
 

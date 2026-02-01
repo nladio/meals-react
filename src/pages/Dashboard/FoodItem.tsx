@@ -5,9 +5,10 @@ import { useAppState } from '../../hooks/useAppState';
 interface FoodItemProps {
   item: InventoryItem;
   section: Section;
+  isDualUse?: boolean;
 }
 
-export function FoodItem({ item, section }: FoodItemProps) {
+export function FoodItem({ item, section, isDualUse = false }: FoodItemProps) {
   const { dispatch } = useAppState();
   const isLow = item.quantity <= 2;
   const relativeDate = formatRelativeDate(item.addedDate);
@@ -27,7 +28,17 @@ export function FoodItem({ item, section }: FoodItemProps) {
       </button>
 
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-        <span className="font-medium text-[15px] truncate">{item.name}</span>
+        <div className="flex items-center gap-1.5">
+          <span className="font-medium text-[15px] truncate">{item.name}</span>
+          {isDualUse && (
+            <span
+              className="text-[10px] px-1.5 py-0.5 bg-purple-100 text-purple-600 rounded-full font-medium shrink-0"
+              title="This item appears in both Ready to eat and Ingredients"
+            >
+              2x
+            </span>
+          )}
+        </div>
         <span className="text-xs text-gray-400">{relativeDate}</span>
         {item.expiryDate && (
           <span
