@@ -7,10 +7,10 @@ interface ShoppingItemProps {
   urgency: Urgency;
 }
 
-const URGENCY_STYLES: Record<Urgency, { dot: string; border: string }> = {
-  restock: { dot: 'bg-red-500', border: 'border-l-red-500' },
-  low: { dot: 'bg-orange-400', border: 'border-l-orange-400' },
-  variety: { dot: 'bg-blue-400', border: 'border-l-blue-400' },
+const URGENCY_STYLES: Record<Urgency, { border: string }> = {
+  restock: { border: 'border-l-red-500' },
+  low: { border: 'border-l-orange-400' },
+  variety: { border: 'border-l-blue-400' },
 };
 
 export function ShoppingItem({ item, urgency }: ShoppingItemProps) {
@@ -20,7 +20,7 @@ export function ShoppingItem({ item, urgency }: ShoppingItemProps) {
     <div
       className={`flex items-center gap-3 p-3 bg-white rounded-sm border border-l-4 border-gray-200 ${urgencyStyle.border}`}
     >
-      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${urgencyStyle.dot}`} />
+      <span className={`w-2 h-2 rounded-full flex-shrink-0`} />
 
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
         <span className="font-medium text-[15px] text-gray-800 truncate">{item.name}</span>
