@@ -1,4 +1,4 @@
-import type { Section, ItemUsage } from '../types';
+import type { Section, ItemUsage, NutritionTag } from '../types';
 
 export type IngredientCategory = 'produce' | 'dairy' | 'protein' | 'condiments' | 'grains' | 'legumes';
 export type MealCategory = 'curries' | 'soups' | 'noodles' | 'snacks' | 'ready-meals';
@@ -10,6 +10,7 @@ export interface DefaultKnownItem {
   ingredientCategory?: IngredientCategory;
   mealCategory?: MealCategory;
   defaultExpiryDays?: number; // Days until expiry from purchase
+  nutritionTags?: NutritionTag[];
 }
 
 export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
@@ -17,8 +18,8 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     // Ready to eat (meals only) - prepared foods, ~5 days
     { name: 'Paneer Curry', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
     { name: 'Dal Makhani', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
-    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
-    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
+    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'] },
+    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'] },
     { name: 'Aloo Gobi', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5 },
     { name: 'Chapatis', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
     { name: 'Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5 },
@@ -29,9 +30,9 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'Ginger', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
     { name: 'Potato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 21 },
     { name: 'Cucumber', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
-    { name: 'Spinach', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Spinach', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5, nutritionTags: ['high-fiber'] },
     { name: 'Lettuce', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
-    { name: 'Avocado', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
+    { name: 'Avocado', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5, nutritionTags: ['high-fiber'] },
     { name: 'Lime', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14 },
     { name: 'Green Chillies', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
     { name: 'Cilantro', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
@@ -39,18 +40,18 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'Curry Leaves', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7 },
     { name: 'Mint', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 5 },
     // Protein - paneer/tofu ~7-10 days, chicken ~3 days
-    { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10 },
-    { name: 'Tofu', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10 },
+    { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10, nutritionTags: ['high-protein'] },
+    { name: 'Tofu', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10, nutritionTags: ['high-protein'] },
     // Dairy - ~14 days
     { name: 'Amul Cheese Cubes', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
     { name: 'Amul Cheese Slice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
     { name: 'Butter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 30 },
     { name: 'Yogurt', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14 },
     // Eggs ~21 days, chicken ~3 days
-    { name: 'Egg', typicalQty: 24, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 21 },
-    { name: 'Chicken', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 3 },
+    { name: 'Egg', typicalQty: 24, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 21, nutritionTags: ['high-protein'] },
+    { name: 'Chicken', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 3, nutritionTags: ['high-protein'] },
     // Condiments/dips - ~7-14 days
-    { name: 'Hummus', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 10 },
+    { name: 'Hummus', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 10},
     { name: 'Tzatziki', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 7 },
     { name: 'Green Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 7 },
     { name: 'Tamarind Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 14 },
@@ -69,7 +70,7 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'TJs Orange Chicken', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', defaultExpiryDays: 90 },
     { name: 'Frozen Samosas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90 },
     { name: 'Frozen Parathas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90 },
-    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 90 },
+    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 90},
   ],
   dry: [
     // Dry goods - long shelf life, 180 days (6 months) or omit
@@ -86,14 +87,14 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     // Dry ingredients - very long shelf life, omit defaultExpiryDays
     { name: 'Rice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
     { name: 'Atta', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
-    { name: 'Thick Poha', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains' },
-    { name: 'CannedBlackBeans', typicalQty: 2, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Toor Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Masoor Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Moong Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Black Urad Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Chickpeas', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
-    { name: 'Rajma', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes' },
+    { name: 'Thick Poha', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', nutritionTags: ['high-fiber'] },
+    { name: 'CannedBlackBeans', typicalQty: 2, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-fiber'] },
+    { name: 'Toor Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-fiber'] },
+    { name: 'Masoor Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-fiber'] },
+    { name: 'Moong Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-fiber'] },
+    { name: 'Black Urad Dal', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-fiber'] },
+    { name: 'Chickpeas', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-protein', 'high-fiber'] },
+    { name: 'Rajma', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'legumes', nutritionTags: ['high-protein', 'high-fiber'] },
   ],
 };
 

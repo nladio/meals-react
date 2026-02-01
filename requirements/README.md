@@ -14,6 +14,7 @@ This directory contains functional requirements documentation for the Meals-Reac
 | [alerts.md](./alerts.md) | Alert System | Critical and warning notifications |
 | [meal-planning.md](./meal-planning.md) | Meal Planning | Create recipes and match with inventory `[unimplemented]` |
 | [food-ordering.md](./food-ordering.md) | Food Ordering | Track restaurant orders and dishes |
+| [nutrition-tags.md](./nutrition-tags.md) | Nutrition Tags | Tag foods with protein/fiber and find what to eat `[unimplemented]` |
 
 ## Project Summary
 

@@ -1,4 +1,4 @@
-import type { Section, InventoryItem, KnownItem } from '../../types';
+import type { Section, InventoryItem, KnownItem, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { SubcategoryGroup } from './SubcategoryGroup';
 import { RestockControls } from './RestockControls';
@@ -11,6 +11,7 @@ interface InventorySectionProps {
 interface GroupedItem {
   item: InventoryItem;
   isDualUse: boolean;
+  nutritionTags?: NutritionTag[];
 }
 
 export function InventorySection({ section, title }: InventorySectionProps) {
@@ -18,10 +19,9 @@ export function InventorySection({ section, title }: InventorySectionProps) {
   const items = state.inventory[section];
   const knownItems = getMergedKnownItems(state)[section];
 
-  // Helper to get usages for an item
-  const getItemUsages = (itemName: string): KnownItem['usages'] => {
-    const knownItem = knownItems.find(k => k.name === itemName);
-    return knownItem?.usages || ['meal'];
+  // Helper to get known item data
+  const getKnownItem = (itemName: string): KnownItem | undefined => {
+    return knownItems.find(k => k.name === itemName);
   };
 
   // Group items by usage (meal = "Ready to eat", ingredient = "Ingredients")
@@ -30,14 +30,16 @@ export function InventorySection({ section, title }: InventorySectionProps) {
   const ingredientItems: GroupedItem[] = [];
 
   for (const item of items) {
-    const usages = getItemUsages(item.name);
+    const knownItem = getKnownItem(item.name);
+    const usages = knownItem?.usages || ['meal'];
     const isDualUse = usages.includes('meal') && usages.includes('ingredient');
+    const nutritionTags = knownItem?.nutritionTags;
 
     if (usages.includes('meal')) {
-      mealItems.push({ item, isDualUse });
+      mealItems.push({ item, isDualUse, nutritionTags });
     }
     if (usages.includes('ingredient')) {
-      ingredientItems.push({ item, isDualUse });
+      ingredientItems.push({ item, isDualUse, nutritionTags });
     }
   }
 

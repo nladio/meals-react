@@ -2,6 +2,8 @@ export type Section = 'fresh' | 'frozen' | 'dry';
 
 export type ItemUsage = 'meal' | 'ingredient';
 
+export type NutritionTag = 'high-protein' | 'high-fiber';
+
 export type IngredientCategory = 'produce' | 'dairy' | 'protein' | 'condiments' | 'grains' | 'legumes';
 export type MealCategory = 'curries' | 'soups' | 'noodles' | 'snacks' | 'ready-meals';
 
@@ -14,6 +16,7 @@ export interface KnownItem {
   mealCategory?: MealCategory;
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
   defaultExpiryDays?: number; // Days until expiry from purchase
+  nutritionTags?: NutritionTag[];
 }
 
 export interface InventoryItem {

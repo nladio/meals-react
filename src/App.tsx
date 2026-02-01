@@ -4,6 +4,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Shopping } from './pages/Shopping';
 import { History } from './pages/History';
 import { Recipes } from './pages/Recipes';
+import { WhatToEat } from './pages/WhatToEat';
 
 function App() {
   const [page, setPage] = useState(() => window.location.hash.slice(1) || 'dashboard');
@@ -26,6 +27,8 @@ function App() {
         return <History />;
       case 'recipes':
         return <Recipes />;
+      case 'nutrition':
+        return <WhatToEat />;
       default:
         return <Dashboard />;
     }

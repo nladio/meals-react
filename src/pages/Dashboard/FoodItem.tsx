@@ -1,14 +1,16 @@
-import type { InventoryItem, Section } from '../../types';
+import type { InventoryItem, Section, NutritionTag } from '../../types';
 import { formatRelativeDate, getExpiryStatus } from '../../utils/helpers';
 import { useAppState } from '../../hooks/useAppState';
+import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 interface FoodItemProps {
   item: InventoryItem;
   section: Section;
   isDualUse?: boolean;
+  nutritionTags?: NutritionTag[];
 }
 
-export function FoodItem({ item, section, isDualUse = false }: FoodItemProps) {
+export function FoodItem({ item, section, isDualUse = false, nutritionTags }: FoodItemProps) {
   const { dispatch } = useAppState();
   const isLow = item.quantity <= 2;
   const relativeDate = formatRelativeDate(item.addedDate);
@@ -38,6 +40,7 @@ export function FoodItem({ item, section, isDualUse = false }: FoodItemProps) {
               2x
             </span>
           )}
+          <NutritionBadges tags={nutritionTags} />
         </div>
         <span className="text-xs text-gray-400">{relativeDate}</span>
         {item.expiryDate && (

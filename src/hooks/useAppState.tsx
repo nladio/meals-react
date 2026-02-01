@@ -40,6 +40,7 @@ export function getMergedKnownItems(state: AppState): Record<Section, KnownItem[
         ingredientCategory: defaultItem.ingredientCategory,
         mealCategory: defaultItem.mealCategory,
         defaultExpiryDays: defaultItem.defaultExpiryDays,
+        nutritionTags: defaultItem.nutritionTags,
         lastBought: customData?.lastBought ?? null,
         isDefault: true,
       });
