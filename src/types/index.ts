@@ -2,11 +2,14 @@ export type Section = 'fresh' | 'frozen' | 'dry';
 
 export type ItemUsage = 'meal' | 'ingredient';
 
+export type IngredientCategory = 'produce' | 'dairy' | 'protein' | 'condiments' | 'grains' | 'legumes';
+
 export interface KnownItem {
   name: string;
   lastBought: string | null;
   typicalQty: number;
   usages: ItemUsage[];
+  ingredientCategory?: IngredientCategory;
   isDefault?: boolean; // Runtime flag: true for default items, false for custom
 }
 
