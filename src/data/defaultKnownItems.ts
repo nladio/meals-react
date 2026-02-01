@@ -18,14 +18,14 @@ export interface DefaultKnownItem {
 
 export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
   fresh: [
-    // Ready to eat (meals only) - prepared foods, ~5 days
-    { name: 'Paneer Curry', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high' },
-    { name: 'Dal Makhani', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high' },
-    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'], stores: ['indian-store'], priority: 'high' },
-    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'], stores: ['indian-store'], priority: 'medium' },
-    { name: 'Aloo Gobi', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium' },
-    { name: 'Chapatis', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high' },
-    { name: 'Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['grocery'], priority: 'medium' },
+    // Ready to eat (meals only) - prepared foods, ~5 days, 3-5 min reheat
+    { name: 'Paneer Curry', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high', prepTimeMinutes: 3 },
+    { name: 'Dal Makhani', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high', prepTimeMinutes: 3 },
+    { name: 'Palak Paneer', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'], stores: ['indian-store'], priority: 'high', prepTimeMinutes: 3 },
+    { name: 'Chole', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, nutritionTags: ['high-fiber'], stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 3 },
+    { name: 'Aloo Gobi', typicalQty: 2, usages: ['meal'], mealCategory: 'curries', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 3 },
+    { name: 'Chapatis', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high', prepTimeMinutes: 3 },
+    { name: 'Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['grocery'], priority: 'medium', prepTimeMinutes: 5 },
     // Ingredients only - produce ~7 days, herbs ~5 days
     { name: 'Onion', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 14, stores: ['grocery', 'costco'], priority: 'high' },
     { name: 'Tomato', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'produce', defaultExpiryDays: 7, stores: ['grocery', 'costco'], priority: 'high' },
@@ -59,34 +59,34 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'Green Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 7, stores: ['indian-store'], priority: 'medium' },
     { name: 'Tamarind Chutney', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 14, stores: ['indian-store'], priority: 'medium' },
     { name: 'Pickle', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'condiments', defaultExpiryDays: 30, stores: ['indian-store'], priority: 'low' },
-    // Breads - ~5 days
-    { name: 'Bread', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['grocery', 'costco'], priority: 'high' },
-    { name: 'Naan', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store', 'costco'], priority: 'medium' },
-    { name: 'Roti', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium' },
+    // Breads - ~5 days, quick reheat
+    { name: 'Bread', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['grocery', 'costco'], priority: 'high', prepTimeMinutes: 1 },
+    { name: 'Naan', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store', 'costco'], priority: 'medium', prepTimeMinutes: 2 },
+    { name: 'Roti', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 2 },
     // Batters - ~5-7 days
     { name: 'Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'high' },
     { name: 'Ragi Dosa Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium' },
     { name: 'Idli Batter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', defaultExpiryDays: 5, stores: ['indian-store'], priority: 'medium' },
   ],
   frozen: [
-    // Frozen items - 90 days (3 months)
-    { name: 'TJs Orange Chicken', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', defaultExpiryDays: 90, stores: ['grocery'], priority: 'medium' },
-    { name: 'Frozen Samosas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90, stores: ['indian-store', 'costco'], priority: 'medium' },
-    { name: 'Frozen Parathas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90, stores: ['indian-store', 'costco'], priority: 'high' },
-    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 90, stores: ['grocery', 'costco'], priority: 'medium' },
+    // Frozen items - 90 days (3 months), 10-15 min cook time
+    { name: 'TJs Orange Chicken', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', defaultExpiryDays: 90, stores: ['grocery'], priority: 'medium', prepTimeMinutes: 12 },
+    { name: 'Frozen Samosas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90, stores: ['indian-store', 'costco'], priority: 'medium', prepTimeMinutes: 15 },
+    { name: 'Frozen Parathas', typicalQty: 1, usages: ['meal'], mealCategory: 'snacks', defaultExpiryDays: 90, stores: ['indian-store', 'costco'], priority: 'high', prepTimeMinutes: 8 },
+    { name: 'Frozen Falafel', typicalQty: 1, usages: ['meal', 'ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 90, stores: ['grocery', 'costco'], priority: 'medium', prepTimeMinutes: 12 },
   ],
   dry: [
     // Dry goods - long shelf life, 180 days (6 months) or omit
-    { name: 'Tomato Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low' },
-    { name: 'Sweet & Sour Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low' },
-    { name: 'Vegetable Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low' },
-    { name: 'Maggi Noodles', typicalQty: 8, usages: ['meal'], mealCategory: 'noodles', stores: ['indian-store', 'grocery'], priority: 'medium' },
-    { name: 'Top Ramen Curry Noodles', typicalQty: 4, usages: ['meal'], mealCategory: 'noodles', stores: ['grocery'], priority: 'low' },
-    { name: 'MTR Upma', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium' },
-    { name: 'MTR Idli', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium' },
-    { name: 'MTR Sambhar', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium' },
+    { name: 'Tomato Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
+    { name: 'Sweet & Sour Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
+    { name: 'Vegetable Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
+    { name: 'Maggi Noodles', typicalQty: 8, usages: ['meal'], mealCategory: 'noodles', stores: ['indian-store', 'grocery'], priority: 'medium', prepTimeMinutes: 6 },
+    { name: 'Top Ramen Curry Noodles', typicalQty: 4, usages: ['meal'], mealCategory: 'noodles', stores: ['grocery'], priority: 'low', prepTimeMinutes: 6 },
+    { name: 'MTR Upma', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 8 },
+    { name: 'MTR Idli', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 8 },
+    { name: 'MTR Sambhar', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 5 },
     // Tortillas - shorter shelf life than most dry goods
-    { name: 'Tortillas', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 14, stores: ['grocery', 'costco'], priority: 'medium' },
+    { name: 'Tortillas', typicalQty: 1, usages: ['meal', 'ingredient'], defaultExpiryDays: 14, stores: ['grocery', 'costco'], priority: 'medium', prepTimeMinutes: 2 },
     // Dry ingredients - very long shelf life, omit defaultExpiryDays
     { name: 'Rice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', stores: ['indian-store', 'costco'], priority: 'high' },
     { name: 'Atta', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'grains', stores: ['indian-store'], priority: 'high' },
