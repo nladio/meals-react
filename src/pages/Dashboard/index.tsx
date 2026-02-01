@@ -1,5 +1,6 @@
 import { useAppState, getTotalServings } from '../../hooks/useAppState';
 import { InventorySection } from './InventorySection';
+import { FoodOrderSection } from './FoodOrderSection';
 
 export function Dashboard() {
   const { state } = useAppState();
@@ -28,6 +29,9 @@ export function Dashboard() {
       <InventorySection section="fresh" title="Fresh Food" />
       <InventorySection section="frozen" title="Frozen Food" />
       <InventorySection section="dry" title="Dry/Pantry" />
+
+      {/* Food Ordering Section */}
+      <FoodOrderSection />
     </div>
   );
 }

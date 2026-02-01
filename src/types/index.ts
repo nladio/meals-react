@@ -72,3 +72,34 @@ export interface RecipeMatch {
   missingRequired: string[];
   missingOptional: string[];
 }
+
+// Food Ordering Types
+export type MealTime = 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
+export type Cuisine = 'Indian' | 'Chinese' | 'American' | 'Mexican' | 'Italian' | 'Thai' | 'Middle Eastern' | 'Greek';
+export type DishType = 'Appetizer' | 'Main' | 'Dessert' | 'Drink' | 'Side';
+
+export interface DishTags {
+  mealTime?: MealTime[];  // Multiple allowed (e.g., Lunch AND Dinner)
+  cuisine?: Cuisine;
+  dishType?: DishType;
+}
+
+export interface Macros {
+  calories?: number;   // kcal
+  protein?: number;    // grams
+  carbs?: number;      // grams
+  fat?: number;        // grams
+}
+
+export interface Dish {
+  name: string;
+  cost: number;
+  tags: DishTags;
+  macros?: Macros;     // Optional macro info
+}
+
+export interface Order {
+  id: string;
+  restaurant: string;        // Restaurant name
+  dishes: Dish[];            // Dishes in this order/meal
+}

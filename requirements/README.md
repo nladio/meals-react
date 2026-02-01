@@ -13,6 +13,7 @@ This directory contains functional requirements documentation for the Meals-Reac
 | [shopping-history.md](./shopping-history.md) | Purchase History | Calendar view of past shopping activity |
 | [alerts.md](./alerts.md) | Alert System | Critical and warning notifications |
 | [meal-planning.md](./meal-planning.md) | Meal Planning | Create recipes and match with inventory `[unimplemented]` |
+| [food-ordering.md](./food-ordering.md) | Food Ordering | Track restaurant orders and dishes |
 
 ## Project Summary
 
