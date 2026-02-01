@@ -98,4 +98,26 @@ describe('InstantPrepSection', () => {
     // Items visible again
     expect(screen.getByText('TJs Orange Chicken')).toBeInTheDocument();
   });
+
+  it('shows prep time for each item', () => {
+    render(<InstantPrepSection />);
+    expect(screen.getByText('12 min')).toBeInTheDocument();
+    expect(screen.getByText('8 min')).toBeInTheDocument();
+    expect(screen.getByText('6 min')).toBeInTheDocument();
+  });
+
+  it('shows read-only quantity indicator', () => {
+    render(<InstantPrepSection />);
+    expect(screen.getByText('×1')).toBeInTheDocument();
+    expect(screen.getByText('×3')).toBeInTheDocument();
+    expect(screen.getByText('×4')).toBeInTheDocument();
+  });
+
+  it('does not show increment/decrement buttons', () => {
+    render(<InstantPrepSection />);
+    // Only button should be the section header toggle
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0]).toHaveTextContent('Instant Prep');
+  });
 });

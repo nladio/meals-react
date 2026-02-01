@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppState } from '../../hooks/useAppState';
 import { categorizeByPrepTime } from '../../utils/prepTimeCategories';
-import { FoodItem } from '../../components/inventory';
+import { MealCard } from '../../components/dashboard/MealCard';
 
 export function InstantPrepSection() {
   const { state } = useAppState();
@@ -37,11 +37,12 @@ export function InstantPrepSection() {
 
       {isExpanded && (
         <div className="flex flex-col gap-2 mt-4">
-          {instantPrep.map(({ item, section, nutritionTags }) => (
-            <FoodItem
+          {instantPrep.map(({ item, nutritionTags, prepTimeMinutes }) => (
+            <MealCard
               key={item.id}
-              item={item}
-              section={section}
+              name={item.name}
+              quantity={item.quantity}
+              prepTimeMinutes={prepTimeMinutes}
               nutritionTags={nutritionTags}
             />
           ))}
