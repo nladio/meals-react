@@ -71,7 +71,7 @@ function collectShoppingItems(
       if (inventoryNames.has(knownItem.name)) continue;
 
       const lastBoughtTime = knownItem.lastBought ? new Date(knownItem.lastBought).getTime() : null;
-      const shouldShow = knownItem.lastBought || !lastBoughtTime || lastBoughtTime < sevenDaysAgo;
+      const shouldShow = !lastBoughtTime || lastBoughtTime < sevenDaysAgo;
 
       if (shouldShow) {
         items.push({
@@ -167,27 +167,37 @@ export function Shopping() {
         <div className="w-10" />
       </header>
 
-      <section className="p-4">
-        <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 mb-6">
+      <section className="py-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
           {STORE_ORDER.map(store => (
-            <div key={store} className="bg-gray-50 rounded-lg p-3 min-w-[200px]">
-              <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 px-2 py-1.5 rounded bg-gray-200 text-gray-700">
-                {STORE_LABELS[store]}
-              </h3>
-              <div className="flex flex-col gap-2">
-                {storeGroups[store].length > 0 ? (
-                  storeGroups[store].map(item => (
-                    <ShoppingItem
-                      key={`${store}-${item.section}-${item.name}`}
-                      item={item}
-                      urgency={item.urgency}
-                    />
-                  ))
-                ) : (
-                  <div className="text-center py-4 text-gray-400 italic text-sm">
-                    Nothing needed from here
-                  </div>
-                )}
+            <div
+              key={store}
+              className="bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden flex flex-col items-stretch hover:shadow-2xl transition-shadow duration-300"
+            >
+              <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 px-6 py-5">
+                <h3 className="text-xl font-bold text-white text-center tracking-wide">
+                  {STORE_LABELS[store]}
+                </h3>
+                <p className="text-slate-300 text-sm text-center mt-2">
+                  {storeGroups[store].length} {storeGroups[store].length === 1 ? 'item' : 'items'} to buy
+                </p>
+              </div>
+              <div className="p-5 flex-1 bg-gradient-to-b from-white to-gray-50">
+                <div className="space-y-3">
+                  {storeGroups[store].length > 0 ? (
+                    storeGroups[store].map(item => (
+                      <ShoppingItem
+                        key={`${store}-${item.section}-${item.name}`}
+                        item={item}
+                        urgency={item.urgency}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-center py-12 text-gray-400 italic">
+                      Nothing needed from here
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))}
