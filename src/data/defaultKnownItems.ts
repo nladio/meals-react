@@ -77,9 +77,9 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
   ],
   dry: [
     // Dry goods - long shelf life, 180 days (6 months) or omit
-    { name: 'Tomato Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
-    { name: 'Sweet & Sour Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
-    { name: 'Vegetable Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 5 },
+    { name: 'Tomato Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 8 },
+    { name: 'Sweet & Sour Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 8 },
+    { name: 'Vegetable Powdered Soup', typicalQty: 2, usages: ['meal'], mealCategory: 'soups', stores: ['grocery'], priority: 'low', prepTimeMinutes: 8 },
     { name: 'Maggi Noodles', typicalQty: 8, usages: ['meal'], mealCategory: 'noodles', stores: ['indian-store', 'grocery'], priority: 'medium', prepTimeMinutes: 6 },
     { name: 'Top Ramen Curry Noodles', typicalQty: 4, usages: ['meal'], mealCategory: 'noodles', stores: ['grocery'], priority: 'low', prepTimeMinutes: 6 },
     { name: 'MTR Upma', typicalQty: 2, usages: ['meal'], mealCategory: 'ready-meals', stores: ['indian-store'], priority: 'medium', prepTimeMinutes: 8 },
