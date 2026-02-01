@@ -6,25 +6,25 @@ import { generateId } from '../utils/helpers';
 const DEFAULT_STATE: AppState = {
   knownItems: {
     fresh: [
-      { name: 'Paneer Curry', lastBought: null, typicalQty: 2 },
-      { name: 'Dal Makhani', lastBought: null, typicalQty: 2 },
-      { name: 'Chapatis', lastBought: null, typicalQty: 1 },
-      { name: 'Palak Paneer', lastBought: null, typicalQty: 2 },
-      { name: 'Chole', lastBought: null, typicalQty: 2 },
-      { name: 'Aloo Gobi', lastBought: null, typicalQty: 2 },
+      { name: 'Paneer Curry', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Dal Makhani', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Palak Paneer', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Chole', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Aloo Gobi', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Chapatis', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
     ],
     frozen: [
-      { name: 'Biryani', lastBought: null, typicalQty: 2 },
-      { name: 'TJs Palak Paneer', lastBought: null, typicalQty: 2 },
-      { name: 'Frozen Samosas', lastBought: null, typicalQty: 1 },
-      { name: 'Frozen Parathas', lastBought: null, typicalQty: 1 },
+      { name: 'Biryani', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'TJs Palak Paneer', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Frozen Samosas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
+      { name: 'Frozen Parathas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
     ],
     dry: [
-      { name: 'Instant Noodles', lastBought: null, typicalQty: 3 },
-      { name: 'Canned Soup', lastBought: null, typicalQty: 2 },
-      { name: 'Rice', lastBought: null, typicalQty: 1 },
-      { name: 'Tortillas', lastBought: null, typicalQty: 1 },
-      { name: 'Beans', lastBought: null, typicalQty: 2 },
+      { name: 'Instant Noodles', lastBought: null, typicalQty: 3, subcategory: 'Ready to eat' },
+      { name: 'Canned Soup', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
+      { name: 'Rice', lastBought: null, typicalQty: 1, subcategory: 'Ingredients' },
+      { name: 'Tortillas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
+      { name: 'Beans', lastBought: null, typicalQty: 2, subcategory: 'Ingredients' },
     ],
   },
   inventory: {
@@ -223,6 +223,37 @@ export function reducer(state: AppState, action: Action): AppState {
   }
 }
 
+// Migrate old subcategories to new simplified categories
+function migrateSubcategory(oldSubcategory: string | undefined, itemName: string, section: Section): string | undefined {
+  // If already using new categories, keep as-is
+  if (oldSubcategory === 'Ready to eat' || oldSubcategory === 'Ingredients') {
+    return oldSubcategory;
+  }
+
+  // Check if item exists in DEFAULT_STATE and use its subcategory
+  const defaultItem = DEFAULT_STATE.knownItems[section].find(d => d.name === itemName);
+  if (defaultItem?.subcategory) {
+    return defaultItem.subcategory;
+  }
+
+  // Map old subcategories to new ones
+  const oldToNew: Record<string, string> = {
+    'Curries': 'Ready to eat',
+    'Breads': 'Ready to eat',
+    'Ready Meals': 'Ready to eat',
+    'Snacks & Sides': 'Ready to eat',
+    'Quick Meals': 'Ready to eat',
+    'Staples': 'Ingredients',
+  };
+
+  if (oldSubcategory && oldToNew[oldSubcategory]) {
+    return oldToNew[oldSubcategory];
+  }
+
+  // Default to 'Ready to eat' for unknown categories
+  return oldSubcategory ? 'Ready to eat' : undefined;
+}
+
 // Load state from localStorage
 function loadState(): AppState {
   try {
@@ -242,9 +273,12 @@ function loadState(): AppState {
         migratedKnownItems[section] = items.map((item: KnownItem | string) => {
           if (typeof item === 'string') {
             const defaultItem = DEFAULT_STATE.knownItems[section].find(d => d.name === item);
-            return { name: item, lastBought: null, typicalQty: defaultItem?.typicalQty || 1 };
+            const subcategory = migrateSubcategory(defaultItem?.subcategory, item, section);
+            return { name: item, lastBought: null, typicalQty: defaultItem?.typicalQty || 1, subcategory };
           }
-          return item;
+          // Migrate subcategory to new format
+          const subcategory = migrateSubcategory(item.subcategory, item.name, section);
+          return { ...item, subcategory };
         });
       }
 

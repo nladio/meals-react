@@ -4,6 +4,7 @@ export interface KnownItem {
   name: string;
   lastBought: string | null;
   typicalQty: number;
+  subcategory?: string;
 }
 
 export interface InventoryItem {

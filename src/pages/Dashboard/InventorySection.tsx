@@ -1,6 +1,6 @@
-import type { Section } from '../../types';
+import type { Section, InventoryItem } from '../../types';
 import { useAppState } from '../../hooks/useAppState';
-import { FoodItem } from './FoodItem';
+import { SubcategoryGroup } from './SubcategoryGroup';
 import { RestockControls } from './RestockControls';
 
 interface InventorySectionProps {
@@ -11,6 +11,22 @@ interface InventorySectionProps {
 export function InventorySection({ section, title }: InventorySectionProps) {
   const { state } = useAppState();
   const items = state.inventory[section];
+  const knownItems = state.knownItems[section];
+
+  // Group items by subcategory
+  const groupedItems = items.reduce((groups, item) => {
+    const knownItem = knownItems.find(k => k.name === item.name);
+    const subcategory = knownItem?.subcategory || 'Other';
+    if (!groups[subcategory]) groups[subcategory] = [];
+    groups[subcategory].push(item);
+    return groups;
+  }, {} as Record<string, InventoryItem[]>);
+
+  const sortedSubcategories = Object.keys(groupedItems).sort((a, b) => {
+    if (a === 'Other') return 1;
+    if (b === 'Other') return -1;
+    return a.localeCompare(b);
+  });
 
   return (
     <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
@@ -24,7 +40,14 @@ export function InventorySection({ section, title }: InventorySectionProps) {
             <span className="font-medium text-[15px]">No items stocked</span>
           </div>
         ) : (
-          items.map(item => <FoodItem key={item.id} item={item} section={section} />)
+          sortedSubcategories.map(subcategory => (
+            <SubcategoryGroup
+              key={subcategory}
+              subcategory={subcategory}
+              items={groupedItems[subcategory]}
+              section={section}
+            />
+          ))
         )}
       </div>
 
