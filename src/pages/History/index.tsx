@@ -51,16 +51,20 @@ export function History() {
         <div className="flex items-center justify-between px-4 py-3 bg-white rounded-[12px] mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
           <button
             onClick={() => navigateMonth(-1)}
-            className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-sm text-lg font-semibold text-gray-600 hover:bg-gray-200 transition-all active:scale-95"
+            className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200 transition-all active:scale-95"
           >
-            &larr;
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
           <span className="text-lg font-semibold text-gray-800">{monthLabel}</span>
           <button
             onClick={() => navigateMonth(1)}
-            className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-sm text-lg font-semibold text-gray-600 hover:bg-gray-200 transition-all active:scale-95"
+            className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200 transition-all active:scale-95"
           >
-            &rarr;
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
           </button>
         </div>
 

@@ -44,21 +44,31 @@ export function CalendarGrid({ viewMonth, selectedDate, onSelectDate }: Calendar
     const isToday = isCurrentMonth && today.getDate() === day;
     const isSelected = selectedDate === dateStr;
 
-    let classes = 'aspect-square flex flex-col items-center justify-center rounded-sm cursor-pointer transition-all relative bg-gray-100 hover:bg-gray-200';
+    let bgClass = 'bg-gray-50 hover:bg-gray-100';
+    let textClass = 'text-gray-700';
 
-    if (isToday) classes += ' border-2 border-primary';
-    if (hasPurchases) classes += ' !bg-success';
-    if (isSelected) classes += ' !bg-primary';
+    if (isToday && !isSelected) {
+      bgClass = 'bg-primary/20 hover:bg-primary/30';
+      textClass = 'text-primary font-bold';
+    }
+    if (isSelected) {
+      bgClass = 'bg-primary hover:bg-primary-dark';
+      textClass = 'text-white font-semibold';
+    }
 
     cells.push(
-      <div key={day} className={classes} onClick={() => onSelectDate(dateStr)}>
-        <span
-          className={`text-sm font-medium ${
-            isSelected ? 'text-white' : hasPurchases ? 'text-white' : isToday ? 'text-primary font-bold' : 'text-gray-800'
-          }`}
-        >
-          {day}
-        </span>
+      <div
+        key={day}
+        className={`aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition-all ${bgClass}`}
+        onClick={() => onSelectDate(dateStr)}
+      >
+        <span className={`text-sm ${textClass}`}>{day}</span>
+        {hasPurchases && !isSelected && (
+          <span className="w-1.5 h-1.5 rounded-full bg-success mt-0.5" />
+        )}
+        {hasPurchases && isSelected && (
+          <span className="w-1.5 h-1.5 rounded-full bg-white mt-0.5" />
+        )}
       </div>
     );
   }
