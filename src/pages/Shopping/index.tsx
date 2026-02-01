@@ -1,4 +1,4 @@
-import { useAppState } from '../../hooks/useAppState';
+import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import type { Section, ShoppingListItem, PurchaseItem } from '../../types';
 import { ShoppingItem } from './ShoppingItem';
 import { Button } from '../../components/ui/Button';
@@ -16,12 +16,13 @@ export function Shopping() {
 
     const now = new Date();
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const mergedKnownItems = getMergedKnownItems(state);
 
     for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
       // Check inventory items
       for (const item of state.inventory[section]) {
         if (item.quantity === 0) {
-          const knownItem = state.knownItems[section].find(k => k.name === item.name);
+          const knownItem = mergedKnownItems[section].find(k => k.name === item.name);
           needRestock.push({
             name: item.name,
             section,
@@ -30,7 +31,7 @@ export function Shopping() {
             lastBought: knownItem?.lastBought || null,
           });
         } else if (item.quantity <= 2) {
-          const knownItem = state.knownItems[section].find(k => k.name === item.name);
+          const knownItem = mergedKnownItems[section].find(k => k.name === item.name);
           runningLow.push({
             name: item.name,
             section,
@@ -43,7 +44,7 @@ export function Shopping() {
 
       // Check known items not in inventory
       const inventoryNames = state.inventory[section].map(i => i.name);
-      for (const knownItem of state.knownItems[section]) {
+      for (const knownItem of mergedKnownItems[section]) {
         if (!inventoryNames.includes(knownItem.name)) {
           if (knownItem.lastBought) {
             needRestock.push({
@@ -71,7 +72,7 @@ export function Shopping() {
     const lowNames = new Set(runningLow.map(i => i.name));
 
     for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
-      for (const knownItem of state.knownItems[section]) {
+      for (const knownItem of mergedKnownItems[section]) {
         if (restockNames.has(knownItem.name) || lowNames.has(knownItem.name)) continue;
 
         const lastBought = knownItem.lastBought ? new Date(knownItem.lastBought) : null;

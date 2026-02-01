@@ -3,7 +3,7 @@ import { reducer } from './useAppState';
 import type { AppState } from '../types';
 
 const createEmptyState = (): AppState => ({
-  knownItems: {
+  customKnownItems: {
     fresh: [],
     frozen: [],
     dry: [],

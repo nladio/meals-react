@@ -5,6 +5,7 @@ export interface KnownItem {
   lastBought: string | null;
   typicalQty: number;
   subcategory?: string;
+  isDefault?: boolean; // Runtime flag: true for default items, false for custom
 }
 
 export interface InventoryItem {
@@ -28,7 +29,7 @@ export interface PurchaseHistoryEntry {
 }
 
 export interface AppState {
-  knownItems: Record<Section, KnownItem[]>;
+  customKnownItems: Record<Section, KnownItem[]>; // User-added items only
   inventory: Record<Section, InventoryItem[]>;
   shoppingChecked: Record<string, boolean | number>;
   purchaseHistory: PurchaseHistoryEntry[];

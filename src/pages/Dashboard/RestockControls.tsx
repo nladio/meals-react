@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Section } from '../../types';
-import { useAppState } from '../../hooks/useAppState';
+import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { QuantityControl } from '../../components/ui/QuantityControl';
 import { Button } from '../../components/ui/Button';
 
@@ -17,8 +17,9 @@ export function RestockControls({ section }: RestockControlsProps) {
   const [expiryDate, setExpiryDate] = useState('');
 
   // Get items not currently in inventory
+  const mergedKnownItems = getMergedKnownItems(state);
   const inventoryNames = state.inventory[section].map(i => i.name);
-  const availableItems = state.knownItems[section].filter(
+  const availableItems = mergedKnownItems[section].filter(
     item => !inventoryNames.includes(item.name)
   );
 

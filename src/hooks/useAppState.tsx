@@ -1,31 +1,14 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem } from '../types';
 import { generateId } from '../utils/helpers';
+import { defaultKnownItems, getDefaultItemNames } from '../data/defaultKnownItems';
 
-// Default state
+// Default state - customKnownItems is empty, defaults come from data file
 const DEFAULT_STATE: AppState = {
-  knownItems: {
-    fresh: [
-      { name: 'Paneer Curry', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Dal Makhani', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Palak Paneer', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Chole', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Aloo Gobi', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Chapatis', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
-    ],
-    frozen: [
-      { name: 'Biryani', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'TJs Palak Paneer', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Frozen Samosas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
-      { name: 'Frozen Parathas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
-    ],
-    dry: [
-      { name: 'Instant Noodles', lastBought: null, typicalQty: 3, subcategory: 'Ready to eat' },
-      { name: 'Canned Soup', lastBought: null, typicalQty: 2, subcategory: 'Ready to eat' },
-      { name: 'Rice', lastBought: null, typicalQty: 1, subcategory: 'Ingredients' },
-      { name: 'Tortillas', lastBought: null, typicalQty: 1, subcategory: 'Ready to eat' },
-      { name: 'Beans', lastBought: null, typicalQty: 2, subcategory: 'Ingredients' },
-    ],
+  customKnownItems: {
+    fresh: [],
+    frozen: [],
+    dry: [],
   },
   inventory: {
     fresh: [],
@@ -37,12 +20,49 @@ const DEFAULT_STATE: AppState = {
   historyViewMonth: null,
 };
 
+// Selector: Merge default items with custom items for display
+export function getMergedKnownItems(state: AppState): Record<Section, KnownItem[]> {
+  const merged: Record<Section, KnownItem[]> = {
+    fresh: [],
+    frozen: [],
+    dry: [],
+  };
+
+  for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
+    // Add default items with isDefault: true
+    // If user has purchase data for a default item in customKnownItems, merge it
+    for (const defaultItem of defaultKnownItems[section]) {
+      const customData = state.customKnownItems[section].find(c => c.name === defaultItem.name);
+      merged[section].push({
+        name: defaultItem.name,
+        typicalQty: customData?.typicalQty ?? defaultItem.typicalQty,
+        subcategory: defaultItem.subcategory,
+        lastBought: customData?.lastBought ?? null,
+        isDefault: true,
+      });
+    }
+
+    // Add custom items (not in defaults) with isDefault: false
+    const defaultNames = getDefaultItemNames(section);
+    for (const customItem of state.customKnownItems[section]) {
+      if (!defaultNames.has(customItem.name)) {
+        merged[section].push({
+          ...customItem,
+          isDefault: false,
+        });
+      }
+    }
+  }
+
+  return merged;
+}
+
 // Actions
 type Action =
   | { type: 'INCREMENT_ITEM'; section: Section; id: string }
   | { type: 'DECREMENT_ITEM'; section: Section; id: string }
   | { type: 'ADD_TO_INVENTORY'; section: Section; name: string; qty: number; expiryDate?: string }
-  | { type: 'ADD_KNOWN_ITEM'; section: Section; name: string }
+  | { type: 'ADD_KNOWN_ITEM'; section: Section; name: string; subcategory?: string }
   | { type: 'SET_SHOPPING_CHECKED'; key: string; value: boolean | number }
   | { type: 'CLEAR_SHOPPING_CHECKED' }
   | { type: 'RECORD_PURCHASE'; date: string; items: PurchaseItem[] }
@@ -105,21 +125,24 @@ export function reducer(state: AppState, action: Action): AppState {
         expiryDate: action.expiryDate,
       };
 
-      // Also add to known items if not already there
-      const knownExists = state.knownItems[action.section].find(k => k.name === action.name);
-      const newKnownItems = knownExists
-        ? state.knownItems
+      // Also add to custom known items if not already there and not a default item
+      const defaultNames = getDefaultItemNames(action.section);
+      const isDefault = defaultNames.has(action.name);
+      const customExists = state.customKnownItems[action.section].find(k => k.name === action.name);
+
+      const newCustomKnownItems = (isDefault || customExists)
+        ? state.customKnownItems
         : {
-            ...state.knownItems,
+            ...state.customKnownItems,
             [action.section]: [
-              ...state.knownItems[action.section],
+              ...state.customKnownItems[action.section],
               { name: action.name, lastBought: null, typicalQty: action.qty },
             ],
           };
 
       return {
         ...state,
-        knownItems: newKnownItems,
+        customKnownItems: newCustomKnownItems,
         inventory: {
           ...state.inventory,
           [action.section]: [...state.inventory[action.section], newItem],
@@ -128,16 +151,21 @@ export function reducer(state: AppState, action: Action): AppState {
     }
 
     case 'ADD_KNOWN_ITEM': {
-      const exists = state.knownItems[action.section].find(k => k.name === action.name);
-      if (exists) return state;
+      // Check if already exists in defaults
+      const defaultNames = getDefaultItemNames(action.section);
+      if (defaultNames.has(action.name)) return state;
+
+      // Check if already exists in custom items
+      const customExists = state.customKnownItems[action.section].find(k => k.name === action.name);
+      if (customExists) return state;
 
       return {
         ...state,
-        knownItems: {
-          ...state.knownItems,
+        customKnownItems: {
+          ...state.customKnownItems,
           [action.section]: [
-            ...state.knownItems[action.section],
-            { name: action.name, lastBought: null, typicalQty: 1 },
+            ...state.customKnownItems[action.section],
+            { name: action.name, lastBought: null, typicalQty: 1, subcategory: action.subcategory },
           ],
         },
       };
@@ -194,11 +222,32 @@ export function reducer(state: AppState, action: Action): AppState {
     }
 
     case 'UPDATE_KNOWN_ITEM_PURCHASE': {
+      const defaultNames = getDefaultItemNames(action.section);
+      const isDefault = defaultNames.has(action.name);
+      const customExists = state.customKnownItems[action.section].find(k => k.name === action.name);
+
+      // If it's a default item or custom item that doesn't exist yet, add/update in customKnownItems
+      // to store user's purchase data (lastBought, typicalQty)
+      if (isDefault && !customExists) {
+        // Add entry to track purchase data for default item
+        return {
+          ...state,
+          customKnownItems: {
+            ...state.customKnownItems,
+            [action.section]: [
+              ...state.customKnownItems[action.section],
+              { name: action.name, lastBought: new Date().toISOString(), typicalQty: action.qty },
+            ],
+          },
+        };
+      }
+
+      // Update existing entry in customKnownItems
       return {
         ...state,
-        knownItems: {
-          ...state.knownItems,
-          [action.section]: state.knownItems[action.section].map(item =>
+        customKnownItems: {
+          ...state.customKnownItems,
+          [action.section]: state.customKnownItems[action.section].map(item =>
             item.name === action.name
               ? { ...item, lastBought: new Date().toISOString(), typicalQty: action.qty }
               : item
@@ -230,8 +279,8 @@ function migrateSubcategory(oldSubcategory: string | undefined, itemName: string
     return oldSubcategory;
   }
 
-  // Check if item exists in DEFAULT_STATE and use its subcategory
-  const defaultItem = DEFAULT_STATE.knownItems[section].find(d => d.name === itemName);
+  // Check if item exists in defaultKnownItems and use its subcategory
+  const defaultItem = defaultKnownItems[section].find(d => d.name === itemName);
   if (defaultItem?.subcategory) {
     return defaultItem.subcategory;
   }
@@ -261,29 +310,54 @@ function loadState(): AppState {
     if (saved) {
       const parsed = JSON.parse(saved);
 
-      // Migrate old string-based knownItems to object format
-      const migratedKnownItems: Record<Section, KnownItem[]> = {
-        fresh: [],
-        frozen: [],
-        dry: [],
-      };
+      // Check if we need to migrate from old knownItems to new customKnownItems format
+      const hasOldFormat = parsed.knownItems && !parsed.customKnownItems;
 
-      for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
-        const items = parsed.knownItems?.[section] || DEFAULT_STATE.knownItems[section];
-        migratedKnownItems[section] = items.map((item: KnownItem | string) => {
-          if (typeof item === 'string') {
-            const defaultItem = DEFAULT_STATE.knownItems[section].find(d => d.name === item);
-            const subcategory = migrateSubcategory(defaultItem?.subcategory, item, section);
-            return { name: item, lastBought: null, typicalQty: defaultItem?.typicalQty || 1, subcategory };
+      if (hasOldFormat) {
+        // Migrate from old knownItems format to new customKnownItems format
+        const migratedCustomKnownItems: Record<Section, KnownItem[]> = {
+          fresh: [],
+          frozen: [],
+          dry: [],
+        };
+
+        for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
+          const items = parsed.knownItems?.[section] || [];
+          const defaultNames = getDefaultItemNames(section);
+
+          for (const item of items) {
+            const itemObj: KnownItem = typeof item === 'string'
+              ? { name: item, lastBought: null, typicalQty: 1 }
+              : item;
+
+            // Migrate subcategory
+            const subcategory = migrateSubcategory(itemObj.subcategory, itemObj.name, section);
+
+            // Only add to customKnownItems if it's a custom item OR has user data (lastBought)
+            const isDefault = defaultNames.has(itemObj.name);
+            if (!isDefault || itemObj.lastBought) {
+              migratedCustomKnownItems[section].push({
+                name: itemObj.name,
+                lastBought: itemObj.lastBought,
+                typicalQty: itemObj.typicalQty || 1,
+                subcategory: isDefault ? undefined : subcategory,
+              });
+            }
           }
-          // Migrate subcategory to new format
-          const subcategory = migrateSubcategory(item.subcategory, item.name, section);
-          return { ...item, subcategory };
-        });
+        }
+
+        return {
+          customKnownItems: migratedCustomKnownItems,
+          inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
+          shoppingChecked: parsed.shoppingChecked || {},
+          purchaseHistory: parsed.purchaseHistory || [],
+          historyViewMonth: parsed.historyViewMonth || null,
+        };
       }
 
+      // Already in new format
       return {
-        knownItems: migratedKnownItems,
+        customKnownItems: parsed.customKnownItems || DEFAULT_STATE.customKnownItems,
         inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],

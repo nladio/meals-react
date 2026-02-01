@@ -7,14 +7,19 @@ const mockDispatch = vi.fn();
 vi.mock('../../hooks/useAppState', () => ({
   useAppState: () => ({
     state: {
-      knownItems: {
-        fresh: [{ name: 'Test Item', lastBought: null, typicalQty: 1 }],
+      customKnownItems: {
+        fresh: [],
         frozen: [],
         dry: [],
       },
       inventory: { fresh: [], frozen: [], dry: [] },
     },
     dispatch: mockDispatch,
+  }),
+  getMergedKnownItems: () => ({
+    fresh: [{ name: 'Test Item', lastBought: null, typicalQty: 1, isDefault: true }],
+    frozen: [],
+    dry: [],
   }),
 }));
 
@@ -52,7 +57,7 @@ describe('RestockControls', () => {
       (call) => call[0].type === 'ADD_TO_INVENTORY'
     );
     expect(addToInventoryCall).toBeDefined();
-    expect(addToInventoryCall[0].expiryDate).toBe('2025-02-15');
+    expect(addToInventoryCall![0].expiryDate).toBe('2025-02-15');
   });
 
   it('sends undefined expiryDate when date input is empty', () => {
@@ -73,6 +78,6 @@ describe('RestockControls', () => {
       (call) => call[0].type === 'ADD_TO_INVENTORY'
     );
     expect(addToInventoryCall).toBeDefined();
-    expect(addToInventoryCall[0].expiryDate).toBeUndefined();
+    expect(addToInventoryCall![0].expiryDate).toBeUndefined();
   });
 });

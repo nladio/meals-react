@@ -1,5 +1,5 @@
 import type { Section, InventoryItem } from '../../types';
-import { useAppState } from '../../hooks/useAppState';
+import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { SubcategoryGroup } from './SubcategoryGroup';
 import { RestockControls } from './RestockControls';
 
@@ -11,7 +11,7 @@ interface InventorySectionProps {
 export function InventorySection({ section, title }: InventorySectionProps) {
   const { state } = useAppState();
   const items = state.inventory[section];
-  const knownItems = state.knownItems[section];
+  const knownItems = getMergedKnownItems(state)[section];
 
   // Group items by subcategory
   const groupedItems = items.reduce((groups, item) => {
