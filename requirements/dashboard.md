@@ -49,17 +49,20 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - The app shall ship with a predefined list of known items for each section (Fresh, Frozen, Dry)
 - Known items shall populate the dropdown when adding items to inventory
 
-### FR-DASH-007: Subcategory Types `[unimplemented]`
+### FR-DASH-007: Usage Classification
 
-- Two universal subcategories apply to all sections (Fresh, Frozen, Dry):
-  - **Ready-to-eat**: Complete meals/snacks consumable directly
-  - **Ingredients**: Items used in cooking/recipes
-- Each inventory item belongs to exactly one subcategory
+- Items are classified by usage type via a `usages` array:
+  - **meal**: Complete meals/snacks consumable directly
+  - **ingredient**: Items used in cooking/recipes
+- Items may have multiple usages (e.g., bread can be both a meal and an ingredient)
+- Usage classification determines how items are grouped in the Add Item modal
 
-### FR-DASH-008: Default Item Classification `[unimplemented]`
+### FR-DASH-008: Default Item Classification
 
-- Known items in DEFAULT_STATE have assigned subcategories
-- Existing items without subcategory inferred from name patterns
+- All default known items in `defaultKnownItems.ts` have assigned usages
+- Default items also have optional category classifications:
+  - **Ingredient categories**: produce, dairy, protein, condiments, grains, legumes
+  - **Meal categories**: curries, soups, noodles, snacks, ready-meals
 
 ### FR-DASH-009: View Inventory by Subcategory `[unimplemented]`
 
@@ -67,10 +70,14 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - Subcategories shown as nested collapsible subsections
 - Each subsection shows item count/total servings
 
-### FR-DASH-010: Add Items with Subcategory `[unimplemented]`
+### FR-DASH-010: Add Items Grouped by Usage
 
-- When adding a new item, user selects subcategory
-- Known items retain their subcategory when restocked
+- The Add Item modal groups available items by usage:
+  - **Ready to eat**: Items with only `meal` usage
+  - **Ingredients**: Items with only `ingredient` usage
+  - **Both**: Items with both `meal` and `ingredient` usages
+- Within each group, items are further organized by their category (ingredient or meal category)
+- Known items retain their usage classification when added to inventory
 
 ### FR-DASH-011: Auto-Remove Items at Zero Quantity
 
@@ -96,10 +103,13 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - The data file shall export default items organized by section (Fresh, Frozen, Dry)
 - Each default item shall include:
   - Item name
-  - Typical quantity
-  - Subcategory (Ready to eat or Ingredients)
+  - Typical quantity (auto-populated when selecting item)
+  - Usages array (`meal`, `ingredient`, or both)
+  - Optional ingredient category (for ingredient items)
+  - Optional meal category (for meal items)
+  - Optional default expiry days (see FR-DASH-018)
 - Developers can modify the default items by editing the data file
-- Default items shall always appear in the dropdown (users cannot remove them)
+- Default items shall always appear in the modal (users cannot remove them)
 
 ### FR-DASH-015: User-Added Custom Items `[removed]`
 
@@ -111,22 +121,42 @@ The Dashboard provides the primary interface for viewing and managing food inven
 
 *Removed to simplify UX. Users can only add items from the predefined known items list.*
 
-### FR-DASH-016: Add Item via Categorized Modal `[unimplemented]`
+### FR-DASH-016: Add Item via Categorized Modal
 
 - The system shall provide a single "+ Add Item" button per section (replacing inline dropdown)
 - Tapping the button shall open a modal displaying available items organized by usage category:
-  - **Ready to eat**: Items used as complete meals
-  - **Ingredients**: Items used for cooking
-  - **Both**: Dual-use items (displayed in both categories or a separate section)
-- Users shall tap an item to select it
+  - **Ready to eat**: Items with `meal` usage, grouped by meal category
+  - **Ingredients**: Items with `ingredient` usage, grouped by ingredient category
+  - **Both**: Dual-use items with both usages
+- Items already in inventory shall not appear in the modal
+- Users shall tap an item chip to select it
+- Selecting an item shall auto-populate:
+  - Quantity (from item's `typicalQty`)
+  - Expiry date (from item's `defaultExpiryDays`, if present)
 - After selection, the modal shall display quantity and optional expiry date controls
 - Confirming adds the item to inventory and closes the modal
 
-### FR-DASH-017: Simplified Section Add Controls `[unimplemented]`
+### FR-DASH-017: Simplified Section Add Controls
 
 - Each section shall display only a single "+ Add Item" button (no inline form fields)
 - The dropdown, quantity stepper, date picker, and "+ New" button shall be removed from the section view
 - All add functionality shall be accessed through the categorized modal (FR-DASH-016)
+
+### FR-DASH-018: Default Expiry Days for Known Items
+
+- Each known item may have an optional `defaultExpiryDays` field specifying typical shelf life in days
+- When a user selects an item in the Add Item modal, the system shall auto-populate the expiry date field:
+  - Expiry date = today's date + `defaultExpiryDays`
+- If the item has no `defaultExpiryDays`, the expiry date field shall be cleared
+- Users may still manually adjust the expiry date before adding the item
+- Suggested default expiry values by item type:
+  - Fresh produce: 5-14 days
+  - Fresh dairy: 14 days
+  - Eggs: 21 days
+  - Fresh bread/roti: 5 days
+  - Fresh protein (chicken): 3 days
+  - Frozen items: 90 days
+  - Dry goods: omit (very long shelf life)
 
 ## User Interface Requirements
 
@@ -149,21 +179,26 @@ The Dashboard provides the primary interface for viewing and managing food inven
 - The dashboard shall be usable on both desktop and mobile devices
 - Touch-friendly controls for quantity adjustment on mobile
 
-### UI-DASH-004: Add Item Modal `[unimplemented]`
+### UI-DASH-004: Add Item Modal
 
 - The modal shall display a header with the section name (e.g., "Add to Fresh Food")
 - The modal shall include a close button (X) in the header
-- Items shall be grouped under category headers ("Ready to eat", "Ingredients", "Both")
-- Each item shall be displayed as a tappable row/button
-- Selected item shall be visually highlighted
+- Items shall be grouped under usage category headers ("Ready to eat", "Ingredients", "Both")
+- Within each usage category, items shall be further grouped by subcategory:
+  - Ready to eat: curries, soups, noodles, snacks, ready-meals
+  - Ingredients: produce, dairy & eggs, protein, dips & sauces, grains, legumes
+- Each item shall be displayed as a tappable chip/pill button
+- Selected item shall be visually highlighted (primary color background)
 - Quantity control and expiry date input shall appear after item selection
-- "Add Item" confirmation button shall be prominently displayed
+- "Add [Item Name]" confirmation button shall be prominently displayed
 - Modal shall close upon successful add or when close button is tapped
+- Modal can be dismissed by pressing Escape or clicking outside
 
 ## Out of Scope (MVP)
 
-- User-defined custom subcategories
-- Changing subcategory of existing items
-- Subcategory-based filtering on Shopping page
-- More than 2 subcategory types
+- User-defined custom categories
+- Changing usage/category of existing items
+- Usage-based filtering on Shopping page
+- Dashboard grouping by usage (FR-DASH-009)
 - User-added custom items (removed in favor of predefined known items only)
+- Editing expiry date after item is added to inventory
