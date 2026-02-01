@@ -3,12 +3,31 @@
 @theme {
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
+  /* Brand colors */
   --color-primary: #e07b39;
   --color-primary-dark: #c46a2e;
-  --color-secondary: #4a90a4;
-  --color-success: #4caf50;
-  --color-warning: #ff9800;
-  --color-danger: #f44336;
+  --color-secondary: #334155;
+
+  /* Status colors */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Category accent colors */
+  --color-fresh: #10b981;
+  --color-frozen: #06b6d4;
+  --color-dry: #f59e0b;
+  --color-protein: #22c55e;
+  --color-fiber: #14b8a6;
+
+  /* Gray scale */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-400: #9ca3af;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
 
   --radius-DEFAULT: 12px;
   --radius-sm: 8px;
@@ -16,8 +35,8 @@
 
 body {
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #f5f5f5;
-  color: #333333;
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-700);
   line-height: 1.5;
   min-height: 100vh;
 }
