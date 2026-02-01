@@ -73,7 +73,7 @@ const PROTEIN_CONFIG: NutritionSectionConfig = {
   badge: 'P',
   title: 'High Protein',
   emptyMessage: 'No high-protein items in stock',
-  emptyIcon: '🥩',
+  emptyIcon: '🥚',
   badgeBg: 'bg-green-100',
   badgeText: 'text-green-600',
   borderColor: 'border-l-green-500',
