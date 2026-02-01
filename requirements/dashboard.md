@@ -34,11 +34,11 @@ The Dashboard (titled "What to Eat") helps users decide what to eat by showing m
   - **Orange**: Warning level (≤6 servings)
   - **Green**: Healthy level (>6 servings)
 
-### FR-DASH-003: Increment/Decrement Item Quantity
+### FR-DASH-003: Read-Only Meal Display
 
-- The user shall be able to increase or decrease the quantity of any meal item
-- Quantity changes shall be reflected immediately in the UI
-- Changes sync with the Inventory page
+- The Dashboard displays meal items in read-only mode
+- Quantity is shown as a simple indicator (e.g., "×2") without controls
+- To modify quantities, users navigate to the Inventory page
 
 ### FR-DASH-004: Quick Recipes Section
 
@@ -87,15 +87,14 @@ The Dashboard (titled "What to Eat") helps users decide what to eat by showing m
 - Each section shows total quantity badge
 - Empty sections are hidden
 
-### UI-DASH-003: Item Display
+### UI-DASH-003: Meal Card Display
 
-- Each item shows:
-  - Decrement button (-)
+- Each meal item shows a simplified card with:
   - Item name with optional nutrition badges
-  - Added date (relative format)
-  - Expiry date (if present) with status color
-  - Quantity badge with status color
-  - Increment button (+)
+  - Prep time badge (e.g., "3 min")
+  - Read-only quantity indicator (e.g., "×2")
+- No increment/decrement buttons on Dashboard
+- Full inventory controls (+/-) remain on Inventory page only
 
 ### UI-DASH-004: Quick Recipes Section
 
