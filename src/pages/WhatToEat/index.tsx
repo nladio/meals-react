@@ -53,7 +53,7 @@ export function WhatToEat() {
         {/* High Protein Section */}
         <section className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
           <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide flex items-center gap-2">
-            <span className="text-[12px] px-2 py-0.5 bg-green-100 text-green-600 rounded-full font-medium">P</span>
+            <span className="text-[10px] px-2 py-0.5 bg-green-100 text-green-600 rounded-full font-medium">P</span>
             High Protein
           </h2>
           {highProteinItems.length === 0 ? (
@@ -84,7 +84,7 @@ export function WhatToEat() {
         {/* High Fiber Section */}
         <section className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
           <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide flex items-center gap-2">
-            <span className="text-[12px] px-2 py-0.5 bg-teal-100 text-teal-600 rounded-full font-medium">F</span>
+            <span className="text-[10px] px-2 py-0.5 bg-teal-100 text-teal-600 rounded-full font-medium">F</span>
             High Fiber
           </h2>
           {highFiberItems.length === 0 ? (

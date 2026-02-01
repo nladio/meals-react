@@ -28,15 +28,18 @@ export function RecipeCard({ match }: RecipeCardProps) {
         {availableIngredients.map(name => (
           <span
             key={name}
-            className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700"
+            className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-green-50 text-green-600"
           >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
             {name}
           </span>
         ))}
         {missingRequired.map(name => (
           <span
             key={name}
-            className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700"
+            className="text-xs px-2 py-1 rounded-full bg-red-50 text-red-400"
           >
             {name}
           </span>
@@ -44,7 +47,7 @@ export function RecipeCard({ match }: RecipeCardProps) {
         {missingOptional.map(name => (
           <span
             key={name}
-            className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500"
+            className="text-xs px-2 py-1 rounded-full bg-gray-50 text-gray-400"
           >
             {name}
           </span>
