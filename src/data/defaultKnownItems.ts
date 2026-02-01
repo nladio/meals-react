@@ -13,6 +13,7 @@ export interface DefaultKnownItem {
   nutritionTags?: NutritionTag[];
   priority?: Priority; // default: 'medium'
   stores?: Store[]; // default: ['grocery']
+  prepTimeMinutes?: number; // Minutes to prepare (for meal items)
 }
 
 export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {

@@ -23,6 +23,7 @@ export interface KnownItem {
   nutritionTags?: NutritionTag[];
   priority?: Priority; // default: 'medium'
   stores?: Store[]; // default: ['grocery']
+  prepTimeMinutes?: number; // Minutes to prepare (for meal items)
 }
 
 export interface InventoryItem {

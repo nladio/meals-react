@@ -2,19 +2,29 @@
 
 ## Overview
 
-The Dashboard (titled "What to Eat") helps users decide what to eat by showing ready-to-eat meals, recipe suggestions based on available ingredients, and food ordering options. For full inventory management, see [Inventory](./inventory.md).
+The Dashboard (titled "What to Eat") helps users decide what to eat by showing meals organized by **time-to-eat priority** based on prep time. This helps users quickly find options that match their available time. For full inventory management, see [Inventory](./inventory.md).
 
 ## Functional Requirements
 
-### FR-DASH-001: View Ready-to-Eat Items by Section
+### FR-DASH-001: View Meal Items by Prep Time Category
 
-- The system shall display only items with `meal` usage, grouped into sections:
-  - **Fresh**: Refrigerated meal items
-  - **Frozen**: Frozen meal items
-  - **Dry**: Pantry meal items
-- Sections with no meal items shall be hidden
+- The system shall display only items with `meal` usage, grouped by prep time:
+  - **Quick Reheat** (0-5 min): Items that just need reheating
+  - **Instant Prep** (6-15 min): Items requiring some preparation (add water, stir, cook)
+  - **Cook** (16+ min): Recipes requiring actual cooking
+  - **Order** (~1 hour): Restaurant delivery options
+- Sections with no items shall be hidden
 - Items with only `ingredient` usage shall NOT appear on the Dashboard
 - Each section is collapsible with total quantity badge
+
+### FR-DASH-001a: Prep Time Data Model
+
+- Each `KnownItem` may have a `prepTimeMinutes: number` field
+- Categorization thresholds:
+  - `prepTimeMinutes <= 5` → Quick Reheat
+  - `prepTimeMinutes 6-15` → Instant Prep
+  - `prepTimeMinutes >= 16` → Cook
+- Items without `prepTimeMinutes` default to Quick Reheat category
 
 ### FR-DASH-002: Display Total Servings with Status
 
@@ -67,11 +77,14 @@ The Dashboard (titled "What to Eat") helps users decide what to eat by showing r
 - Quick Recipes section (when applicable)
 - Food Ordering section
 
-### UI-DASH-002: Ready to Eat Section
+### UI-DASH-002: Prep Time Sections
 
-- Section header: "Ready to Eat"
-- Items grouped by storage type (Fresh, Frozen, Dry) as collapsible subsections
-- Each subsection shows quantity badge
+- Sections ordered by time priority:
+  1. **Quick Reheat** - Header shows "(0-5 min)" subtitle
+  2. **Instant Prep** - Header shows "(6-15 min)" subtitle
+  3. **Cook** - Header shows "(16+ min)" subtitle
+  4. **Order** - Header shows "(~1 hour)" subtitle
+- Each section shows total quantity badge
 - Empty sections are hidden
 
 ### UI-DASH-003: Item Display
