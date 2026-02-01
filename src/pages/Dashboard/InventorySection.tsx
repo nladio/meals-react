@@ -1,8 +1,7 @@
 import type { Section, InventoryItem, KnownItem, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { EmptyState } from '../../components/EmptyState';
-import { SubcategoryGroup } from './SubcategoryGroup';
-import { RestockControls } from './RestockControls';
+import { SubcategoryGroup, RestockControls } from '../../components/inventory';
 
 interface InventorySectionProps {
   section: Section;
