@@ -3,8 +3,8 @@ import { getPrepCategory, categorizeByPrepTime } from './prepTimeCategories';
 import type { AppState } from '../types';
 
 describe('getPrepCategory', () => {
-  it('returns quick-reheat for undefined', () => {
-    expect(getPrepCategory(undefined)).toBe('quick-reheat');
+  it('returns instant-prep for undefined (unknown items need some prep)', () => {
+    expect(getPrepCategory(undefined)).toBe('instant-prep');
   });
 
   it('returns quick-reheat for 0-5 minutes', () => {

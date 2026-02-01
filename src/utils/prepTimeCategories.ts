@@ -17,7 +17,9 @@ export interface PrepTimeCategorized {
 }
 
 export function getPrepCategory(minutes: number | undefined): PrepCategory {
-  if (minutes === undefined || minutes <= 5) return 'quick-reheat';
+  // Unknown items go to Instant Prep - only explicitly quick items belong in Quick Reheat
+  if (minutes === undefined) return 'instant-prep';
+  if (minutes <= 5) return 'quick-reheat';
   if (minutes <= 15) return 'instant-prep';
   return 'cook';
 }
