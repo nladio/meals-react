@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Shopping } from './pages/Shopping';
 import { History } from './pages/History';
+import { Recipes } from './pages/Recipes';
 
 function App() {
   const [page, setPage] = useState(() => window.location.hash.slice(1) || 'dashboard');
@@ -23,6 +24,8 @@ function App() {
         return <Shopping />;
       case 'history':
         return <History />;
+      case 'recipes':
+        return <Recipes />;
       default:
         return <Dashboard />;
     }

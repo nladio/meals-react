@@ -41,3 +41,24 @@ export interface ShoppingListItem {
   suggestedQty: number;
   lastBought: string | null;
 }
+
+export interface RecipeIngredient {
+  name: string;      // Matches inventory item names
+  required: boolean; // true = must have, false = optional
+}
+
+export interface Recipe {
+  id: string;
+  name: string;
+  ingredients: RecipeIngredient[];
+}
+
+export type MatchStatus = 'full' | 'partial' | 'none';
+
+export interface RecipeMatch {
+  recipe: Recipe;
+  status: MatchStatus;
+  availableIngredients: string[];
+  missingRequired: string[];
+  missingOptional: string[];
+}
