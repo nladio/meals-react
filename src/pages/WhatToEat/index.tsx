@@ -1,6 +1,7 @@
 import type { Section, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { PageHeader } from '../../components/PageHeader';
+import { EmptyState } from '../../components/EmptyState';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 interface NutritionItem {
@@ -56,9 +57,7 @@ export function WhatToEat() {
             High Protein
           </h2>
           {highProteinItems.length === 0 ? (
-            <div className="flex items-center justify-center p-5 bg-gray-50 rounded-sm border-l-[3px] border-l-gray-200 text-gray-400">
-              <span className="font-medium text-[15px]">No high-protein items in stock</span>
-            </div>
+            <EmptyState message="No high-protein items in stock" icon="🥩" />
           ) : (
             <div className="flex flex-col gap-2">
               {highProteinItems.map(item => (
@@ -89,9 +88,7 @@ export function WhatToEat() {
             High Fiber
           </h2>
           {highFiberItems.length === 0 ? (
-            <div className="flex items-center justify-center p-5 bg-gray-50 rounded-sm border-l-[3px] border-l-gray-200 text-gray-400">
-              <span className="font-medium text-[15px]">No high-fiber items in stock</span>
-            </div>
+            <EmptyState message="No high-fiber items in stock" icon="🥬" />
           ) : (
             <div className="flex flex-col gap-2">
               {highFiberItems.map(item => (

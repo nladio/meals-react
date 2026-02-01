@@ -1,5 +1,6 @@
 import type { Section, InventoryItem, KnownItem, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
+import { EmptyState } from '../../components/EmptyState';
 import { SubcategoryGroup } from './SubcategoryGroup';
 import { RestockControls } from './RestockControls';
 
@@ -59,9 +60,7 @@ export function InventorySection({ section, title }: InventorySectionProps) {
 
       <div className="flex flex-col gap-2">
         {items.length === 0 ? (
-          <div className="flex items-center justify-center p-5 bg-gray-50 rounded-sm border-l-[3px] border-l-gray-200 text-gray-400">
-            <span className="font-medium text-[15px]">No items stocked</span>
-          </div>
+          <EmptyState message="No items stocked" icon="📦" />
         ) : (
           groups.map(group => (
             <SubcategoryGroup

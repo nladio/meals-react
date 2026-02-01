@@ -1,6 +1,7 @@
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import type { AppState, KnownItem, Priority, Section, ShoppingListItem, Store } from '../../types';
 import { PageHeader } from '../../components/PageHeader';
+import { EmptyState } from '../../components/EmptyState';
 import { ShoppingItem } from './ShoppingItem';
 
 type Urgency = 'restock' | 'low' | 'variety';
@@ -179,9 +180,7 @@ export function Shopping() {
                   />
                 ))
               ) : (
-                <div className="flex items-center justify-center p-5 bg-gray-50 rounded-sm border-l-[3px] border-l-gray-200 text-gray-400">
-                  <span className="font-medium text-[15px]">Nothing needed from here</span>
-                </div>
+                <EmptyState message="Nothing needed from here" icon="✓" />
               )}
             </div>
           </section>
