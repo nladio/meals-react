@@ -16,17 +16,18 @@ For ANY feature work, follow this exact order:
    - Explore the code using the feature-dev:code-explorer skill
    - Design the optimal approach using the feature-dev:code-architect skill
 
-2. **For Each Feature Slice** (repeat until feature complete):
+3. **For Each Feature Slice** (repeat until feature complete):
    - Write source code for one slice
    - Write unit tests for that slice
+   - Run `npm run typecheck` to catch type errors (including in tests)
    - Simplify the new code using the code-simplifier:code-simplifier skill
-   - Validate the feature using the playright plugin 
+   - Validate the feature using the playright plugin
    - Make a small, focused commit using the commit-commands skill
 
 ## Slice Workflow
 
 ```
-Code → Tests → Simplify → Validate -> Commit
+Code → Tests → Typecheck → Simplify → Validate -> Commit
 ```
 
 Repeat for each logical slice of the feature.

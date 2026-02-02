@@ -25,13 +25,13 @@ describe('RecipeCard', () => {
     expect(screen.getByText('Test Recipe')).toBeInTheDocument();
   });
 
-  it('renders ingredient count', () => {
+  it('renders prep time', () => {
     render(<RecipeCard match={baseMatch} />);
-    expect(screen.getByText('2 ingredients')).toBeInTheDocument();
+    expect(screen.getByText('20 min')).toBeInTheDocument();
   });
 
-  it('renders nutrition badges when recipe has nutritionTags', () => {
-    const matchWithTags: RecipeMatch = {
+  it('applies violet background for recipes with both protein and fiber', () => {
+    const matchWithBothTags: RecipeMatch = {
       ...baseMatch,
       recipe: {
         ...baseMatch.recipe,
@@ -39,19 +39,17 @@ describe('RecipeCard', () => {
       },
     };
 
-    render(<RecipeCard match={matchWithTags} />);
-    expect(screen.getByTitle('High Protein')).toBeInTheDocument();
-    expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
+    const { container } = render(<RecipeCard match={matchWithBothTags} />);
+    expect(container.firstChild).toHaveClass('bg-violet-50');
   });
 
-  it('does not render nutrition badges when recipe has no nutritionTags', () => {
-    render(<RecipeCard match={baseMatch} />);
-    expect(screen.queryByTitle('High Fiber')).not.toBeInTheDocument();
-    expect(screen.queryByTitle('High Protein')).not.toBeInTheDocument();
+  it('applies white background when recipe has no nutritionTags', () => {
+    const { container } = render(<RecipeCard match={baseMatch} />);
+    expect(container.firstChild).toHaveClass('bg-white');
   });
 
-  it('renders single nutrition badge correctly', () => {
-    const matchWithSingleTag: RecipeMatch = {
+  it('applies green background for high-fiber recipe', () => {
+    const matchWithFiberTag: RecipeMatch = {
       ...baseMatch,
       recipe: {
         ...baseMatch.recipe,
@@ -59,9 +57,8 @@ describe('RecipeCard', () => {
       },
     };
 
-    render(<RecipeCard match={matchWithSingleTag} />);
-    expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
-    expect(screen.queryByTitle('High Protein')).not.toBeInTheDocument();
+    const { container } = render(<RecipeCard match={matchWithFiberTag} />);
+    expect(container.firstChild).toHaveClass('bg-green-100');
   });
 
   it('renders available ingredients with checkmark', () => {

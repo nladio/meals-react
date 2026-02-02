@@ -15,16 +15,16 @@ describe('NutritionBadge', () => {
     expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
   });
 
-  it('applies green styling for high-protein badge', () => {
+  it('applies blue styling for high-protein badge', () => {
     render(<NutritionBadge tag="high-protein" />);
     const badge = screen.getByText('P');
-    expect(badge).toHaveClass('bg-green-100', 'text-green-600');
+    expect(badge).toHaveClass('bg-blue-100', 'text-blue-600');
   });
 
-  it('applies teal styling for high-fiber badge', () => {
+  it('applies green styling for high-fiber badge', () => {
     render(<NutritionBadge tag="high-fiber" />);
     const badge = screen.getByText('F');
-    expect(badge).toHaveClass('bg-teal-100', 'text-teal-600');
+    expect(badge).toHaveClass('bg-green-100', 'text-green-600');
   });
 });
 

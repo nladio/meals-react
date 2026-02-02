@@ -1,15 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { NutritionGoalsSection } from './NutritionGoalsSection';
+import { NutritionGoalsSection, type NutritionGoalItem } from './NutritionGoalsSection';
 
 describe('NutritionGoalsSection', () => {
   const mockOnAddToList = vi.fn();
 
-  const sampleItems = [
-    { name: 'Toor Dal', section: 'dry' as const, nutritionTags: ['high-fiber', 'high-protein'] as const },
-    { name: 'Spinach', section: 'fresh' as const, nutritionTags: ['high-fiber'] as const },
-    { name: 'Chicken', section: 'fresh' as const, nutritionTags: ['high-protein'] as const },
+  const sampleItems: NutritionGoalItem[] = [
+    { name: 'Toor Dal', section: 'dry', nutritionTags: ['high-fiber', 'high-protein'] },
+    { name: 'Spinach', section: 'fresh', nutritionTags: ['high-fiber'] },
+    { name: 'Chicken', section: 'fresh', nutritionTags: ['high-protein'] },
   ];
 
   beforeEach(() => {
@@ -48,13 +48,14 @@ describe('NutritionGoalsSection', () => {
     expect(outOfStockLabels).toHaveLength(3);
   });
 
-  it('displays nutrition badges for items', () => {
-    render(
+  it('applies nutrition-based background colors to items', () => {
+    const { container } = render(
       <NutritionGoalsSection items={sampleItems} store="grocery" onAddToList={mockOnAddToList} />
     );
-    // Toor Dal has both badges, Spinach has fiber, Chicken has protein
-    expect(screen.getAllByTitle('High Fiber').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByTitle('High Protein').length).toBeGreaterThanOrEqual(1);
+    // Toor Dal (both) = violet, Spinach (fiber) = green, Chicken (protein) = blue
+    expect(container.querySelector('.bg-violet-50')).toBeInTheDocument();
+    expect(container.querySelector('.bg-green-100')).toBeInTheDocument();
+    expect(container.querySelector('.bg-blue-100')).toBeInTheDocument();
   });
 
   it('calls onAddToList when cart button is clicked', async () => {
