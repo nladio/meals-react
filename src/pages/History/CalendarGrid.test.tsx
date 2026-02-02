@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CalendarGrid } from './CalendarGrid';
 
-// Mock the useAppState hook
 vi.mock('../../hooks/useAppState', () => ({
   useAppState: vi.fn(),
 }));
@@ -12,20 +11,24 @@ import { useAppState } from '../../hooks/useAppState';
 
 const mockUseAppState = vi.mocked(useAppState);
 
+function createMockState(purchaseHistory: Array<{ id: string; date: string; items: unknown[] }> = []) {
+  return {
+    state: {
+      purchaseHistory,
+      customKnownItems: { fresh: [], frozen: [], dry: [] },
+      inventory: { fresh: [], frozen: [], dry: [] },
+      shoppingChecked: {},
+      historyViewMonth: null,
+      shoppingList: [],
+    },
+    dispatch: vi.fn(),
+  };
+}
+
 describe('CalendarGrid', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseAppState.mockReturnValue({
-      state: {
-        purchaseHistory: [],
-        customKnownItems: { fresh: [], frozen: [], dry: [] },
-        inventory: { fresh: [], frozen: [], dry: [] },
-        shoppingChecked: {},
-        historyViewMonth: null,
-        shoppingList: [],
-      },
-      dispatch: vi.fn(),
-    });
+    mockUseAppState.mockReturnValue(createMockState());
   });
 
   it('renders all day headers', () => {
@@ -76,20 +79,10 @@ describe('CalendarGrid', () => {
     expect(onSelectDate).toHaveBeenCalledWith('2024-01-15');
   });
 
-  it('applies success background class to days with purchases', () => {
-    mockUseAppState.mockReturnValue({
-      state: {
-        purchaseHistory: [
-          { id: '1', date: '2024-01-10', items: [] },
-        ],
-        customKnownItems: { fresh: [], frozen: [], dry: [] },
-        inventory: { fresh: [], frozen: [], dry: [] },
-        shoppingChecked: {},
-        historyViewMonth: null,
-        shoppingList: [],
-      },
-      dispatch: vi.fn(),
-    });
+  it('shows indicator dot for days with purchases', () => {
+    mockUseAppState.mockReturnValue(
+      createMockState([{ id: '1', date: '2024-01-10', items: [] }])
+    );
 
     render(
       <CalendarGrid
@@ -99,38 +92,12 @@ describe('CalendarGrid', () => {
       />
     );
 
-    const day10 = screen.getByText('10').closest('div');
-    expect(day10).toHaveClass('!bg-success');
+    const day10Cell = screen.getByText('10').closest('div');
+    const indicatorDot = day10Cell?.querySelector('.bg-success');
+    expect(indicatorDot).toBeInTheDocument();
   });
 
-  it('applies white text to days with purchases', () => {
-    mockUseAppState.mockReturnValue({
-      state: {
-        purchaseHistory: [
-          { id: '1', date: '2024-01-10', items: [] },
-        ],
-        customKnownItems: { fresh: [], frozen: [], dry: [] },
-        inventory: { fresh: [], frozen: [], dry: [] },
-        shoppingChecked: {},
-        historyViewMonth: null,
-        shoppingList: [],
-      },
-      dispatch: vi.fn(),
-    });
-
-    render(
-      <CalendarGrid
-        viewMonth="2024-01"
-        selectedDate={null}
-        onSelectDate={() => {}}
-      />
-    );
-
-    const day10Text = screen.getByText('10');
-    expect(day10Text).toHaveClass('text-white');
-  });
-
-  it('applies primary border to today\'s date', () => {
+  it('applies primary background to today\'s date', () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -146,7 +113,7 @@ describe('CalendarGrid', () => {
     );
 
     const todayCell = screen.getByText(String(day)).closest('div');
-    expect(todayCell).toHaveClass('border-primary');
+    expect(todayCell).toHaveClass('bg-primary/20');
   });
 
   it('applies primary background to selected date', () => {
@@ -159,6 +126,6 @@ describe('CalendarGrid', () => {
     );
 
     const selectedDay = screen.getByText('20').closest('div');
-    expect(selectedDay).toHaveClass('!bg-primary');
+    expect(selectedDay).toHaveClass('bg-primary');
   });
 });
