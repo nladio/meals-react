@@ -1,8 +1,8 @@
-# Shopping List - Shopping Suggestions Requirements
+# Shopping List Requirements
 
 ## Overview
 
-The Shopping List feature provides intelligent shopping recommendations based on current inventory levels and purchase history, organized by store for efficient shopping trips.
+The Shopping List feature provides a three-section shopping experience per store: user-curated items, staple essentials, and intelligent suggestions based on inventory levels and purchase history.
 
 ## Functional Requirements
 
@@ -15,65 +15,88 @@ The Shopping List feature provides intelligent shopping recommendations based on
 - Items shall appear in ALL stores where they are available (based on item's `stores[]` field)
 - Items without a `stores` field shall default to `['grocery']`
 
-### FR-SHOP-002: Priority-Based Sorting
+### FR-SHOP-002: Three-Section Layout Per Store
 
-- Within each store section, items shall be sorted by:
+- Each store section shall display three sub-sections:
+  1. **Your List**: User-added items (always visible, shows empty state when no items)
+  2. **Staples**: Pre-configured essential items for that store (hidden when empty)
+  3. **Suggestions**: Auto-generated items based on inventory/history (hidden when empty)
+- Items in "Your List" shall not appear in Staples or Suggestions sections
+- Items in Staples shall not appear in Suggestions section
+
+### FR-SHOP-003: User Shopping List Management
+
+- Users shall be able to add items to their shopping list via:
+  - Cart icon on Staples items
+  - Cart icon on Suggestions items
+  - Cart icon on Inventory page items
+- Users shall be able to remove items from their list via X button
+- Shopping list state shall persist across sessions (localStorage)
+
+### FR-SHOP-004: Staple Items Configuration
+
+- Items can be marked as `staple: true` in the data files
+- Staple items shall automatically appear in the Staples section for their configured stores
+- Staples shall be sorted by priority (high → medium → low)
+
+### FR-SHOP-005: Priority-Based Sorting
+
+- Within Staples section, items shall be sorted by priority: high → medium → low
+- Within Suggestions section, items shall be sorted by:
   1. Priority: high → medium → low
   2. Then by urgency: restock → running low → variety
 - Items without a `priority` field shall default to `'medium'`
 
-### FR-SHOP-003: Urgency Classification
+### FR-SHOP-006: Urgency Classification
 
-- Items shall be classified into urgency levels:
+- Suggestion items shall be classified into urgency levels:
   - **Restock**: Items with quantity = 0 that have been purchased before
   - **Running Low**: Items with quantity between 1 and 2 (inclusive)
   - **Variety**: Items not purchased in 7+ days or never purchased
 
-### FR-SHOP-004: Urgency Visual Indicators
+### FR-SHOP-007: Urgency Visual Indicators
 
-- Each item shall display a color-coded urgency indicator:
-  - Red: Restock (quantity = 0)
-  - Orange: Running Low (quantity 1-2)
-  - Blue: Variety (haven't bought lately)
-- Indicator shown as colored left border and dot
+- Suggestion items shall display color-coded urgency indicators:
+  - Red left border: Restock (quantity = 0)
+  - Orange left border: Running Low (quantity 1-2)
+  - Gray left border: Variety (haven't bought lately)
+- User List items shall display blue left border
+- Staple items shall display gray left border
 
-### FR-SHOP-005: Unified Checkbox State
+### FR-SHOP-008: Inventory Cart Integration
 
-- Each item shall have a checkbox for selection
-- Checking an item in one store shall check it across ALL store sections (single checkbox state)
-- This prevents duplicate additions when an item appears in multiple stores
-
-### FR-SHOP-006: Adjust Quantities Before Adding
-
-- For each selected item, the user shall be able to adjust the quantity to add
-- Default quantity shall be a reasonable restock amount based on `typicalQty`
-- Quantity shall be adjustable via increment/decrement controls
-
-### FR-SHOP-007: Add Selected Items to Inventory
-
-- The user shall be able to add all selected items to inventory with one action
-- Adding items shall:
-  - Increase inventory quantities by the specified amounts
-  - Update the "last bought" timestamp for each item
-  - Clear the selection after successful addition
-- Each unique item is added only once (even if checked in multiple stores)
-
-### FR-SHOP-008: Update Purchase History
-
-- When items are added to inventory from the shopping list, the system shall:
-  - Record the purchase date
-  - Record all items and quantities purchased
-  - Store this information for the shopping history feature
+- Each inventory item shall have a cart icon button
+- Clicking the cart icon shall add the item to the user's shopping list
+- The item shall be added to the first store in its `stores[]` array
 
 ## Data Model Requirements
 
-### DM-SHOP-001: Priority Type
+### DM-SHOP-001: Shopping List Entry
+
+```typescript
+interface ShoppingListEntry {
+  name: string;
+  section: Section;  // 'fresh' | 'frozen' | 'dry'
+  store: Store;      // 'indian-store' | 'costco' | 'grocery'
+}
+```
+
+### DM-SHOP-002: App State Extension
+
+- `AppState.shoppingList: ShoppingListEntry[]` - User's manually added shopping items
+
+### DM-SHOP-003: Staple Flag
+
+- `DefaultKnownItem.staple?: boolean` - When true, item appears in Staples section
+- Configured in JSON data files: `fresh-items.json`, `frozen-items.json`, `dry-items.json`
+
+### DM-SHOP-004: Priority Type
 
 - `Priority` type: `'low' | 'medium' | 'high'`
 - Added to `KnownItem` interface as optional field
 - Default value: `'medium'`
 
-### DM-SHOP-002: Store Type
+### DM-SHOP-005: Store Type
 
 - `Store` type: `'indian-store' | 'costco' | 'grocery'`
 - Added to `KnownItem` interface as optional `stores[]` array
@@ -88,27 +111,79 @@ The Shopping List feature provides intelligent shopping recommendations based on
   - Desktop: 3 columns side-by-side
 - Store order: Indian Store, Costco, Grocery
 
-### UI-SHOP-002: Empty Store Section
+### UI-SHOP-002: Sub-Section Headers
 
-- When a store section has no items, display "Nothing needed from here" message
+- Each sub-section (Your List, Staples, Suggestions) shall have:
+  - Gray background header bar (`bg-gray-50 rounded-t-lg`)
+  - Section name on the left
+  - Item count badge on the right
+- Styling shall match SubcategoryGroup component in Inventory page
 
-### UI-SHOP-003: Item Display
+### UI-SHOP-003: Your List Empty State
+
+- When Your List is empty, display "Add items from below" message with notepad icon
+- Your List section shall always be visible (never hidden)
+
+### UI-SHOP-004: Item Display - Your List
 
 - Each item shall show:
-  - Urgency indicator (colored dot and left border)
-  - Checkbox
+  - Blue left border indicator
   - Item name
-  - Current quantity (if > 0, shown as "X left")
-  - Quantity control for adjusting amount to purchase
+  - X button on right to remove from list
 
-### UI-SHOP-004: Action Button
+### UI-SHOP-005: Item Display - Staples/Suggestions
 
-- A prominent "Add to Inventory" button shall be displayed at the bottom
-- Button shall be full-width
-- Alert shown when no items are selected
+- Each item shall show:
+  - Color-coded left border (gray for staples, urgency-based for suggestions)
+  - Item name
+  - Current quantity if > 0 (shown as "X left")
+  - Cart icon button on right to add to Your List
+
+### UI-SHOP-006: Inventory Page Cart Icon
+
+- Each inventory item shall display a cart icon button
+- Cart icon shall be positioned between the item details and quantity badge
+- Clicking shall add item to shopping list for its primary store
+
+## Reducer Actions
+
+### ADD_TO_SHOPPING_LIST
+
+- Adds an item to the user's shopping list
+- Prevents duplicates (same name + same store)
+- Payload: `{ entry: ShoppingListEntry }`
+
+### REMOVE_FROM_SHOPPING_LIST
+
+- Removes an item from the user's shopping list
+- Matches by name AND store (allows same item in different stores)
+- Payload: `{ name: string, store: Store }`
+
+## Default Staple Items
+
+The following items are configured as staples:
+
+**Fresh:**
+- Chapatis (Indian Store)
+- Onion (Grocery, Costco)
+- Butter (Grocery, Costco)
+- Yogurt (Grocery, Costco)
+- Egg (Grocery, Costco)
+- Bread (Grocery, Costco)
+- Dosa Batter (Indian Store)
+
+**Frozen:**
+- Frozen Parathas (Indian Store, Costco)
+
+**Dry:**
+- Rice (Indian Store, Costco)
+- Atta (Indian Store)
+- Toor Dal (Indian Store)
 
 ## Out of Scope
 
 - User-facing UI to set store/priority (configured in code only)
-- AddItemModal changes for custom items to set store/priority
-- Store preferences or filtering
+- User-facing UI to mark items as staples
+- Drag-and-drop reordering of Your List items
+- Quantity adjustment before adding to inventory
+- Batch "Add to Inventory" action from shopping list
