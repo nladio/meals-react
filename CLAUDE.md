@@ -1,5 +1,11 @@
 # meals-react Development Guidelines
 
+## Development Environment
+
+- **Base URL**: http://localhost:5173/meals-react/
+- **Assume the dev server is always running** (`npm run dev`)
+- Do not start the server; it is managed externally
+
 ## MANDATORY Workflow Order
 
 ```
