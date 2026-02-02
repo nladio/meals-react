@@ -1,8 +1,20 @@
-import type { RecipeMatch } from '../../types';
+import type { NutritionTag, RecipeMatch } from '../../types';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 interface RecipeCardProps {
   match: RecipeMatch;
+}
+
+function getNutritionBgColor(tags?: NutritionTag[]): string {
+  if (!tags || tags.length === 0) return 'bg-white';
+
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 'bg-violet-50';
+  if (hasProtein) return 'bg-blue-100';
+  if (hasFiber) return 'bg-green-100';
+  return 'bg-white';
 }
 
 export function RecipeCard({ match }: RecipeCardProps) {
@@ -14,8 +26,10 @@ export function RecipeCard({ match }: RecipeCardProps) {
     none: 'border-l-gray-300',
   }[status];
 
+  const bgColor = getNutritionBgColor(recipe.nutritionTags);
+
   return (
-    <div className={`bg-white rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] ${borderColor}`}>
+    <div className={`${bgColor} rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] ${borderColor}`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-1.5 flex-wrap">
           <h3 className="font-semibold text-gray-800">{recipe.name}</h3>
