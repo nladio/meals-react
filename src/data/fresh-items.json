@@ -4,7 +4,7 @@
   { "name": "Palak Paneer", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "nutritionTags": ["high-fiber"], "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3 },
   { "name": "Chole", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "nutritionTags": ["high-fiber"], "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 3 },
   { "name": "Aloo Gobi", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 3 },
-  { "name": "Chapatis", "typicalQty": 1, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },
+  { "name": "Fresh Chapatis", "typicalQty": 1, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },
   { "name": "Falafel", "typicalQty": 1, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["grocery"], "priority": "medium", "prepTimeMinutes": 5 },
   { "name": "Onion", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "produce", "defaultExpiryDays": 14, "stores": ["grocery", "costco"], "priority": "high", "staple": true },
   { "name": "Tomato", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "produce", "defaultExpiryDays": 7, "stores": ["grocery", "costco"], "priority": "high" },
