@@ -270,9 +270,9 @@ export function Shopping() {
               <div className="flex flex-col gap-3">
                 {/* Your List section - always visible */}
                 <div className="mb-3">
-                  <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
-                    <span className="font-medium text-sm text-gray-700">Your List</span>
-                    <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                  <div className="flex items-center justify-between px-3 py-2 bg-blue-50 rounded-t-lg">
+                    <span className="font-medium text-sm text-blue-700">Your List</span>
+                    <span className="text-xs text-blue-600 bg-white px-2 py-0.5 rounded-full">
                       {userItems.length}
                     </span>
                   </div>
@@ -297,9 +297,9 @@ export function Shopping() {
                 {/* Staples section */}
                 {staples.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
-                      <span className="font-medium text-sm text-gray-700">Staples</span>
-                      <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2 bg-amber-50 rounded-t-lg">
+                      <span className="font-medium text-sm text-amber-700">Staples</span>
+                      <span className="text-xs text-amber-600 bg-white px-2 py-0.5 rounded-full">
                         {staples.length}
                       </span>
                     </div>
@@ -319,9 +319,9 @@ export function Shopping() {
                 {/* Suggestions section */}
                 {suggestions.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
-                      <span className="font-medium text-sm text-gray-700">Suggestions</span>
-                      <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2 bg-green-50 rounded-t-lg">
+                      <span className="font-medium text-sm text-green-700">Suggestions</span>
+                      <span className="text-xs text-green-600 bg-white px-2 py-0.5 rounded-full">
                         {suggestions.length}
                       </span>
                     </div>
