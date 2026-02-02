@@ -39,6 +39,10 @@ export function getCategoryForStaple(item: DefaultKnownItem): StapleCategory {
   if (ingredientCategory === 'legumes') return 'Legumes';
   if (ingredientCategory === 'condiments') return 'Condiments';
 
+  // Check for bread-like items by name
+  const breadPatterns = ['Chapati', 'Thepla', 'Naan', 'Roti', 'Bread', 'Paratha'];
+  if (breadPatterns.some(pattern => name.includes(pattern))) return 'Breads & Batters';
+
   if (usages.includes('meal')) return 'Ready Meals';
 
   return 'Other';

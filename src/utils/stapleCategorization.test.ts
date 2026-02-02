@@ -113,13 +113,27 @@ describe('getCategoryForStaple', () => {
     expect(getCategoryForStaple(item)).toBe('Condiments');
   });
 
-  it('categorizes meal-usage items without categories as ready meals', () => {
-    const item: DefaultKnownItem = {
-      name: 'Fresh Chapatis',
-      typicalQty: 6,
+  it('categorizes bread-like items as breads & batters', () => {
+    const chapatis: DefaultKnownItem = {
+      name: 'Uncooked Chapatis',
+      typicalQty: 20,
       usages: ['meal', 'ingredient'],
     };
-    expect(getCategoryForStaple(item)).toBe('Ready Meals');
+    expect(getCategoryForStaple(chapatis)).toBe('Breads & Batters');
+
+    const thepla: DefaultKnownItem = {
+      name: 'Fresh Methi Thepla',
+      typicalQty: 4,
+      usages: ['meal', 'ingredient'],
+    };
+    expect(getCategoryForStaple(thepla)).toBe('Breads & Batters');
+
+    const bread: DefaultKnownItem = {
+      name: 'Wholewheat Bread',
+      typicalQty: 40,
+      usages: ['meal', 'ingredient'],
+    };
+    expect(getCategoryForStaple(bread)).toBe('Breads & Batters');
   });
 
   it('categorizes uncategorized items as other', () => {
