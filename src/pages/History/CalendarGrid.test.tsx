@@ -11,7 +11,9 @@ import { useAppState } from '../../hooks/useAppState';
 
 const mockUseAppState = vi.mocked(useAppState);
 
-function createMockState(purchaseHistory: Array<{ id: string; date: string; items: unknown[] }> = []) {
+import type { PurchaseHistoryEntry } from '../../types';
+
+function createMockState(purchaseHistory: PurchaseHistoryEntry[] = []) {
   return {
     state: {
       purchaseHistory,
@@ -22,7 +24,7 @@ function createMockState(purchaseHistory: Array<{ id: string; date: string; item
       shoppingList: [],
     },
     dispatch: vi.fn(),
-  };
+  } as ReturnType<typeof useAppState>;
 }
 
 describe('CalendarGrid', () => {
