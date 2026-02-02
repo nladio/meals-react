@@ -134,7 +134,7 @@ export const defaultRecipes: Recipe[] = [
     prepTimeMinutes: 20,
     nutritionTags: ['high-fiber'],
     ingredients: [
-      { name: 'Frozen Veggie Pattie', required: true },
+      { name: 'Frozen Veggie Patty', required: true },
       { name: 'Bun', required: true },
       { name: 'Tomato', required: true },
       { name: 'Onion', required: true },
