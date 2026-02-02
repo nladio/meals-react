@@ -4,6 +4,12 @@ import { defaultKnownItems, type DefaultKnownItem } from '../../data/defaultKnow
 import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { ShoppingItem } from './ShoppingItem';
+import { StapleSubcategoryGroup } from './StapleSubcategoryGroup';
+import {
+  groupStaplesByCategory,
+  STAPLE_CATEGORY_ORDER,
+  type StapleItem,
+} from '../../utils/stapleCategorization';
 
 type Urgency = 'restock' | 'low' | 'variety';
 
@@ -12,9 +18,7 @@ interface StoreShoppingItem extends ShoppingListItem {
   priority: Priority;
 }
 
-interface StapleItem extends ShoppingListItem {
-  priority: Priority;
-}
+const STAPLE_CATEGORIZATION_THRESHOLD = 8;
 
 const STORE_LABELS: Record<Store, string> = {
   'indian-store': 'Indian Store',
@@ -173,6 +177,11 @@ function getStaplesByStore(): Record<Store, Array<{ item: DefaultKnownItem; sect
   return staples;
 }
 
+// Get all default items flattened for categorization
+function getAllDefaultItems(): DefaultKnownItem[] {
+  return [...defaultKnownItems.fresh, ...defaultKnownItems.frozen, ...defaultKnownItems.dry];
+}
+
 // Convert user's shopping list to store-grouped items
 function groupUserListByStore(
   shoppingList: ShoppingListEntry[],
@@ -303,16 +312,37 @@ export function Shopping() {
                         {staples.length}
                       </span>
                     </div>
-                    <div className="flex flex-col gap-2 pt-2">
-                      {staples.map(item => (
-                        <ShoppingItem
-                          key={`staple-${store}-${item.name}`}
-                          item={item}
-                          variant="staple"
-                          onAddToList={() => handleAddToList(item.name, item.section, store)}
-                        />
-                      ))}
-                    </div>
+                    {staples.length > STAPLE_CATEGORIZATION_THRESHOLD ? (
+                      <div className="flex flex-col gap-1 pt-2">
+                        {(() => {
+                          const grouped = groupStaplesByCategory(staples, getAllDefaultItems());
+                          return STAPLE_CATEGORY_ORDER.map(category => {
+                            const categoryItems = grouped[category];
+                            if (categoryItems.length === 0) return null;
+                            return (
+                              <StapleSubcategoryGroup
+                                key={`${store}-${category}`}
+                                category={category}
+                                items={categoryItems}
+                                store={store}
+                                onAddToList={(name, section) => handleAddToList(name, section, store)}
+                              />
+                            );
+                          });
+                        })()}
+                      </div>
+                    ) : (
+                      <div className="flex flex-col gap-2 pt-2">
+                        {staples.map(item => (
+                          <ShoppingItem
+                            key={`staple-${store}-${item.name}`}
+                            item={item}
+                            variant="staple"
+                            onAddToList={() => handleAddToList(item.name, item.section, store)}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
 
