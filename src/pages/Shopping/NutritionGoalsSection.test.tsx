@@ -7,9 +7,9 @@ describe('NutritionGoalsSection', () => {
   const mockOnAddToList = vi.fn();
 
   const sampleItems = [
-    { name: 'Toor Dal', section: 'dry' as const, nutritionTags: ['high-fiber', 'high-protein', 'natural-protein'] as const },
+    { name: 'Toor Dal', section: 'dry' as const, nutritionTags: ['high-fiber', 'high-protein'] as const },
     { name: 'Spinach', section: 'fresh' as const, nutritionTags: ['high-fiber'] as const },
-    { name: 'Chicken', section: 'fresh' as const, nutritionTags: ['high-protein', 'natural-protein'] as const },
+    { name: 'Chicken', section: 'fresh' as const, nutritionTags: ['high-protein'] as const },
   ];
 
   beforeEach(() => {
@@ -52,10 +52,9 @@ describe('NutritionGoalsSection', () => {
     render(
       <NutritionGoalsSection items={sampleItems} store="grocery" onAddToList={mockOnAddToList} />
     );
-    // Toor Dal has all three badges
+    // Toor Dal has both badges, Spinach has fiber, Chicken has protein
     expect(screen.getAllByTitle('High Fiber').length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByTitle('High Protein').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByTitle('Natural Protein').length).toBeGreaterThanOrEqual(1);
   });
 
   it('calls onAddToList when cart button is clicked', async () => {

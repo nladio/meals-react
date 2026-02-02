@@ -71,22 +71,11 @@ function NutritionSection({ config, items }: NutritionSectionProps) {
   );
 }
 
-const NATURAL_PROTEIN_CONFIG: NutritionSectionConfig = {
-  badge: 'N',
-  title: 'Natural Protein',
-  emptyMessage: 'No natural protein items in stock',
-  emptyIcon: '🥚',
-  badgeBg: 'bg-purple-100',
-  badgeText: 'text-purple-600',
-  borderColor: 'border-l-purple-500',
-  quantityColors: 'text-purple-600 border-purple-500',
-};
-
-const SUPPLEMENTS_CONFIG: NutritionSectionConfig = {
+const PROTEIN_CONFIG: NutritionSectionConfig = {
   badge: 'P',
-  title: 'Protein Supplements',
-  emptyMessage: 'No protein supplements in stock',
-  emptyIcon: '🥤',
+  title: 'High Protein',
+  emptyMessage: 'No high-protein items in stock',
+  emptyIcon: '🥚',
   badgeBg: 'bg-green-100',
   badgeText: 'text-green-600',
   borderColor: 'border-l-green-500',
@@ -124,17 +113,15 @@ export function WhatToEat() {
       .filter((item): item is NutritionItem => item !== null)
   );
 
-  const naturalProteinItems = nutritionItems.filter(item => hasTag(item, 'natural-protein'));
-  const supplementItems = nutritionItems.filter(item => hasTag(item, 'high-protein') && !hasTag(item, 'natural-protein'));
+  const highProteinItems = nutritionItems.filter(item => hasTag(item, 'high-protein'));
   const highFiberItems = nutritionItems.filter(item => hasTag(item, 'high-fiber'));
 
   return (
     <div>
       <PageHeader title="What to Eat" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <NutritionSection config={NATURAL_PROTEIN_CONFIG} items={naturalProteinItems} />
-        <NutritionSection config={SUPPLEMENTS_CONFIG} items={supplementItems} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <NutritionSection config={PROTEIN_CONFIG} items={highProteinItems} />
         <NutritionSection config={FIBER_CONFIG} items={highFiberItems} />
       </div>
     </div>

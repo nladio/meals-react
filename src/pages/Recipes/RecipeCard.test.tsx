@@ -35,18 +35,17 @@ describe('RecipeCard', () => {
       ...baseMatch,
       recipe: {
         ...baseMatch.recipe,
-        nutritionTags: ['natural-protein', 'high-fiber'],
+        nutritionTags: ['high-protein', 'high-fiber'],
       },
     };
 
     render(<RecipeCard match={matchWithTags} />);
-    expect(screen.getByTitle('Natural Protein')).toBeInTheDocument();
+    expect(screen.getByTitle('High Protein')).toBeInTheDocument();
     expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
   });
 
   it('does not render nutrition badges when recipe has no nutritionTags', () => {
     render(<RecipeCard match={baseMatch} />);
-    expect(screen.queryByTitle('Natural Protein')).not.toBeInTheDocument();
     expect(screen.queryByTitle('High Fiber')).not.toBeInTheDocument();
     expect(screen.queryByTitle('High Protein')).not.toBeInTheDocument();
   });
@@ -62,7 +61,7 @@ describe('RecipeCard', () => {
 
     render(<RecipeCard match={matchWithSingleTag} />);
     expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
-    expect(screen.queryByTitle('Natural Protein')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('High Protein')).not.toBeInTheDocument();
   });
 
   it('renders available ingredients with checkmark', () => {

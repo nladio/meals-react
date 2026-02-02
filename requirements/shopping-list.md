@@ -185,7 +185,7 @@ The following items are configured as staples:
 ### FR-SHOP-009: Nutrition Badges on Shopping Items
 
 - Shopping items in Staples and Suggestions sections shall display nutrition badges
-- Badges include: N (natural-protein), P (high-protein), F (high-fiber)
+- Badges include: P (high-protein), F (high-fiber)
 - Helps users identify nutrition-supporting items when shopping
 - Badges appear after item name, consistent with inventory display
 
@@ -194,7 +194,7 @@ The following items are configured as staples:
 - Each store shall display a "For Your Nutrition Goals" section
 - Section appears between Staples and Suggestions
 - Shows out-of-stock items that support nutrition goals:
-  - Natural protein items with quantity = 0
+  - High-protein items with quantity = 0
   - High-fiber items with quantity = 0
 - Ready-made meals (e.g., Palak Paneer) display appropriate badges
 - Section is hidden when no nutrition goal items need restocking

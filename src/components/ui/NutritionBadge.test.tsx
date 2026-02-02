@@ -3,12 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { NutritionBadge, NutritionBadges } from './NutritionBadge';
 
 describe('NutritionBadge', () => {
-  it('renders "N" badge for natural-protein tag', () => {
-    render(<NutritionBadge tag="natural-protein" />);
-    expect(screen.getByText('N')).toBeInTheDocument();
-    expect(screen.getByTitle('Natural Protein')).toBeInTheDocument();
-  });
-
   it('renders "P" badge for high-protein tag', () => {
     render(<NutritionBadge tag="high-protein" />);
     expect(screen.getByText('P')).toBeInTheDocument();
@@ -19,12 +13,6 @@ describe('NutritionBadge', () => {
     render(<NutritionBadge tag="high-fiber" />);
     expect(screen.getByText('F')).toBeInTheDocument();
     expect(screen.getByTitle('High Fiber')).toBeInTheDocument();
-  });
-
-  it('applies purple styling for natural-protein badge', () => {
-    render(<NutritionBadge tag="natural-protein" />);
-    const badge = screen.getByText('N');
-    expect(badge).toHaveClass('bg-purple-100', 'text-purple-600');
   });
 
   it('applies green styling for high-protein badge', () => {
@@ -52,16 +40,14 @@ describe('NutritionBadges', () => {
   });
 
   it('renders all badges when multiple tags provided', () => {
-    render(<NutritionBadges tags={['high-protein', 'high-fiber', 'natural-protein']} />);
+    render(<NutritionBadges tags={['high-protein', 'high-fiber']} />);
     expect(screen.getByText('P')).toBeInTheDocument();
     expect(screen.getByText('F')).toBeInTheDocument();
-    expect(screen.getByText('N')).toBeInTheDocument();
   });
 
   it('renders single badge when one tag provided', () => {
-    render(<NutritionBadges tags={['natural-protein']} />);
-    expect(screen.getByText('N')).toBeInTheDocument();
-    expect(screen.queryByText('P')).not.toBeInTheDocument();
+    render(<NutritionBadges tags={['high-protein']} />);
+    expect(screen.getByText('P')).toBeInTheDocument();
     expect(screen.queryByText('F')).not.toBeInTheDocument();
   });
 });

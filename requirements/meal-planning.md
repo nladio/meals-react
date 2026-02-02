@@ -34,18 +34,18 @@ The Meal Planning feature allows users to create recipes with ingredients and ma
 
 - Recipes can have an optional `nutritionTags[]` field
 - Tags are assigned based on main ingredients:
-  - Dal Tadka → high-fiber (uses Toor Dal)
-  - Dal Palak → high-fiber, natural-protein (uses Toor Dal, Spinach)
-  - Paneer Tikka Kebab → natural-protein (uses Paneer)
-  - Egg Bhurji, Omelette, Half Fried Egg → natural-protein (uses Egg)
-  - Chicken Tikka Kebab → natural-protein (uses Chicken)
+  - Dal Tadka → high-fiber, high-protein (uses Toor Dal)
+  - Dal Palak → high-fiber, high-protein (uses Toor Dal, Spinach)
+  - Paneer Tikka Kebab → high-protein (uses Paneer)
+  - Egg Bhurji, Omelette, Half Fried Egg → high-protein (uses Egg)
+  - Chicken Tikka Kebab → high-protein (uses Chicken)
 - Tags help users identify recipes that support their nutrition goals
 
 ### FR-MEAL-005: Recipe Nutrition Badges
 
 - Recipe cards shall display nutrition badges when recipe has nutritionTags
 - Badges appear in recipe card header, after the recipe name
-- Badge styling matches inventory nutrition badges (N, P, F)
+- Badge styling matches inventory nutrition badges (P, F)
 - Helps users quickly find recipes supporting their nutrition goals
 
 ## Out of Scope (MVP)

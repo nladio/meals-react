@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { WhatToEat } from './index';
-import type { AppState, Section } from '../../types';
+import type { AppState } from '../../types';
 
 const mockState: AppState = {
   customKnownItems: { fresh: [], frozen: [], dry: [] },
@@ -27,12 +27,12 @@ vi.mock('../../hooks/useAppState', () => ({
   useAppState: () => ({ state: mockState, dispatch: vi.fn() }),
   getMergedKnownItems: () => ({
     fresh: [
-      { name: 'Egg', typicalQty: 24, usages: ['ingredient'], nutritionTags: ['high-protein', 'natural-protein'] },
-      { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], nutritionTags: ['high-protein', 'natural-protein'] },
+      { name: 'Egg', typicalQty: 24, usages: ['ingredient'], nutritionTags: ['high-protein'] },
+      { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], nutritionTags: ['high-protein'] },
     ],
     frozen: [],
     dry: [
-      { name: 'Toor Dal', typicalQty: 1, usages: ['ingredient'], nutritionTags: ['high-fiber', 'high-protein', 'natural-protein'] },
+      { name: 'Toor Dal', typicalQty: 1, usages: ['ingredient'], nutritionTags: ['high-fiber', 'high-protein'] },
       { name: 'Fairlife 30g Protein Shake', typicalQty: 30, usages: ['meal'], nutritionTags: ['high-protein'] },
       { name: 'Spinach', typicalQty: 1, usages: ['ingredient'], nutritionTags: ['high-fiber'] },
     ],
@@ -45,14 +45,9 @@ describe('WhatToEat', () => {
     expect(screen.getByText('What to Eat')).toBeInTheDocument();
   });
 
-  it('renders Natural Protein section', () => {
+  it('renders High Protein section', () => {
     render(<WhatToEat />);
-    expect(screen.getByText('Natural Protein')).toBeInTheDocument();
-  });
-
-  it('renders Protein Supplements section', () => {
-    render(<WhatToEat />);
-    expect(screen.getByText('Protein Supplements')).toBeInTheDocument();
+    expect(screen.getByText('High Protein')).toBeInTheDocument();
   });
 
   it('renders High Fiber section', () => {
@@ -60,22 +55,17 @@ describe('WhatToEat', () => {
     expect(screen.getByText('High Fiber')).toBeInTheDocument();
   });
 
-  it('shows natural protein items in Natural Protein section', () => {
+  it('shows high-protein items in High Protein section', () => {
     render(<WhatToEat />);
-    // Egg and Paneer have natural-protein tag
+    // Egg, Paneer, Toor Dal, Fairlife all have high-protein tag
     expect(screen.getByText('Egg')).toBeInTheDocument();
     expect(screen.getByText('Paneer')).toBeInTheDocument();
-  });
-
-  it('shows supplements in Protein Supplements section', () => {
-    render(<WhatToEat />);
-    // Fairlife has high-protein but NOT natural-protein
     expect(screen.getByText('Fairlife 30g Protein Shake')).toBeInTheDocument();
   });
 
   it('shows high fiber items in High Fiber section', () => {
     render(<WhatToEat />);
-    // Toor Dal has high-fiber tag, appears in both Natural Protein and High Fiber sections
+    // Toor Dal has both high-fiber and high-protein tags, appears in both sections
     const toorDalElements = screen.getAllByText('Toor Dal');
     expect(toorDalElements.length).toBe(2); // Appears in both sections
   });

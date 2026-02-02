@@ -208,7 +208,7 @@ function groupUserListByStore(
   return groups;
 }
 
-// Get nutrition goal items for a store (out-of-stock natural protein and high fiber items)
+// Get nutrition goal items for a store (out-of-stock high protein and high fiber items)
 function getNutritionGoalsByStore(
   state: AppState,
   mergedKnownItems: Record<Section, KnownItem[]>,
@@ -231,14 +231,14 @@ function getNutritionGoalsByStore(
       if (seen.has(known.name)) continue;
 
       const hasNutritionTags = known.nutritionTags && known.nutritionTags.length > 0;
-      const hasNaturalProtein = known.nutritionTags?.includes('natural-protein');
+      const hasHighProtein = known.nutritionTags?.includes('high-protein');
       const hasHighFiber = known.nutritionTags?.includes('high-fiber');
       const qty = inventoryMap.get(known.name) ?? 0;
       const isOutOfStock = qty === 0;
       const itemStores = known.stores || ['grocery'];
       const isInStore = itemStores.includes(store);
 
-      if (hasNutritionTags && (hasNaturalProtein || hasHighFiber) && isOutOfStock && isInStore) {
+      if (hasNutritionTags && (hasHighProtein || hasHighFiber) && isOutOfStock && isInStore) {
         items.push({
           name: known.name,
           section,

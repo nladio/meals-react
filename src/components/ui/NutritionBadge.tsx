@@ -7,11 +7,6 @@ interface BadgeConfig {
 }
 
 const BADGE_CONFIG: Record<NutritionTag, BadgeConfig> = {
-  'natural-protein': {
-    label: 'N',
-    title: 'Natural Protein',
-    colors: 'bg-purple-100 text-purple-600',
-  },
   'high-protein': {
     label: 'P',
     title: 'High Protein',
