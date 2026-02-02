@@ -147,7 +147,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'chicken burger',
     name: 'Chicken Burger',
     prepTimeMinutes: 20,
-    nutritionTags: ['high-fiber'],
+    nutritionTags: ['high-protein'],
     ingredients: [
       { name: 'Frozen Spicy Chicken Pattie', required: true },
       { name: 'Bun', required: true },
