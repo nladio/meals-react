@@ -267,12 +267,17 @@ export function Shopping() {
                 {STORE_LABELS[store]}
               </h2>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
                 {/* Your List section - always visible */}
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-2">Your List</h3>
+                <div className="mb-3">
+                  <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
+                    <span className="font-medium text-sm text-gray-700">Your List</span>
+                    <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                      {userItems.length}
+                    </span>
+                  </div>
                   {userItems.length > 0 ? (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 pt-2">
                       {userItems.map(item => (
                         <ShoppingItem
                           key={`user-${store}-${item.name}`}
@@ -283,15 +288,22 @@ export function Shopping() {
                       ))}
                     </div>
                   ) : (
-                    <EmptyState message="Add items from below" icon="📝" />
+                    <div className="pt-2">
+                      <EmptyState message="Add items from below" icon="📝" />
+                    </div>
                   )}
                 </div>
 
                 {/* Staples section */}
                 {staples.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">Staples</h3>
-                    <div className="flex flex-col gap-2">
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
+                      <span className="font-medium text-sm text-gray-700">Staples</span>
+                      <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                        {staples.length}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-2 pt-2">
                       {staples.map(item => (
                         <ShoppingItem
                           key={`staple-${store}-${item.name}`}
@@ -306,9 +318,14 @@ export function Shopping() {
 
                 {/* Suggestions section */}
                 {suggestions.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">Suggestions</h3>
-                    <div className="flex flex-col gap-2">
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg">
+                      <span className="font-medium text-sm text-gray-700">Suggestions</span>
+                      <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+                        {suggestions.length}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-2 pt-2">
                       {suggestions.map(item => (
                         <ShoppingItem
                           key={`suggestion-${store}-${item.section}-${item.name}`}
