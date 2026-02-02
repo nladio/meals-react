@@ -25,8 +25,24 @@ const VARIANT_STYLES: Record<Variant, string> = {
   suggestion: 'bg-gray-100 border-l-[3px] border-l-gray-300',
 };
 
+function getNutritionHighlightStyle(tags?: NutritionTag[]): string | null {
+  if (!tags || tags.length === 0) return null;
+
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 'bg-purple-50';
+  if (hasProtein) return 'bg-green-50';
+  if (hasFiber) return 'bg-teal-50';
+  return null;
+}
+
 export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToList, onRemove }: ShoppingItemProps) {
-  const style = variant === 'suggestion' && urgency ? URGENCY_STYLES[urgency] : VARIANT_STYLES[variant];
+  const nutritionStyle = variant === 'staple' ? getNutritionHighlightStyle(nutritionTags) : null;
+  const baseStyle = variant === 'suggestion' && urgency ? URGENCY_STYLES[urgency] : VARIANT_STYLES[variant];
+  const style = nutritionStyle
+    ? `${nutritionStyle} border-l-[3px] border-l-gray-300`
+    : baseStyle;
 
   return (
     <div className={`flex items-center gap-3 p-3 rounded-sm ${style}`}>

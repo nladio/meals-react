@@ -252,6 +252,26 @@ function getNutritionGoalsByStore(
   return items;
 }
 
+function NutritionLegend() {
+  return (
+    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+      <span className="font-medium">Legend:</span>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-green-50 border border-green-200"></span>
+        <span>Protein</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-teal-50 border border-teal-200"></span>
+        <span>Fiber</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-purple-50 border border-purple-200"></span>
+        <span>Both</span>
+      </div>
+    </div>
+  );
+}
+
 export function Shopping() {
   const { state, dispatch } = useAppState();
 
@@ -287,6 +307,7 @@ export function Shopping() {
   return (
     <div>
       <PageHeader title="Shopping List" />
+      <NutritionLegend />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {STORE_ORDER.map(store => {
