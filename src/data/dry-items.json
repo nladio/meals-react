@@ -20,8 +20,9 @@
   { "name": "Black Urad Dal", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "legumes", "nutritionTags": ["high-fiber"], "stores": ["indian-store"], "priority": "medium" },
   { "name": "Chickpeas", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "legumes", "nutritionTags": ["high-protein", "high-fiber"], "stores": ["indian-store", "grocery"], "priority": "medium" },
   { "name": "Rajma", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "legumes", "nutritionTags": ["high-protein", "high-fiber"], "stores": ["indian-store"], "priority": "medium" },
-  { "name": "Fairlife 30g Protein Shake", "typicalQty": 30, "usages": ["meal"], "stores": ["costco"], "priority": "high", "prepTimeMinutes": 0 },
+  { "name": "Fairlife 30g Protein Shake", "typicalQty": 30, "usages": ["meal"], "stores": ["costco"], "priority": "high", "prepTimeMinutes": 0, "staple": true },
   { "name": "Pure Protein Bars", "typicalQty": 25, "usages": ["meal"], "stores": ["costco"], "priority": "high", "prepTimeMinutes": 0 },
   { "name": "Multigrain Tortilla Chips with Seeds", "typicalQty": 12, "usages": ["meal"], "stores": ["grocery"], "priority": "medium", "prepTimeMinutes": 0 },
-  { "name": "Stacy's Chips", "typicalQty": 12, "usages": ["meal"], "stores": ["costco"], "priority": "low", "prepTimeMinutes": 0 }
+  { "name": "Stacy's Chips", "typicalQty": 12, "usages": ["meal"], "stores": ["costco"], "priority": "low", "prepTimeMinutes": 0 },
+  { "name": "Unsalted Mixed Nuts", "typicalQty": 12, "usages": ["meal"], "stores": ["costco"], "priority": "high", "prepTimeMinutes": 0, "staple": true }
 ]
