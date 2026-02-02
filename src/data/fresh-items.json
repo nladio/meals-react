@@ -39,6 +39,7 @@
   { "name": "Pickle", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "condiments", "defaultExpiryDays": 30, "stores": ["indian-store"], "priority": "low" },
   { "name": "Sourdough Bread", "typicalQty": 40, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["costco", "grocery"], "priority": "medium", "prepTimeMinutes": 0 },
   { "name": "Wholewheat Bread", "typicalQty": 40, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["costco", "grocery"], "priority": "high", "prepTimeMinutes": 0, "staple": true },
+  { "name": "Bun", "typicalQty": 6, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["grocery"], "priority": "medium", "prepTimeMinutes": 0 },
 
   { "name": "Naan", "typicalQty": 1, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store", "costco"], "priority": "medium", "prepTimeMinutes": 2 },
   { "name": "Roti", "typicalQty": 1, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 2 },
