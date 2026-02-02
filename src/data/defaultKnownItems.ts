@@ -46,8 +46,8 @@ export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
     { name: 'Paneer', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10, nutritionTags: ['high-protein'], stores: ['indian-store'], priority: 'high' },
     { name: 'Tofu', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'protein', defaultExpiryDays: 10, nutritionTags: ['high-protein'], stores: ['grocery', 'costco'], priority: 'medium' },
     // Dairy - ~14 days
-    { name: 'Amul Cheese Cubes', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14, stores: ['indian-store'], priority: 'medium' },
-    { name: 'Amul Cheese Slice', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14, stores: ['indian-store'], priority: 'medium' },
+    { name: 'Amul Cheese Cubes', typicalQty: 10, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14, stores: ['indian-store'], priority: 'medium' },
+    { name: 'Amul Cheese Slice', typicalQty: 10, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14, stores: ['indian-store'], priority: 'medium' },
     { name: 'Butter', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 30, stores: ['grocery', 'costco'], priority: 'high' },
     { name: 'Yogurt', typicalQty: 1, usages: ['ingredient'], ingredientCategory: 'dairy', defaultExpiryDays: 14, stores: ['grocery', 'costco'], priority: 'high' },
     // Eggs ~21 days, chicken ~3 days
