@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Section, ShoppingListItem, Store } from '../../types';
+import type { KnownItem, Section, ShoppingListItem, Store } from '../../types';
 import { ShoppingItem } from './ShoppingItem';
 
 type Variant = 'staple' | 'user-list';
@@ -9,6 +9,7 @@ interface ShoppingSubcategoryGroupProps {
   items: ShoppingListItem[];
   store: Store;
   variant: Variant;
+  knownMap?: Map<string, KnownItem>;
   onAddToList?: (name: string, section: Section) => void;
   onRemove?: (name: string) => void;
 }
@@ -18,6 +19,7 @@ export function ShoppingSubcategoryGroup({
   items,
   store,
   variant,
+  knownMap,
   onAddToList,
   onRemove,
 }: ShoppingSubcategoryGroupProps) {
@@ -49,6 +51,7 @@ export function ShoppingSubcategoryGroup({
               key={`${variant}-${store}-${category}-${item.name}`}
               item={item}
               variant={variant}
+              nutritionTags={knownMap?.get(item.name)?.nutritionTags}
               onAddToList={variant === 'staple' && onAddToList ? () => onAddToList(item.name, item.section) : undefined}
               onRemove={variant === 'user-list' && onRemove ? () => onRemove(item.name) : undefined}
             />

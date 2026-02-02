@@ -1,4 +1,5 @@
-import type { ShoppingListItem } from '../../types';
+import type { NutritionTag, ShoppingListItem } from '../../types';
+import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 type Urgency = 'restock' | 'low' | 'variety';
 type Variant = 'user-list' | 'staple' | 'suggestion';
@@ -7,6 +8,7 @@ interface ShoppingItemProps {
   item: ShoppingListItem;
   urgency?: Urgency;
   variant: Variant;
+  nutritionTags?: NutritionTag[];
   onAddToList?: () => void;
   onRemove?: () => void;
 }
@@ -23,13 +25,16 @@ const VARIANT_STYLES: Record<Variant, string> = {
   suggestion: 'bg-gray-100 border-l-[3px] border-l-gray-300',
 };
 
-export function ShoppingItem({ item, urgency, variant, onAddToList, onRemove }: ShoppingItemProps) {
+export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToList, onRemove }: ShoppingItemProps) {
   const style = variant === 'suggestion' && urgency ? URGENCY_STYLES[urgency] : VARIANT_STYLES[variant];
 
   return (
     <div className={`flex items-center gap-3 p-3 rounded-sm ${style}`}>
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-        <span className="font-medium text-[15px] truncate">{item.name}</span>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="font-medium text-[15px] truncate">{item.name}</span>
+          <NutritionBadges tags={nutritionTags} />
+        </div>
         {item.currentQty > 0 && (
           <span className="text-xs text-gray-400">{item.currentQty} left</span>
         )}

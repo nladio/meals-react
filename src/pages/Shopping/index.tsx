@@ -5,6 +5,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { ShoppingItem } from './ShoppingItem';
 import { ShoppingSubcategoryGroup } from './StapleSubcategoryGroup';
+import { NutritionGoalsSection, type NutritionGoalItem } from './NutritionGoalsSection';
 import {
   groupItemsByCategory,
   STAPLE_CATEGORY_ORDER,
@@ -207,6 +208,50 @@ function groupUserListByStore(
   return groups;
 }
 
+// Get nutrition goal items for a store (out-of-stock natural protein and high fiber items)
+function getNutritionGoalsByStore(
+  state: AppState,
+  mergedKnownItems: Record<Section, KnownItem[]>,
+  userListNames: Set<string>,
+  stapleNames: Set<string>,
+  store: Store
+): NutritionGoalItem[] {
+  const items: NutritionGoalItem[] = [];
+  const seen = new Set<string>();
+
+  for (const section of SECTIONS) {
+    const inventoryMap = new Map(
+      state.inventory[section].map(i => [i.name, i.quantity])
+    );
+
+    for (const known of mergedKnownItems[section]) {
+      // Skip if already in user list or staples
+      if (userListNames.has(known.name) || stapleNames.has(known.name)) continue;
+      // Skip if already added (avoid duplicates across sections)
+      if (seen.has(known.name)) continue;
+
+      const hasNutritionTags = known.nutritionTags && known.nutritionTags.length > 0;
+      const hasNaturalProtein = known.nutritionTags?.includes('natural-protein');
+      const hasHighFiber = known.nutritionTags?.includes('high-fiber');
+      const qty = inventoryMap.get(known.name) ?? 0;
+      const isOutOfStock = qty === 0;
+      const itemStores = known.stores || ['grocery'];
+      const isInStore = itemStores.includes(store);
+
+      if (hasNutritionTags && (hasNaturalProtein || hasHighFiber) && isOutOfStock && isInStore) {
+        items.push({
+          name: known.name,
+          section,
+          nutritionTags: known.nutritionTags!,
+        });
+        seen.add(known.name);
+      }
+    }
+  }
+
+  return items;
+}
+
 export function Shopping() {
   const { state, dispatch } = useAppState();
 
@@ -265,6 +310,15 @@ export function Shopping() {
           const stapleNames = new Set(staplesByStore[store].map(({ item }) => item.name));
           const suggestions = suggestionGroups[store].filter(
             item => !userListNames.has(item.name) && !stapleNames.has(item.name)
+          );
+
+          // Nutrition goals: out-of-stock natural protein and high fiber items
+          const nutritionGoals = getNutritionGoalsByStore(
+            state,
+            mergedKnownItems,
+            userListNames,
+            stapleNames,
+            store
           );
 
           return (
@@ -346,6 +400,7 @@ export function Shopping() {
                                 items={categoryItems}
                                 store={store}
                                 variant="staple"
+                                knownMap={knownMap}
                                 onAddToList={(name, section) => handleAddToList(name, section, store)}
                               />
                             );
@@ -359,6 +414,7 @@ export function Shopping() {
                             key={`staple-${store}-${item.name}`}
                             item={item}
                             variant="staple"
+                            nutritionTags={knownMap.get(item.name)?.nutritionTags}
                             onAddToList={() => handleAddToList(item.name, item.section, store)}
                           />
                         ))}
@@ -366,6 +422,13 @@ export function Shopping() {
                     )}
                   </div>
                 )}
+
+                {/* Nutrition Goals section */}
+                <NutritionGoalsSection
+                  items={nutritionGoals}
+                  store={store}
+                  onAddToList={(name, section) => handleAddToList(name, section, store)}
+                />
 
                 {/* Suggestions section */}
                 {suggestions.length > 0 && (
@@ -383,6 +446,7 @@ export function Shopping() {
                           item={item}
                           variant="suggestion"
                           urgency={item.urgency}
+                          nutritionTags={knownMap.get(item.name)?.nutritionTags}
                           onAddToList={() => handleAddToList(item.name, item.section, store)}
                         />
                       ))}
