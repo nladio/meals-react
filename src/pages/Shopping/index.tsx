@@ -1,5 +1,6 @@
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
-import type { AppState, KnownItem, Priority, Section, ShoppingListItem, Store } from '../../types';
+import type { AppState, KnownItem, Priority, Section, ShoppingListItem, Store, ShoppingListEntry } from '../../types';
+import { defaultKnownItems, type DefaultKnownItem } from '../../data/defaultKnownItems';
 import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { ShoppingItem } from './ShoppingItem';
@@ -8,6 +9,10 @@ type Urgency = 'restock' | 'low' | 'variety';
 
 interface StoreShoppingItem extends ShoppingListItem {
   urgency: Urgency;
+  priority: Priority;
+}
+
+interface StapleItem extends ShoppingListItem {
   priority: Priority;
 }
 
@@ -146,45 +151,184 @@ function groupByStore(
   return groups;
 }
 
+// Get staple items for each store
+function getStaplesByStore(): Record<Store, Array<{ item: DefaultKnownItem; section: Section }>> {
+  const staples: Record<Store, Array<{ item: DefaultKnownItem; section: Section }>> = {
+    'indian-store': [],
+    costco: [],
+    grocery: [],
+  };
+
+  for (const section of SECTIONS) {
+    for (const item of defaultKnownItems[section]) {
+      if (item.staple) {
+        const stores = item.stores || ['grocery'];
+        for (const store of stores) {
+          staples[store].push({ item, section });
+        }
+      }
+    }
+  }
+
+  return staples;
+}
+
+// Convert user's shopping list to store-grouped items
+function groupUserListByStore(
+  shoppingList: ShoppingListEntry[],
+  knownMap: Map<string, KnownItem>
+): Record<Store, ShoppingListItem[]> {
+  const groups: Record<Store, ShoppingListItem[]> = {
+    'indian-store': [],
+    costco: [],
+    grocery: [],
+  };
+
+  for (const entry of shoppingList) {
+    const knownItem = knownMap.get(entry.name);
+    groups[entry.store].push({
+      name: entry.name,
+      section: entry.section,
+      currentQty: 0,
+      suggestedQty: knownItem?.typicalQty || 1,
+      lastBought: knownItem?.lastBought || null,
+    });
+  }
+
+  return groups;
+}
+
 export function Shopping() {
-  const { state } = useAppState();
+  const { state, dispatch } = useAppState();
 
   const mergedKnownItems = getMergedKnownItems(state);
   const { items, knownMap } = collectShoppingItems(state, mergedKnownItems);
   const uniqueItems = dedupeItems(items);
   const itemsWithUrgency = uniqueItems.map(item => ({ ...item, urgency: determineUrgency(item) }));
   const limitedItems = limitVarietyItems(itemsWithUrgency);
-  const storeGroups = groupByStore(limitedItems, knownMap);
+  const suggestionGroups = groupByStore(limitedItems, knownMap);
+  const staplesByStore = getStaplesByStore();
+  const userListByStore = groupUserListByStore(state.shoppingList, knownMap);
+
+  // Get names in user's shopping list for this store (to filter from staples/suggestions)
+  const getUserListNames = (store: Store) => new Set(
+    state.shoppingList.filter(e => e.store === store).map(e => e.name)
+  );
+
+  const handleAddToList = (name: string, section: Section, store: Store) => {
+    dispatch({
+      type: 'ADD_TO_SHOPPING_LIST',
+      entry: { name, section, store },
+    });
+  };
+
+  const handleRemoveFromList = (name: string, store: Store) => {
+    dispatch({
+      type: 'REMOVE_FROM_SHOPPING_LIST',
+      name,
+      store,
+    });
+  };
 
   return (
     <div>
       <PageHeader title="Shopping List" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {STORE_ORDER.map(store => (
-          <section
-            key={store}
-            className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
-          >
-            <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide">
-              {STORE_LABELS[store]}
-            </h2>
+        {STORE_ORDER.map(store => {
+          const userListNames = getUserListNames(store);
+          const userItems = userListByStore[store];
 
-            <div className="flex flex-col gap-2">
-              {storeGroups[store].length > 0 ? (
-                storeGroups[store].map(item => (
-                  <ShoppingItem
-                    key={`${store}-${item.section}-${item.name}`}
-                    item={item}
-                    urgency={item.urgency}
-                  />
-                ))
-              ) : (
+          // Staples: items marked as staple for this store, excluding items already in user's list
+          const staples: StapleItem[] = staplesByStore[store]
+            .filter(({ item }) => !userListNames.has(item.name))
+            .map(({ item, section }) => ({
+              name: item.name,
+              section,
+              currentQty: 0,
+              suggestedQty: item.typicalQty,
+              lastBought: knownMap.get(item.name)?.lastBought || null,
+              priority: item.priority || 'medium',
+            }))
+            .sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]);
+
+          // Suggestions: auto-generated items, excluding user's list items and staples
+          const stapleNames = new Set(staplesByStore[store].map(({ item }) => item.name));
+          const suggestions = suggestionGroups[store].filter(
+            item => !userListNames.has(item.name) && !stapleNames.has(item.name)
+          );
+
+          const hasAnyItems = userItems.length > 0 || staples.length > 0 || suggestions.length > 0;
+
+          return (
+            <section
+              key={store}
+              className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
+            >
+              <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide">
+                {STORE_LABELS[store]}
+              </h2>
+
+              {!hasAnyItems ? (
                 <EmptyState message="Nothing needed from here" icon="✓" />
+              ) : (
+                <div className="flex flex-col gap-4">
+                  {/* Your List section - hidden when empty */}
+                  {userItems.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-500 mb-2">Your List</h3>
+                      <div className="flex flex-col gap-2">
+                        {userItems.map(item => (
+                          <ShoppingItem
+                            key={`user-${store}-${item.name}`}
+                            item={item}
+                            variant="user-list"
+                            onRemove={() => handleRemoveFromList(item.name, store)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Staples section */}
+                  {staples.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-500 mb-2">Staples</h3>
+                      <div className="flex flex-col gap-2">
+                        {staples.map(item => (
+                          <ShoppingItem
+                            key={`staple-${store}-${item.name}`}
+                            item={item}
+                            variant="staple"
+                            onAddToList={() => handleAddToList(item.name, item.section, store)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Suggestions section */}
+                  {suggestions.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-500 mb-2">Suggestions</h3>
+                      <div className="flex flex-col gap-2">
+                        {suggestions.map(item => (
+                          <ShoppingItem
+                            key={`suggestion-${store}-${item.section}-${item.name}`}
+                            item={item}
+                            variant="suggestion"
+                            urgency={item.urgency}
+                            onAddToList={() => handleAddToList(item.name, item.section, store)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
-            </div>
-          </section>
-        ))}
+            </section>
+          );
+        })}
       </div>
     </div>
   );
