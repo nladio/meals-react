@@ -5,5 +5,6 @@
   { "name": "Frozen Falafel", "typicalQty": 1, "usages": ["meal", "ingredient"], "ingredientCategory": "protein", "defaultExpiryDays": 90, "stores": ["grocery", "costco"], "priority": "medium", "prepTimeMinutes": 12 },
   { "name": "Frozen Veggie Patty", "typicalQty": 2, "usages": ["meal", "ingredient"], "defaultExpiryDays": 180, "stores": ["grocery", "costco"], "priority": "medium", "prepTimeMinutes": 8, "staple": true },
   { "name": "Frozen Spicy Chicken Patty", "typicalQty": 2, "usages": ["meal", "ingredient"], "ingredientCategory": "protein", "defaultExpiryDays": 180, "stores": ["grocery", "costco"], "priority": "high", "prepTimeMinutes": 8, "staple": true },
-  { "name": "Uncooked Chapatis", "typicalQty": 20, "usages": ["meal", "ingredient"], "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "medium", "prepTimeMinutes": 10, "staple": true }
+  { "name": "Uncooked Chapatis", "typicalQty": 20, "usages": ["meal", "ingredient"], "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "medium", "prepTimeMinutes": 10, "staple": true },
+  { "name": "Tamarind Chutney", "typicalQty": 30, "usages": ["ingredient"], "ingredientCategory": "condiments", "defaultExpiryDays": 14, "stores": ["indian-store"], "priority": "medium" }
 ]
