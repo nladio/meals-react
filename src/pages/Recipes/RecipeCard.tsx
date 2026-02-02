@@ -14,8 +14,6 @@ export function RecipeCard({ match }: RecipeCardProps) {
     none: 'border-l-gray-300',
   }[status];
 
-  const totalIngredients = recipe.ingredients.length;
-
   return (
     <div className={`bg-white rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] ${borderColor}`}>
       <div className="flex items-center justify-between mb-3">
@@ -23,14 +21,9 @@ export function RecipeCard({ match }: RecipeCardProps) {
           <h3 className="font-semibold text-gray-800">{recipe.name}</h3>
           <NutritionBadges tags={recipe.nutritionTags} />
         </div>
-        <div className="flex gap-2 shrink-0">
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-            {recipe.prepTimeMinutes} min
-          </span>
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-            {totalIngredients} ingredients
-          </span>
-        </div>
+        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full shrink-0">
+          {recipe.prepTimeMinutes} min
+        </span>
       </div>
 
       <div className="flex flex-wrap gap-2">
