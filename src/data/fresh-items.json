@@ -2,7 +2,7 @@
   { "name": "Paneer Curry", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3 },
   { "name": "Dal Makhani", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },
   { "name": "Palak Paneer", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "nutritionTags": ["high-fiber"], "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },
-  { "name": "Chole", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "nutritionTags": ["high-fiber"], "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 3, "staple": true },
+  { "name": "Chole", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "nutritionTags": ["high-fiber", "high-protein"], "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 3, "staple": true },
   { "name": "Aloo Gobi", "typicalQty": 2, "usages": ["meal"], "mealCategory": "curries", "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "medium", "prepTimeMinutes": 3 },
   { "name": "Fresh Chapatis", "typicalQty": 6, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },
   { "name": "Fresh Methi Thepla", "typicalQty": 4, "usages": ["meal", "ingredient"], "defaultExpiryDays": 5, "stores": ["indian-store"], "priority": "high", "prepTimeMinutes": 3, "staple": true },

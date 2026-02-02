@@ -75,6 +75,17 @@ export const defaultRecipes: Recipe[] = [
     ],
   },
   {
+    id: 'paneer bhurji',
+    name: 'Paneer Bhurji',
+    prepTimeMinutes: 20,
+    nutritionTags: ['high-protein'],
+    ingredients: [
+      { name: 'Paneer', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Tomato', required: false },
+    ],
+  },
+  {
     id: 'omelette',
     name: 'Omelette',
     prepTimeMinutes: 20,
