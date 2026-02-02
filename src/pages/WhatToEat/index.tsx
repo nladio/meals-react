@@ -76,10 +76,10 @@ const PROTEIN_CONFIG: NutritionSectionConfig = {
   title: 'High Protein',
   emptyMessage: 'No high-protein items in stock',
   emptyIcon: '🥚',
-  badgeBg: 'bg-green-100',
-  badgeText: 'text-green-600',
-  borderColor: 'border-l-green-500',
-  quantityColors: 'text-green-600 border-green-500',
+  badgeBg: 'bg-blue-100',
+  badgeText: 'text-blue-600',
+  borderColor: 'border-l-blue-500',
+  quantityColors: 'text-blue-600 border-blue-500',
 };
 
 const FIBER_CONFIG: NutritionSectionConfig = {
@@ -87,10 +87,10 @@ const FIBER_CONFIG: NutritionSectionConfig = {
   title: 'High Fiber',
   emptyMessage: 'No high-fiber items in stock',
   emptyIcon: '🥬',
-  badgeBg: 'bg-teal-100',
-  badgeText: 'text-teal-600',
-  borderColor: 'border-l-teal-500',
-  quantityColors: 'text-teal-600 border-teal-500',
+  badgeBg: 'bg-green-100',
+  badgeText: 'text-green-600',
+  borderColor: 'border-l-green-500',
+  quantityColors: 'text-green-600 border-green-500',
 };
 
 function hasTag(item: NutritionItem, tag: NutritionTag): boolean {
