@@ -149,7 +149,7 @@ export const defaultRecipes: Recipe[] = [
     prepTimeMinutes: 20,
     nutritionTags: ['high-protein'],
     ingredients: [
-      { name: 'Frozen Spicy Chicken Pattie', required: true },
+      { name: 'Frozen Spicy Chicken Patty', required: true },
       { name: 'Bun', required: true },
       { name: 'Tomato', required: true },
       { name: 'Onion', required: true },

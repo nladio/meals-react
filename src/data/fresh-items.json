@@ -26,6 +26,7 @@
   { "name": "Tofu", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "protein", "defaultExpiryDays": 10, "nutritionTags": ["high-protein"], "stores": ["grocery", "costco"], "priority": "low" },
   { "name": "Amul Cheese Cubes", "typicalQty": 10, "usages": ["ingredient"], "ingredientCategory": "dairy", "defaultExpiryDays": 14, "stores": ["indian-store"], "priority": "medium" },
   { "name": "Amul Cheese Slice", "typicalQty": 10, "usages": ["ingredient"], "ingredientCategory": "dairy", "defaultExpiryDays": 14, "stores": ["indian-store"], "priority": "medium", "staple": true },
+  { "name": "Cheese", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "dairy", "defaultExpiryDays": 21, "stores": ["grocery", "costco"], "priority": "medium" },
   { "name": "Whole Milk", "typicalQty": 3, "usages": ["ingredient", "meal"], "ingredientCategory": "dairy", "defaultExpiryDays": 14, "stores": ["costco", "grocery"], "priority": "high", "staple": true },
   { "name": "Butter", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "dairy", "defaultExpiryDays": 30, "stores": ["grocery", "costco"], "priority": "low" },
   { "name": "Yogurt", "typicalQty": 1, "usages": ["ingredient"], "ingredientCategory": "dairy", "defaultExpiryDays": 14, "stores": ["grocery"], "priority": "low", "staple": true },
