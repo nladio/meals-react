@@ -24,26 +24,26 @@ export function ShoppingSubcategoryGroup({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="mb-2">
+    <div className="mb-3">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-3 py-1.5 bg-gray-50 rounded hover:bg-gray-100 transition-all active:scale-[0.98] text-left"
+        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-all active:scale-[0.98] text-left"
       >
         <div className="flex items-center gap-2">
           <span
-            className={`text-gray-400 transition-transform duration-200 text-xs ${isExpanded ? 'rotate-90' : ''}`}
+            className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
           >
             ▶
           </span>
-          <span className="font-medium text-xs text-gray-600">{category}</span>
+          <span className="font-medium text-sm text-gray-700">{category}</span>
         </div>
-        <span className="text-xs text-gray-500 bg-white px-1.5 py-0.5 rounded-full">
+        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
           {items.length}
         </span>
       </button>
 
       {isExpanded && (
-        <div className="flex flex-col gap-2 pt-2 pl-2">
+        <div className="flex flex-col gap-2 pt-2">
           {items.map(item => (
             <ShoppingItem
               key={`${variant}-${store}-${category}-${item.name}`}
