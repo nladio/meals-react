@@ -6,7 +6,7 @@ import type { Recipe } from '../../types';
 
 function CompactRecipeCard({ recipe }: { recipe: Recipe }) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-sm bg-gray-100">
+    <div className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-primary">
       <span className="font-medium text-[15px] flex-1 min-w-0 truncate">{recipe.name}</span>
       <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full shrink-0">
         {recipe.prepTimeMinutes} min
@@ -30,7 +30,7 @@ export function QuickRecipes() {
     <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between"
+        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-all active:scale-[0.98] text-left"
       >
         <div className="flex items-center gap-2">
           <span className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
@@ -41,6 +41,9 @@ export function QuickRecipes() {
           </h2>
           <span className="text-xs text-gray-400 font-normal">(16+ min)</span>
         </div>
+        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+          {readyRecipes.length}
+        </span>
       </button>
 
       {isExpanded && (
