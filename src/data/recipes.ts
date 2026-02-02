@@ -61,6 +61,7 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Bread', required: true },
       { name: 'Butter', required: false },
       { name: 'Lime', required: false },
+      { name: 'Egg', required: false}
     ],
   },
   {
@@ -125,6 +126,36 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Lettuce', required: false },
       { name: 'Hummus', required: true },
       { name: 'Tzatziki', required: false },
+    ],
+  },
+  {
+    id: 'veggie burger',
+    name: 'Veggie Burger',
+    prepTimeMinutes: 20,
+    nutritionTags: ['high-fiber'],
+    ingredients: [
+      { name: 'Frozen Veggie Pattie', required: true },
+      { name: 'Bun', required: true },
+      { name: 'Tomato', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Cheese', required: false },
+      { name: 'Ketchup', required: true },
+      { name: 'Mustard', required: false },
+    ],
+  },
+  {
+    id: 'chicken burger',
+    name: 'Chicken Burger',
+    prepTimeMinutes: 20,
+    nutritionTags: ['high-fiber'],
+    ingredients: [
+      { name: 'Frozen Spicy Chicken Pattie', required: true },
+      { name: 'Bun', required: true },
+      { name: 'Tomato', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Cheese', required: false },
+      { name: 'Ketchup', required: true },
+      { name: 'Mustard', required: false },
     ],
   },
 ];
