@@ -30,13 +30,31 @@ The Meal Planning feature allows users to create recipes with ingredients and ma
   - **Full match**: All required ingredients are available
   - **Partial match**: Some required ingredients are missing (system shows what's missing)
 
+### FR-MEAL-004: Recipe Nutrition Tags
+
+- Recipes can have an optional `nutritionTags[]` field
+- Tags are assigned based on main ingredients:
+  - Dal Tadka → high-fiber (uses Toor Dal)
+  - Dal Palak → high-fiber, natural-protein (uses Toor Dal, Spinach)
+  - Paneer Tikka Kebab → natural-protein (uses Paneer)
+  - Egg Bhurji, Omelette, Half Fried Egg → natural-protein (uses Egg)
+  - Chicken Tikka Kebab → natural-protein (uses Chicken)
+- Tags help users identify recipes that support their nutrition goals
+
+### FR-MEAL-005: Recipe Nutrition Badges
+
+- Recipe cards shall display nutrition badges when recipe has nutritionTags
+- Badges appear in recipe card header, after the recipe name
+- Badge styling matches inventory nutrition badges (N, P, F)
+- Helps users quickly find recipes supporting their nutrition goals
+
 ## Out of Scope (MVP)
 
 - User-created recipes (create/delete)
 - Cooking instructions
 - Weekly meal planning/scheduling
 - Auto-generate shopping list from recipes
-- Recipe categories/tags
+- Recipe categories (beyond nutrition tags)
 - Serving sizes/quantities
 - Ingredient quantities (matching is presence/absence only)
 

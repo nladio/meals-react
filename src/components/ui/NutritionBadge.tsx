@@ -1,27 +1,42 @@
 import type { NutritionTag } from '../../types';
 
+interface BadgeConfig {
+  label: string;
+  title: string;
+  colors: string;
+}
+
+const BADGE_CONFIG: Record<NutritionTag, BadgeConfig> = {
+  'natural-protein': {
+    label: 'N',
+    title: 'Natural Protein',
+    colors: 'bg-purple-100 text-purple-600',
+  },
+  'high-protein': {
+    label: 'P',
+    title: 'High Protein',
+    colors: 'bg-green-100 text-green-600',
+  },
+  'high-fiber': {
+    label: 'F',
+    title: 'High Fiber',
+    colors: 'bg-teal-100 text-teal-600',
+  },
+};
+
 interface NutritionBadgeProps {
   tag: NutritionTag;
 }
 
 export function NutritionBadge({ tag }: NutritionBadgeProps) {
-  if (tag === 'high-protein') {
-    return (
-      <span
-        className="text-[10px] px-1.5 py-0.5 bg-green-100 text-green-600 rounded-full font-medium shrink-0"
-        title="High Protein"
-      >
-        P
-      </span>
-    );
-  }
+  const config = BADGE_CONFIG[tag];
 
   return (
     <span
-      className="text-[10px] px-1.5 py-0.5 bg-teal-100 text-teal-600 rounded-full font-medium shrink-0"
-      title="High Fiber"
+      className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium shrink-0 ${config.colors}`}
+      title={config.title}
     >
-      F
+      {config.label}
     </span>
   );
 }

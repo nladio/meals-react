@@ -83,10 +83,35 @@ The Nutrition Tags feature allows users to tag meals and ingredients with nutrit
 - Nutrition badges shall appear after the item name and any existing badges (e.g., "2x" dual-use badge)
 - Multiple badges shall be displayed inline with small gap between them
 
+### FR-NUTR-007: Natural Protein Tag
+
+- The system shall support a `natural-protein` tag for whole food protein sources
+- Natural protein distinguishes whole foods from protein supplements (bars, shakes)
+- The following items shall be tagged as **natural-protein**:
+  - Eggs, Paneer, Tofu, Chicken (fresh protein sources)
+  - Toor Dal, Masoor Dal, Moong Dal, Black Urad Dal, Chickpeas, Rajma (legumes)
+- Items tagged with `natural-protein` shall also be tagged with `high-protein`
+- Protein supplements (Fairlife Protein Shake, Pure Protein Bars) shall only have `high-protein` tag
+
+### FR-NUTR-008: What to Eat Page Protein Sections
+
+- The High Protein section shall be split into two subsections:
+  - **Natural Protein**: Items with `natural-protein` tag (whole food sources)
+  - **Protein Supplements**: Items with `high-protein` but NOT `natural-protein` (bars, shakes)
+- This helps users distinguish between whole food protein and supplements
+
+## User Interface Requirements (Additional)
+
+### UI-NUTR-005: Natural Protein Badge
+
+- Natural protein tag shall be displayed as a purple badge
+- Badge styling:
+  - **natural-protein**: Purple background (`bg-purple-100`), purple text, label "N"
+- Badge includes tooltip "Natural Protein" on hover
+- Badge appears alongside P and F badges when item has multiple tags
+
 ## Out of Scope (MVP)
 
 - User-editable tags on custom items
 - Additional tag types (low-carb, vegetarian, vegan, etc.)
-- Nutrition filtering on Shopping page
 - Macro tracking (calories, grams of protein/fiber)
-- Tag-based recipe matching

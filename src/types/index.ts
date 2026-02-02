@@ -2,7 +2,7 @@ export type Section = 'fresh' | 'frozen' | 'dry';
 
 export type ItemUsage = 'meal' | 'ingredient';
 
-export type NutritionTag = 'high-protein' | 'high-fiber';
+export type NutritionTag = 'high-protein' | 'high-fiber' | 'natural-protein';
 
 export type Priority = 'low' | 'medium' | 'high';
 

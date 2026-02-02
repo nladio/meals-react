@@ -22,6 +22,8 @@ interface NutritionSectionConfig {
   quantityColors: string;
 }
 
+const SECTIONS: Section[] = ['fresh', 'frozen', 'dry'];
+
 const SECTION_LABEL: Record<Section, string> = {
   fresh: 'Fresh',
   frozen: 'Frozen',
@@ -51,12 +53,12 @@ function NutritionSection({ config, items }: NutritionSectionProps) {
               key={`${item.section}-${item.name}`}
               className={`flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] ${config.borderColor}`}
             >
-              <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-medium text-[15px] truncate">{item.name}</span>
+              <div className="flex flex-col gap-1 flex-1 min-w-0">
+                <span className="font-medium text-[15px] truncate">{item.name}</span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-xs text-gray-400">{SECTION_LABEL[item.section]}</span>
                   <NutritionBadges tags={item.nutritionTags} />
                 </div>
-                <span className="text-xs text-gray-400">{SECTION_LABEL[item.section]}</span>
               </div>
               <span className={`font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 ${config.quantityColors}`}>
                 {item.quantity}
@@ -69,11 +71,22 @@ function NutritionSection({ config, items }: NutritionSectionProps) {
   );
 }
 
-const PROTEIN_CONFIG: NutritionSectionConfig = {
-  badge: 'P',
-  title: 'High Protein',
-  emptyMessage: 'No high-protein items in stock',
+const NATURAL_PROTEIN_CONFIG: NutritionSectionConfig = {
+  badge: 'N',
+  title: 'Natural Protein',
+  emptyMessage: 'No natural protein items in stock',
   emptyIcon: '🥚',
+  badgeBg: 'bg-purple-100',
+  badgeText: 'text-purple-600',
+  borderColor: 'border-l-purple-500',
+  quantityColors: 'text-purple-600 border-purple-500',
+};
+
+const SUPPLEMENTS_CONFIG: NutritionSectionConfig = {
+  badge: 'P',
+  title: 'Protein Supplements',
+  emptyMessage: 'No protein supplements in stock',
+  emptyIcon: '🥤',
   badgeBg: 'bg-green-100',
   badgeText: 'text-green-600',
   borderColor: 'border-l-green-500',
@@ -91,37 +104,37 @@ const FIBER_CONFIG: NutritionSectionConfig = {
   quantityColors: 'text-teal-600 border-teal-500',
 };
 
+function hasTag(item: NutritionItem, tag: NutritionTag): boolean {
+  return item.nutritionTags.includes(tag);
+}
+
 export function WhatToEat() {
   const { state } = useAppState();
   const knownItems = getMergedKnownItems(state);
 
-  const nutritionItems: NutritionItem[] = [];
+  const nutritionItems: NutritionItem[] = SECTIONS.flatMap(section =>
+    state.inventory[section]
+      .filter(invItem => invItem.quantity > 0)
+      .map(invItem => {
+        const known = knownItems[section].find(k => k.name === invItem.name);
+        return known?.nutritionTags?.length
+          ? { name: invItem.name, quantity: invItem.quantity, section, nutritionTags: known.nutritionTags }
+          : null;
+      })
+      .filter((item): item is NutritionItem => item !== null)
+  );
 
-  for (const section of ['fresh', 'frozen', 'dry'] as Section[]) {
-    for (const invItem of state.inventory[section]) {
-      if (invItem.quantity <= 0) continue;
-
-      const known = knownItems[section].find(k => k.name === invItem.name);
-      if (known?.nutritionTags && known.nutritionTags.length > 0) {
-        nutritionItems.push({
-          name: invItem.name,
-          quantity: invItem.quantity,
-          section,
-          nutritionTags: known.nutritionTags,
-        });
-      }
-    }
-  }
-
-  const highProteinItems = nutritionItems.filter(item => item.nutritionTags.includes('high-protein'));
-  const highFiberItems = nutritionItems.filter(item => item.nutritionTags.includes('high-fiber'));
+  const naturalProteinItems = nutritionItems.filter(item => hasTag(item, 'natural-protein'));
+  const supplementItems = nutritionItems.filter(item => hasTag(item, 'high-protein') && !hasTag(item, 'natural-protein'));
+  const highFiberItems = nutritionItems.filter(item => hasTag(item, 'high-fiber'));
 
   return (
     <div>
       <PageHeader title="What to Eat" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <NutritionSection config={PROTEIN_CONFIG} items={highProteinItems} />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <NutritionSection config={NATURAL_PROTEIN_CONFIG} items={naturalProteinItems} />
+        <NutritionSection config={SUPPLEMENTS_CONFIG} items={supplementItems} />
         <NutritionSection config={FIBER_CONFIG} items={highFiberItems} />
       </div>
     </div>
