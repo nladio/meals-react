@@ -18,7 +18,26 @@ export const defaultRecipes: Recipe[] = [
     id: 'veg sandwich',
     name: 'Veg Sandwich',
     prepTimeMinutes: 20,
+    nutritionTags: ['high-fiber'],
     ingredients: [
+      { name: 'Bread', required: true },
+      { name: 'Tomato', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Potato', required: true },
+      { name: 'Cucumber', required: false },
+      { name: 'Green Chutney', required: true },
+      { name: 'Cheese', required: false },
+      { name: 'Butter', required: true },
+    ],
+  },
+  {
+    id: 'paneer sandwich',
+    name: 'Paneer Sandwich',
+    prepTimeMinutes: 20,
+    nutritionTags: ['high-fiber'],
+    ingredients: [
+      { name: 'Paneer', required: true },
+      { name: 'Yogurt', required: true },
       { name: 'Bread', required: true },
       { name: 'Tomato', required: true },
       { name: 'Onion', required: true },
@@ -118,6 +137,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'falafel wrap',
     name: 'Falafel Wrap',
     prepTimeMinutes: 25,
+    nutritionTags: ['high-fiber'],
     ingredients: [
       { name: 'Falafel', required: true },
       { name: 'Tortillas', required: true },
@@ -160,4 +180,68 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Lettuce', required: false }
     ],
   },
+  {
+    id: 'caprese panini',
+    name: 'Caprese Panini',
+    prepTimeMinutes: 10,
+    nutritionTags: ['high-fiber', 'high-protein'],
+    ingredients: [
+      { name: 'Mozzarella', required: true },
+      { name: 'Ciabatta', required: true },
+      { name: 'Tomato', required: true },
+      { name: 'Basil', required: false },
+      { name: 'Olive Oil', required: true},
+      { name: 'Oregano Seasoning', required: true}
+    ],
+  },
+  {
+    id: 'dal makhani',
+    name: 'Dal makhani',
+    prepTimeMinutes: 10,
+    nutritionTags: ['high-fiber', 'high-protein'],
+    ingredients: [
+      { name: 'Black Urad Dal', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Tomato', required: true },
+      { name: 'Ginger', required: false },
+      { name: 'Cream', required: true }
+    ],
+  },
+  {
+    id: 'akkha masoor',
+    name: 'Akkha masoor',
+    prepTimeMinutes: 10,
+    nutritionTags: ['high-fiber', 'high-protein'],
+    ingredients: [
+      { name: 'Masoor', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Tomato', required: false },
+    ],
+  },
+  {
+    id: 'akkha masoor',
+    name: 'Akkha masoor',
+    prepTimeMinutes: 10,
+    nutritionTags: ['high-fiber', 'high-protein'],
+    ingredients: [
+      { name: 'Masoor', required: true },
+      { name: 'Onion', required: true },
+      { name: 'Tomato', required: false },
+    ],
+  },
+  {
+    id: 'dal khichdi',
+    name: 'Dal Khichdi',
+    prepTimeMinutes: 10,
+    nutritionTags: ['high-fiber', 'high-protein'],
+    ingredients: [
+      { name: 'Moong Dal', required: true },
+      { name: 'Indrayani Rice', required: true },
+      { name: 'Ghee', required: true},
+      { name: 'Onion', required: false },
+      { name: 'Tomato', required: false },
+      { name: 'Garlic', required: false },
+      { name: 'Ginger', required: false },
+    ],
+  }
 ];
