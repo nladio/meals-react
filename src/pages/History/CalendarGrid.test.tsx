@@ -22,6 +22,7 @@ describe('CalendarGrid', () => {
         inventory: { fresh: [], frozen: [], dry: [] },
         shoppingChecked: {},
         historyViewMonth: null,
+        shoppingList: [],
       },
       dispatch: vi.fn(),
     });
@@ -85,6 +86,7 @@ describe('CalendarGrid', () => {
         inventory: { fresh: [], frozen: [], dry: [] },
         shoppingChecked: {},
         historyViewMonth: null,
+        shoppingList: [],
       },
       dispatch: vi.fn(),
     });
@@ -111,6 +113,7 @@ describe('CalendarGrid', () => {
         inventory: { fresh: [], frozen: [], dry: [] },
         shoppingChecked: {},
         historyViewMonth: null,
+        shoppingList: [],
       },
       dispatch: vi.fn(),
     });

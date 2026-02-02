@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage } from '../types';
+import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage, Store, ShoppingListEntry } from '../types';
 import { generateId } from '../utils/helpers';
 import { defaultKnownItems, getDefaultItemNames } from '../data/defaultKnownItems';
 
@@ -18,6 +18,7 @@ const DEFAULT_STATE: AppState = {
   shoppingChecked: {},
   purchaseHistory: [],
   historyViewMonth: null,
+  shoppingList: [],
 };
 
 // Selector: Merge default items with custom items for display
@@ -75,7 +76,9 @@ type Action =
   | { type: 'RECORD_PURCHASE'; date: string; items: PurchaseItem[] }
   | { type: 'UPDATE_KNOWN_ITEM_PURCHASE'; section: Section; name: string; qty: number }
   | { type: 'SET_HISTORY_MONTH'; month: string }
-  | { type: 'LOAD_STATE'; state: AppState };
+  | { type: 'LOAD_STATE'; state: AppState }
+  | { type: 'ADD_TO_SHOPPING_LIST'; entry: ShoppingListEntry }
+  | { type: 'REMOVE_FROM_SHOPPING_LIST'; name: string; store: Store };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -274,6 +277,28 @@ export function reducer(state: AppState, action: Action): AppState {
       return action.state;
     }
 
+    case 'ADD_TO_SHOPPING_LIST': {
+      // Check if item already exists for this store
+      const exists = state.shoppingList.some(
+        e => e.name === action.entry.name && e.store === action.entry.store
+      );
+      if (exists) return state;
+
+      return {
+        ...state,
+        shoppingList: [...state.shoppingList, action.entry],
+      };
+    }
+
+    case 'REMOVE_FROM_SHOPPING_LIST': {
+      return {
+        ...state,
+        shoppingList: state.shoppingList.filter(
+          e => !(e.name === action.name && e.store === action.store)
+        ),
+      };
+    }
+
     default:
       return state;
   }
@@ -299,6 +324,7 @@ function loadState(): AppState {
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
         historyViewMonth: parsed.historyViewMonth || null,
+        shoppingList: parsed.shoppingList || [],
       };
     }
 
@@ -337,6 +363,7 @@ function loadState(): AppState {
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
         historyViewMonth: parsed.historyViewMonth || null,
+        shoppingList: [],
       };
     }
   } catch (e) {

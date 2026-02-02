@@ -46,12 +46,19 @@ export interface PurchaseHistoryEntry {
   items: PurchaseItem[];
 }
 
+export interface ShoppingListEntry {
+  name: string;
+  section: Section;
+  store: Store;
+}
+
 export interface AppState {
   customKnownItems: Record<Section, KnownItem[]>; // User-added items only
   inventory: Record<Section, InventoryItem[]>;
   shoppingChecked: Record<string, boolean | number>;
   purchaseHistory: PurchaseHistoryEntry[];
   historyViewMonth: string | null;
+  shoppingList: ShoppingListEntry[]; // User-added shopping items
 }
 
 export interface ShoppingListItem {

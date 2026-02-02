@@ -33,6 +33,7 @@ describe('categorizeByPrepTime', () => {
     shoppingChecked: {},
     purchaseHistory: [],
     historyViewMonth: null,
+    shoppingList: [],
   });
 
   it('returns empty arrays when no inventory items', () => {

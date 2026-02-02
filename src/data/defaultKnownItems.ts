@@ -23,6 +23,7 @@ export interface DefaultKnownItem {
   priority?: Priority; // default: 'medium'
   stores?: Store[]; // default: ['grocery']
   prepTimeMinutes?: number; // Minutes to prepare (for meal items)
+  staple?: boolean; // true = always show in Staples section
 }
 
 export const defaultKnownItems: Record<Section, DefaultKnownItem[]> = {
