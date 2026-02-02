@@ -99,3 +99,93 @@ describe('ADD_TO_INVENTORY with expiryDate', () => {
     expect(result.inventory.fresh[0].expiryDate).toBe('2025-01-25');
   });
 });
+
+describe('ADD_TO_SHOPPING_LIST', () => {
+  it('adds item to shopping list', () => {
+    const state = createEmptyState();
+    const result = reducer(state, {
+      type: 'ADD_TO_SHOPPING_LIST',
+      entry: { name: 'Rice', section: 'dry', store: 'indian-store' },
+    });
+
+    expect(result.shoppingList).toHaveLength(1);
+    expect(result.shoppingList[0]).toEqual({
+      name: 'Rice',
+      section: 'dry',
+      store: 'indian-store',
+    });
+  });
+
+  it('does not add duplicate item for same store', () => {
+    const state = createEmptyState();
+    state.shoppingList = [{ name: 'Rice', section: 'dry', store: 'indian-store' }];
+
+    const result = reducer(state, {
+      type: 'ADD_TO_SHOPPING_LIST',
+      entry: { name: 'Rice', section: 'dry', store: 'indian-store' },
+    });
+
+    expect(result.shoppingList).toHaveLength(1);
+  });
+
+  it('allows same item for different stores', () => {
+    const state = createEmptyState();
+    state.shoppingList = [{ name: 'Rice', section: 'dry', store: 'indian-store' }];
+
+    const result = reducer(state, {
+      type: 'ADD_TO_SHOPPING_LIST',
+      entry: { name: 'Rice', section: 'dry', store: 'costco' },
+    });
+
+    expect(result.shoppingList).toHaveLength(2);
+  });
+});
+
+describe('REMOVE_FROM_SHOPPING_LIST', () => {
+  it('removes item from shopping list', () => {
+    const state = createEmptyState();
+    state.shoppingList = [
+      { name: 'Rice', section: 'dry', store: 'indian-store' },
+      { name: 'Bread', section: 'fresh', store: 'grocery' },
+    ];
+
+    const result = reducer(state, {
+      type: 'REMOVE_FROM_SHOPPING_LIST',
+      name: 'Rice',
+      store: 'indian-store',
+    });
+
+    expect(result.shoppingList).toHaveLength(1);
+    expect(result.shoppingList[0].name).toBe('Bread');
+  });
+
+  it('only removes item for the specified store', () => {
+    const state = createEmptyState();
+    state.shoppingList = [
+      { name: 'Rice', section: 'dry', store: 'indian-store' },
+      { name: 'Rice', section: 'dry', store: 'costco' },
+    ];
+
+    const result = reducer(state, {
+      type: 'REMOVE_FROM_SHOPPING_LIST',
+      name: 'Rice',
+      store: 'indian-store',
+    });
+
+    expect(result.shoppingList).toHaveLength(1);
+    expect(result.shoppingList[0].store).toBe('costco');
+  });
+
+  it('does nothing if item not found', () => {
+    const state = createEmptyState();
+    state.shoppingList = [{ name: 'Rice', section: 'dry', store: 'indian-store' }];
+
+    const result = reducer(state, {
+      type: 'REMOVE_FROM_SHOPPING_LIST',
+      name: 'Bread',
+      store: 'grocery',
+    });
+
+    expect(result.shoppingList).toHaveLength(1);
+  });
+});
