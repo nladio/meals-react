@@ -257,15 +257,15 @@ function NutritionLegend() {
     <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
       <span className="font-medium">Legend:</span>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-green-50 border border-green-200"></span>
+        <span className="w-4 h-4 rounded bg-blue-100 border border-blue-300"></span>
         <span>Protein</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-teal-50 border border-teal-200"></span>
+        <span className="w-4 h-4 rounded bg-green-50 border border-green-200"></span>
         <span>Fiber</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-purple-50 border border-purple-200"></span>
+        <span className="w-4 h-4 rounded bg-violet-50 border border-violet-200"></span>
         <span>Both</span>
       </div>
     </div>

@@ -11,25 +11,25 @@ interface NutritionStyle {
 
 const NUTRITION_STYLES: Record<'protein' | 'fiber' | 'both', NutritionStyle> = {
   protein: {
+    bg: 'bg-blue-100',
+    border: 'border-l-blue-400',
+    text: 'text-blue-400',
+    hoverText: 'hover:text-blue-600',
+    hoverBg: 'hover:bg-blue-200',
+  },
+  fiber: {
     bg: 'bg-green-50',
     border: 'border-l-green-400',
     text: 'text-green-400',
     hoverText: 'hover:text-green-600',
     hoverBg: 'hover:bg-green-100',
   },
-  fiber: {
-    bg: 'bg-teal-50',
-    border: 'border-l-teal-400',
-    text: 'text-teal-400',
-    hoverText: 'hover:text-teal-600',
-    hoverBg: 'hover:bg-teal-100',
-  },
   both: {
-    bg: 'bg-purple-50',
-    border: 'border-l-purple-400',
-    text: 'text-purple-400',
-    hoverText: 'hover:text-purple-600',
-    hoverBg: 'hover:bg-purple-100',
+    bg: 'bg-violet-50',
+    border: 'border-l-violet-400',
+    text: 'text-violet-400',
+    hoverText: 'hover:text-violet-600',
+    hoverBg: 'hover:bg-violet-100',
   },
 };
 
