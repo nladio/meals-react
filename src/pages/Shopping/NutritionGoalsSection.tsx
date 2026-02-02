@@ -1,6 +1,47 @@
 import type { NutritionTag, Section, Store } from '../../types';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
+interface NutritionStyle {
+  bg: string;
+  border: string;
+  hoverBg: string;
+  hoverText: string;
+  text: string;
+}
+
+const NUTRITION_STYLES: Record<'protein' | 'fiber' | 'both', NutritionStyle> = {
+  protein: {
+    bg: 'bg-green-50',
+    border: 'border-l-green-400',
+    text: 'text-green-400',
+    hoverText: 'hover:text-green-600',
+    hoverBg: 'hover:bg-green-100',
+  },
+  fiber: {
+    bg: 'bg-teal-50',
+    border: 'border-l-teal-400',
+    text: 'text-teal-400',
+    hoverText: 'hover:text-teal-600',
+    hoverBg: 'hover:bg-teal-100',
+  },
+  both: {
+    bg: 'bg-purple-50',
+    border: 'border-l-purple-400',
+    text: 'text-purple-400',
+    hoverText: 'hover:text-purple-600',
+    hoverBg: 'hover:bg-purple-100',
+  },
+};
+
+function getNutritionStyle(tags: NutritionTag[]): NutritionStyle {
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return NUTRITION_STYLES.both;
+  if (hasProtein) return NUTRITION_STYLES.protein;
+  return NUTRITION_STYLES.fiber;
+}
+
 export interface NutritionGoalItem {
   name: string;
   section: Section;
@@ -25,29 +66,32 @@ export function NutritionGoalsSection({ items, store, onAddToList }: NutritionGo
         </span>
       </div>
       <div className="flex flex-col gap-2 pt-2">
-        {items.map(item => (
-          <div
-            key={`nutrition-goal-${store}-${item.name}`}
-            className="flex items-center gap-3 p-3 rounded-sm bg-purple-50 border-l-[3px] border-l-purple-400"
-          >
-            <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-medium text-[15px] truncate">{item.name}</span>
-                <NutritionBadges tags={item.nutritionTags} />
-              </div>
-              <span className="text-xs text-gray-400">Out of stock</span>
-            </div>
-            <button
-              onClick={() => onAddToList(item.name, item.section)}
-              className="w-8 h-8 flex items-center justify-center text-purple-400 hover:text-purple-600 hover:bg-purple-100 rounded-full transition-all"
-              aria-label={`Add ${item.name} to shopping list`}
+        {items.map(item => {
+          const style = getNutritionStyle(item.nutritionTags);
+          return (
+            <div
+              key={`nutrition-goal-${store}-${item.name}`}
+              className={`flex items-center gap-3 p-3 rounded-sm ${style.bg} border-l-[3px] ${style.border}`}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </button>
-          </div>
-        ))}
+              <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="font-medium text-[15px] truncate">{item.name}</span>
+                  <NutritionBadges tags={item.nutritionTags} />
+                </div>
+                <span className="text-xs text-gray-400">Out of stock</span>
+              </div>
+              <button
+                onClick={() => onAddToList(item.name, item.section)}
+                className={`w-8 h-8 flex items-center justify-center ${style.text} ${style.hoverText} ${style.hoverBg} rounded-full transition-all`}
+                aria-label={`Add ${item.name} to shopping list`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
