@@ -141,6 +141,7 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Cheese', required: false },
       { name: 'Ketchup', required: true },
       { name: 'Mustard', required: false },
+      { name: 'Lettuce', required: false }
     ],
   },
   {
@@ -156,6 +157,7 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Cheese', required: false },
       { name: 'Ketchup', required: true },
       { name: 'Mustard', required: false },
+      { name: 'Lettuce', required: false }
     ],
   },
 ];
