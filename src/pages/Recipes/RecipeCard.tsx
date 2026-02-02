@@ -1,4 +1,5 @@
 import type { RecipeMatch } from '../../types';
+import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 interface RecipeCardProps {
   match: RecipeMatch;
@@ -18,8 +19,11 @@ export function RecipeCard({ match }: RecipeCardProps) {
   return (
     <div className={`bg-white rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] ${borderColor}`}>
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-gray-800">{recipe.name}</h3>
-        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <h3 className="font-semibold text-gray-800">{recipe.name}</h3>
+          <NutritionBadges tags={recipe.nutritionTags} />
+        </div>
+        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full shrink-0">
           {totalIngredients} ingredients
         </span>
       </div>

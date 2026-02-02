@@ -5,6 +5,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'dal tadka',
     name: 'Dal Tadka',
     prepTimeMinutes: 30,
+    nutritionTags: ['high-fiber', 'natural-protein'],
     ingredients: [
       { name: 'Toor Dal', required: true },
       { name: 'Onion', required: false },
@@ -32,6 +33,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'dal palak',
     name: 'Dal Palak',
     prepTimeMinutes: 35,
+    nutritionTags: ['high-fiber', 'natural-protein'],
     ingredients: [
       { name: 'Spinach', required: true },
       { name: 'Toor Dal', required: true },
@@ -41,6 +43,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'paneer tikka kebab',
     name: 'Paneer Tikka Kebab',
     prepTimeMinutes: 25,
+    nutritionTags: ['natural-protein'],
     ingredients: [
       { name: 'Paneer', required: true },
       { name: 'Yogurt', required: true },
@@ -50,6 +53,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'avocado toast',
     name: 'Avocado Toast',
     prepTimeMinutes: 20,
+    nutritionTags: ['high-fiber'],
     ingredients: [
       { name: 'Avocado', required: true },
       { name: 'Onion', required: true },
@@ -63,6 +67,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'egg bhurji',
     name: 'Egg Bhurji',
     prepTimeMinutes: 20,
+    nutritionTags: ['natural-protein'],
     ingredients: [
       { name: 'Egg', required: true },
       { name: 'Onion', required: true },
@@ -73,6 +78,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'omelette',
     name: 'Omelette',
     prepTimeMinutes: 20,
+    nutritionTags: ['natural-protein'],
     ingredients: [
       { name: 'Egg', required: true },
     ],
@@ -81,6 +87,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'half fried egg',
     name: 'Half Fried Egg',
     prepTimeMinutes: 20,
+    nutritionTags: ['natural-protein'],
     ingredients: [
       { name: 'Egg', required: true },
     ],
@@ -89,6 +96,7 @@ export const defaultRecipes: Recipe[] = [
     id: 'chicken tikka kebab',
     name: 'Chicken Tikka Kebab',
     prepTimeMinutes: 30,
+    nutritionTags: ['natural-protein'],
     ingredients: [
       { name: 'Chicken', required: true },
       { name: 'Yogurt', required: true },

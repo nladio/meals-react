@@ -79,6 +79,7 @@ export interface Recipe {
   name: string;
   prepTimeMinutes: number;
   ingredients: RecipeIngredient[];
+  nutritionTags?: NutritionTag[];
 }
 
 export type MatchStatus = 'full' | 'partial' | 'none';
