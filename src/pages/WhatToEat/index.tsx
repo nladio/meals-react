@@ -2,7 +2,36 @@ import type { Section, NutritionTag } from '../../types';
 import { useAppState, getMergedKnownItems } from '../../hooks/useAppState';
 import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
-import { NutritionBadges } from '../../components/ui/NutritionBadge';
+
+function NutritionLegend() {
+  return (
+    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+      <span className="font-medium">Legend:</span>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-blue-100 border border-blue-300"></span>
+        <span>Protein</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-green-100 border border-green-300"></span>
+        <span>Fiber</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-violet-50 border border-violet-200"></span>
+        <span>Both</span>
+      </div>
+    </div>
+  );
+}
+
+function getNutritionBgColor(tags: NutritionTag[]): string {
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 'bg-violet-50';
+  if (hasProtein) return 'bg-blue-100';
+  if (hasFiber) return 'bg-green-100';
+  return 'bg-gray-100';
+}
 
 interface NutritionItem {
   name: string;
@@ -51,14 +80,11 @@ function NutritionSection({ config, items }: NutritionSectionProps) {
           {items.map(item => (
             <div
               key={`${item.section}-${item.name}`}
-              className={`flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] ${config.borderColor}`}
+              className={`flex items-center gap-3 p-3 rounded-sm ${getNutritionBgColor(item.nutritionTags)} border-l-[3px] ${config.borderColor}`}
             >
               <div className="flex flex-col gap-1 flex-1 min-w-0">
                 <span className="font-medium text-[15px] truncate">{item.name}</span>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-xs text-gray-400">{SECTION_LABEL[item.section]}</span>
-                  <NutritionBadges tags={item.nutritionTags} />
-                </div>
+                <span className="text-xs text-gray-400">{SECTION_LABEL[item.section]}</span>
               </div>
               <span className={`font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 ${config.quantityColors}`}>
                 {item.quantity}
@@ -119,6 +145,7 @@ export function WhatToEat() {
   return (
     <div>
       <PageHeader title="What to Eat" />
+      <NutritionLegend />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <NutritionSection config={PROTEIN_CONFIG} items={highProteinItems} />

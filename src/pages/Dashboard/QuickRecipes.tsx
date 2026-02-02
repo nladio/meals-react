@@ -2,11 +2,25 @@ import { useState } from 'react';
 import { useAppState } from '../../hooks/useAppState';
 import { defaultRecipes } from '../../data/recipes';
 import { getAllRecipeMatches } from '../../utils/recipeMatching';
-import type { Recipe } from '../../types';
+import type { NutritionTag, Recipe } from '../../types';
+
+function getNutritionBgColor(tags?: NutritionTag[]): string {
+  if (!tags || tags.length === 0) return 'bg-gray-100';
+
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 'bg-violet-50';
+  if (hasProtein) return 'bg-blue-100';
+  if (hasFiber) return 'bg-green-100';
+  return 'bg-gray-100';
+}
 
 function CompactRecipeCard({ recipe }: { recipe: Recipe }) {
+  const bgColor = getNutritionBgColor(recipe.nutritionTags);
+
   return (
-    <div className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-primary">
+    <div className={`flex items-center gap-3 p-3 rounded-sm ${bgColor} border-l-[3px] border-l-primary`}>
       <span className="font-medium text-[15px] flex-1 min-w-0 truncate">{recipe.name}</span>
       <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full shrink-0">
         {recipe.prepTimeMinutes} min
