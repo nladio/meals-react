@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import type { InventoryItem, Section, NutritionTag } from '../../types';
+import type { InventoryItem, Section, NutritionTag, Store } from '../../types';
 import { FoodItem } from './FoodItem';
 
 interface GroupedItem {
   item: InventoryItem;
   isDualUse: boolean;
   nutritionTags?: NutritionTag[];
+  stores?: Store[];
 }
 
 interface SubcategoryGroupProps {
@@ -37,8 +38,8 @@ export function SubcategoryGroup({ subcategory, groupedItems, section }: Subcate
 
       {isExpanded && (
         <div className="flex flex-col gap-2 pt-2">
-          {groupedItems.map(({ item, isDualUse, nutritionTags }) => (
-            <FoodItem key={item.id} item={item} section={section} isDualUse={isDualUse} nutritionTags={nutritionTags} />
+          {groupedItems.map(({ item, isDualUse, nutritionTags, stores }) => (
+            <FoodItem key={item.id} item={item} section={section} isDualUse={isDualUse} nutritionTags={nutritionTags} stores={stores} />
           ))}
         </div>
       )}

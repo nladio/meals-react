@@ -1,4 +1,4 @@
-import type { Section, InventoryItem, KnownItem, NutritionTag } from '../../types';
+import type { Section, InventoryItem, KnownItem, NutritionTag, Store } from '../../types';
 import { useAppState, getMergedKnownItems, getTotalServings } from '../../hooks/useAppState';
 import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
@@ -8,6 +8,7 @@ interface GroupedItem {
   item: InventoryItem;
   isDualUse: boolean;
   nutritionTags?: NutritionTag[];
+  stores?: Store[];
 }
 
 interface InventorySectionProps {
@@ -31,12 +32,13 @@ function InventorySection({ section, title, items, knownItems }: InventorySectio
     const usages = knownItem?.usages || ['meal'];
     const isDualUse = usages.includes('meal') && usages.includes('ingredient');
     const nutritionTags = knownItem?.nutritionTags;
+    const stores = knownItem?.stores;
 
     if (usages.includes('meal')) {
-      mealItems.push({ item, isDualUse, nutritionTags });
+      mealItems.push({ item, isDualUse, nutritionTags, stores });
     }
     if (usages.includes('ingredient')) {
-      ingredientItems.push({ item, isDualUse, nutritionTags });
+      ingredientItems.push({ item, isDualUse, nutritionTags, stores });
     }
   }
 

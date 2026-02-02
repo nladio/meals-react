@@ -1,4 +1,4 @@
-import type { InventoryItem, Section, NutritionTag } from '../../types';
+import type { InventoryItem, Section, NutritionTag, Store } from '../../types';
 import { formatRelativeDate, getExpiryStatus, type ExpiryStatus } from '../../utils/helpers';
 import { useAppState } from '../../hooks/useAppState';
 import { NutritionBadges } from '../../components/ui/NutritionBadge';
@@ -16,13 +16,23 @@ interface FoodItemProps {
   section: Section;
   isDualUse?: boolean;
   nutritionTags?: NutritionTag[];
+  stores?: Store[];
 }
 
-export function FoodItem({ item, section, isDualUse = false, nutritionTags }: FoodItemProps) {
+export function FoodItem({ item, section, isDualUse = false, nutritionTags, stores }: FoodItemProps) {
   const { dispatch } = useAppState();
   const isLow = item.quantity <= 2;
   const relativeDate = formatRelativeDate(item.addedDate);
   const expiryStatus = getExpiryStatus(item.expiryDate);
+
+  const handleAddToShoppingList = () => {
+    // Add to the first available store for this item
+    const store = stores?.[0] || 'grocery';
+    dispatch({
+      type: 'ADD_TO_SHOPPING_LIST',
+      entry: { name: item.name, section, store },
+    });
+  };
 
   return (
     <div
@@ -57,6 +67,16 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags }: Fo
           </span>
         )}
       </div>
+
+      <button
+        onClick={handleAddToShoppingList}
+        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-blue-50 rounded-full transition-all shrink-0"
+        aria-label={`Add ${item.name} to shopping list`}
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </button>
 
       <span
         className={`font-bold text-lg px-3.5 py-1.5 bg-white rounded-full min-w-[44px] text-center border-2 ${
