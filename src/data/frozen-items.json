@@ -1,7 +1,7 @@
 [
   { "name": "TJs Orange Chicken", "typicalQty": 2, "usages": ["meal"], "mealCategory": "ready-meals", "defaultExpiryDays": 90, "stores": ["grocery"], "priority": "medium", "prepTimeMinutes": 12 },
   { "name": "Frozen Samosas", "typicalQty": 1, "usages": ["meal"], "mealCategory": "snacks", "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "medium", "prepTimeMinutes": 15 },
-  { "name": "Frozen Parathas", "typicalQty": 1, "usages": ["meal"], "mealCategory": "snacks", "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "high", "prepTimeMinutes": 8, "staple": true },
+  { "name": "Frozen Parathas", "typicalQty": 1, "usages": ["meal"], "mealCategory": "snacks", "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "high", "prepTimeMinutes": 8 },
   { "name": "Frozen Falafel", "typicalQty": 1, "usages": ["meal", "ingredient"], "ingredientCategory": "protein", "defaultExpiryDays": 90, "stores": ["grocery", "costco"], "priority": "medium", "prepTimeMinutes": 12 },
   { "name": "Uncooked Chapatis", "typicalQty": 20, "usages": ["meal", "ingredient"], "defaultExpiryDays": 90, "stores": ["indian-store", "costco"], "priority": "medium", "prepTimeMinutes": 10, "staple": true }
 ]
