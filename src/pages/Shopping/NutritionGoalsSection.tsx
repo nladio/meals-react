@@ -18,11 +18,11 @@ const NUTRITION_STYLES: Record<'protein' | 'fiber' | 'both', NutritionStyle> = {
     hoverBg: 'hover:bg-blue-200',
   },
   fiber: {
-    bg: 'bg-green-50',
+    bg: 'bg-green-100',
     border: 'border-l-green-400',
     text: 'text-green-400',
     hoverText: 'hover:text-green-600',
-    hoverBg: 'hover:bg-green-100',
+    hoverBg: 'hover:bg-green-200',
   },
   both: {
     bg: 'bg-violet-50',

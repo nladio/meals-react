@@ -33,7 +33,7 @@ function getNutritionHighlightStyle(tags?: NutritionTag[]): string | null {
 
   if (hasProtein && hasFiber) return 'bg-violet-50';
   if (hasProtein) return 'bg-blue-100';
-  if (hasFiber) return 'bg-green-50';
+  if (hasFiber) return 'bg-green-100';
   return null;
 }
 

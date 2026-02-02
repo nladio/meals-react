@@ -261,7 +261,7 @@ function NutritionLegend() {
         <span>Protein</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-green-50 border border-green-200"></span>
+        <span className="w-4 h-4 rounded bg-green-100 border border-green-300"></span>
         <span>Fiber</span>
       </div>
       <div className="flex items-center gap-1.5">
