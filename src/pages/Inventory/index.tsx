@@ -4,6 +4,26 @@ import { PageHeader } from '../../components/PageHeader';
 import { EmptyState } from '../../components/EmptyState';
 import { SubcategoryGroup, RestockControls } from '../../components/inventory';
 
+function NutritionLegend() {
+  return (
+    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+      <span className="font-medium">Legend:</span>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-blue-100 border border-blue-300"></span>
+        <span>Protein</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-green-100 border border-green-300"></span>
+        <span>Fiber</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-4 h-4 rounded bg-violet-50 border border-violet-200"></span>
+        <span>Both</span>
+      </div>
+    </div>
+  );
+}
+
 interface GroupedItem {
   item: InventoryItem;
   isDualUse: boolean;
@@ -88,6 +108,7 @@ export function Inventory() {
   return (
     <div>
       <PageHeader title="Inventory" showBackButton={false} />
+      <NutritionLegend />
 
       {/* Total Summary */}
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">

@@ -1,7 +1,6 @@
 import type { InventoryItem, Section, NutritionTag, Store } from '../../types';
 import { formatRelativeDate, getExpiryStatus, type ExpiryStatus } from '../../utils/helpers';
 import { useAppState } from '../../hooks/useAppState';
-import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 function getExpiryColorClass(status: ExpiryStatus): string {
   switch (status) {
@@ -9,6 +8,18 @@ function getExpiryColorClass(status: ExpiryStatus): string {
     case 'expiring-soon': return 'text-amber-500';
     default: return 'text-gray-400';
   }
+}
+
+function getNutritionBgColor(tags?: NutritionTag[]): string {
+  if (!tags || tags.length === 0) return 'bg-gray-100';
+
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 'bg-violet-50';
+  if (hasProtein) return 'bg-blue-100';
+  if (hasFiber) return 'bg-green-100';
+  return 'bg-gray-100';
 }
 
 interface FoodItemProps {
@@ -34,10 +45,12 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
     });
   };
 
+  const bgColor = getNutritionBgColor(nutritionTags);
+
   return (
     <div
-      className={`flex items-center gap-3 p-3 rounded-sm transition-all ${
-        isLow ? 'bg-amber-50 border-l-[3px] border-l-warning' : 'bg-gray-100 border-l-[3px] border-l-success'
+      className={`flex items-center gap-3 p-3 rounded-sm transition-all ${bgColor} ${
+        isLow ? 'border-l-[3px] border-l-warning' : 'border-l-[3px] border-l-success'
       }`}
     >
       <button
@@ -58,7 +71,6 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
               2x
             </span>
           )}
-          <NutritionBadges tags={nutritionTags} />
         </div>
         <span className="text-xs text-gray-400">{relativeDate}</span>
         {item.expiryDate && (
