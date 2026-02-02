@@ -1,21 +1,26 @@
 import { useState } from 'react';
-import type { Section, Store } from '../../types';
-import type { StapleItem } from '../../utils/stapleCategorization';
+import type { Section, ShoppingListItem, Store } from '../../types';
 import { ShoppingItem } from './ShoppingItem';
 
-interface StapleSubcategoryGroupProps {
+type Variant = 'staple' | 'user-list';
+
+interface ShoppingSubcategoryGroupProps {
   category: string;
-  items: StapleItem[];
+  items: ShoppingListItem[];
   store: Store;
-  onAddToList: (name: string, section: Section) => void;
+  variant: Variant;
+  onAddToList?: (name: string, section: Section) => void;
+  onRemove?: (name: string) => void;
 }
 
-export function StapleSubcategoryGroup({
+export function ShoppingSubcategoryGroup({
   category,
   items,
   store,
+  variant,
   onAddToList,
-}: StapleSubcategoryGroupProps) {
+  onRemove,
+}: ShoppingSubcategoryGroupProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -41,10 +46,11 @@ export function StapleSubcategoryGroup({
         <div className="flex flex-col gap-2 pt-2 pl-2">
           {items.map(item => (
             <ShoppingItem
-              key={`staple-${store}-${category}-${item.name}`}
+              key={`${variant}-${store}-${category}-${item.name}`}
               item={item}
-              variant="staple"
-              onAddToList={() => onAddToList(item.name, item.section)}
+              variant={variant}
+              onAddToList={variant === 'staple' && onAddToList ? () => onAddToList(item.name, item.section) : undefined}
+              onRemove={variant === 'user-list' && onRemove ? () => onRemove(item.name) : undefined}
             />
           ))}
         </div>
@@ -52,3 +58,6 @@ export function StapleSubcategoryGroup({
     </div>
   );
 }
+
+// Backwards-compatible alias
+export const StapleSubcategoryGroup = ShoppingSubcategoryGroup;

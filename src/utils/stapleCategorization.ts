@@ -48,11 +48,11 @@ export function getCategoryForStaple(item: DefaultKnownItem): StapleCategory {
   return 'Other';
 }
 
-export function groupStaplesByCategory(
-  staples: StapleItem[],
+export function groupItemsByCategory<T extends { name: string }>(
+  items: T[],
   defaultItems: DefaultKnownItem[]
-): Record<StapleCategory, StapleItem[]> {
-  const groups: Record<StapleCategory, StapleItem[]> = {
+): Record<StapleCategory, T[]> {
+  const groups: Record<StapleCategory, T[]> = {
     Curries: [],
     'Breads & Batters': [],
     'Ready Meals': [],
@@ -66,15 +66,18 @@ export function groupStaplesByCategory(
 
   const defaultItemMap = new Map(defaultItems.map(item => [item.name, item]));
 
-  for (const staple of staples) {
-    const defaultItem = defaultItemMap.get(staple.name);
+  for (const item of items) {
+    const defaultItem = defaultItemMap.get(item.name);
     if (defaultItem) {
       const category = getCategoryForStaple(defaultItem);
-      groups[category].push(staple);
+      groups[category].push(item);
     } else {
-      groups.Other.push(staple);
+      groups.Other.push(item);
     }
   }
 
   return groups;
 }
+
+// Backwards-compatible alias
+export const groupStaplesByCategory = groupItemsByCategory;
