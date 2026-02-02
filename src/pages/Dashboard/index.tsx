@@ -7,7 +7,7 @@ import { FoodOrderSection } from './FoodOrderSection';
 export function Dashboard() {
   return (
     <div>
-      <PageHeader title="What to Eat" showBackButton={false} />
+      <PageHeader title="What You Could Eat" showBackButton={false} />
 
       {/* Quick Reheat (0-5 min) */}
       <QuickReheatSection />
