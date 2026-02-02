@@ -258,8 +258,6 @@ export function Shopping() {
             item => !userListNames.has(item.name) && !stapleNames.has(item.name)
           );
 
-          const hasAnyItems = userItems.length > 0 || staples.length > 0 || suggestions.length > 0;
-
           return (
             <section
               key={store}
@@ -269,63 +267,61 @@ export function Shopping() {
                 {STORE_LABELS[store]}
               </h2>
 
-              {!hasAnyItems ? (
-                <EmptyState message="Nothing needed from here" icon="✓" />
-              ) : (
-                <div className="flex flex-col gap-4">
-                  {/* Your List section - hidden when empty */}
-                  {userItems.length > 0 && (
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500 mb-2">Your List</h3>
-                      <div className="flex flex-col gap-2">
-                        {userItems.map(item => (
-                          <ShoppingItem
-                            key={`user-${store}-${item.name}`}
-                            item={item}
-                            variant="user-list"
-                            onRemove={() => handleRemoveFromList(item.name, store)}
-                          />
-                        ))}
-                      </div>
+              <div className="flex flex-col gap-4">
+                {/* Your List section - always visible */}
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500 mb-2">Your List</h3>
+                  {userItems.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {userItems.map(item => (
+                        <ShoppingItem
+                          key={`user-${store}-${item.name}`}
+                          item={item}
+                          variant="user-list"
+                          onRemove={() => handleRemoveFromList(item.name, store)}
+                        />
+                      ))}
                     </div>
-                  )}
-
-                  {/* Staples section */}
-                  {staples.length > 0 && (
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500 mb-2">Staples</h3>
-                      <div className="flex flex-col gap-2">
-                        {staples.map(item => (
-                          <ShoppingItem
-                            key={`staple-${store}-${item.name}`}
-                            item={item}
-                            variant="staple"
-                            onAddToList={() => handleAddToList(item.name, item.section, store)}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Suggestions section */}
-                  {suggestions.length > 0 && (
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500 mb-2">Suggestions</h3>
-                      <div className="flex flex-col gap-2">
-                        {suggestions.map(item => (
-                          <ShoppingItem
-                            key={`suggestion-${store}-${item.section}-${item.name}`}
-                            item={item}
-                            variant="suggestion"
-                            urgency={item.urgency}
-                            onAddToList={() => handleAddToList(item.name, item.section, store)}
-                          />
-                        ))}
-                      </div>
-                    </div>
+                  ) : (
+                    <EmptyState message="Add items from below" icon="📝" />
                   )}
                 </div>
-              )}
+
+                {/* Staples section */}
+                {staples.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Staples</h3>
+                    <div className="flex flex-col gap-2">
+                      {staples.map(item => (
+                        <ShoppingItem
+                          key={`staple-${store}-${item.name}`}
+                          item={item}
+                          variant="staple"
+                          onAddToList={() => handleAddToList(item.name, item.section, store)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Suggestions section */}
+                {suggestions.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Suggestions</h3>
+                    <div className="flex flex-col gap-2">
+                      {suggestions.map(item => (
+                        <ShoppingItem
+                          key={`suggestion-${store}-${item.section}-${item.name}`}
+                          item={item}
+                          variant="suggestion"
+                          urgency={item.urgency}
+                          onAddToList={() => handleAddToList(item.name, item.section, store)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </section>
           );
         })}
