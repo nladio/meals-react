@@ -1,5 +1,4 @@
 import type { NutritionTag, ShoppingListItem } from '../../types';
-import { NutritionBadges } from '../../components/ui/NutritionBadge';
 
 type Urgency = 'restock' | 'low' | 'variety';
 type Variant = 'user-list' | 'staple' | 'suggestion';
@@ -47,10 +46,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
   return (
     <div className={`flex items-center gap-3 p-3 rounded-sm ${style}`}>
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="font-medium text-[15px] truncate">{item.name}</span>
-          <NutritionBadges tags={nutritionTags} />
-        </div>
+        <span className="font-medium text-[15px] truncate">{item.name}</span>
         {item.currentQty > 0 && (
           <span className="text-xs text-gray-400">{item.currentQty} left</span>
         )}
