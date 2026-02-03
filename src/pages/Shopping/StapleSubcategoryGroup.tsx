@@ -34,7 +34,7 @@ export function ShoppingSubcategoryGroup({
         <div className="flex items-center gap-2">
           <span
             className={`text-primary/60 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}
-            style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+            style={{ transitionTimingFunction: 'var(--ease-bounce)' }}
           >
             ▶
           </span>

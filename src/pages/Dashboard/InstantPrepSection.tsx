@@ -24,7 +24,7 @@ export function InstantPrepSection() {
             className={`text-primary/60 transition-transform duration-300 ${
               isExpanded ? 'rotate-90' : ''
             }`}
-            style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+            style={{ transitionTimingFunction: 'var(--ease-bounce)' }}
           >
             ▶
           </span>
