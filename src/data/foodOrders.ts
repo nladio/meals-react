@@ -631,7 +631,7 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Falafel',
-        cost: 5.99,
+        cost: 7.00,
         quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
@@ -641,8 +641,9 @@ export const orders: Order[] = [
       },
       {
         name: '7 oz. Spicy Chicken Tikka Kabob with rice and salad',
-        cost: 12.99,
+        cost: 28.00,
         quantity: 1,
+        customizations: ['No grilled tomatoes please.'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -651,7 +652,7 @@ export const orders: Order[] = [
       },
       {
         name: 'Garlic Cheese Bread',
-        cost: 3.99,
+        cost: 9.00,
         quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
@@ -660,6 +661,14 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      discount: 10.00,
+      deliveryFee: 0.00,
+      serviceFee: 3.28,
+      salesTax: 4.18,
+      driverTip: 3.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-21',
@@ -667,8 +676,9 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Chipotle Chicken Avo Melt',
-        cost: 12.99,
+        cost: 16.59,
         quantity: 1,
+        customizations: ['Whole', 'Chips (150 Cal.)'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'American',
@@ -676,6 +686,13 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      serviceFee: 1.33,
+      salesTax: 1.77,
+      deliveryFee: 0.00,
+      driverTip: 2.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-22',
@@ -683,7 +700,7 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Chips & Queso Blanco',
-        cost: 5.99,
+        cost: 6.75,
         quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
@@ -693,8 +710,9 @@ export const orders: Order[] = [
       },
       {
         name: 'Quesadilla',
-        cost: 12.99,
+        cost: 19.15,
         quantity: 1,
+        customizations: ['Sofritas Quesadilla', 'Fresh Tomato Salsa', 'Tomatillo-Green Chili Salsa', 'Black Beans', 'Guacamole'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Mexican',
@@ -702,6 +720,13 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      serviceFee: 2.07,
+      salesTax: 2.79,
+      deliveryFee: 0.00,
+      driverTip: 3.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-23',
@@ -709,8 +734,9 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Souvlaki Plate',
-        cost: 12.99,
+        cost: 22.45,
         quantity: 1,
+        customizations: ['Chicken', 'Greek Fries', 'Add Hummus'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -718,6 +744,13 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      serviceFee: 1.80,
+      salesTax: 2.36,
+      deliveryFee: 0.00,
+      driverTip: 3.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-24',
@@ -725,7 +758,7 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Greens 1.5 | Spinach Kale Juice',
-        cost: 7.99,
+        cost: 7.25,
         quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
@@ -735,7 +768,7 @@ export const orders: Order[] = [
       },
       {
         name: 'Greens 2 | Apple Lemon Kale Juice',
-        cost: 7.99,
+        cost: 7.25,
         quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
@@ -745,7 +778,7 @@ export const orders: Order[] = [
       },
       {
         name: 'Hydration + Greens',
-        cost: 7.99,
+        cost: 7.25,
         quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
@@ -754,6 +787,13 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      serviceFee: 1.74,
+      salesTax: 2.42,
+      deliveryFee: 0.00,
+      driverTip: 3.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-25',
@@ -761,8 +801,9 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Souvlaki Plate',
-        cost: 12.99,
+        cost: 20.95,
         quantity: 1,
+        customizations: ['Chicken', 'Greek Fries'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -771,8 +812,9 @@ export const orders: Order[] = [
       },
       {
         name: 'Side Gyro or Falafel',
-        cost: 5.99,
+        cost: 6.95,
         quantity: 1,
+        customizations: ['Falafel'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -780,6 +822,14 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      discount: 3.00,
+      serviceFee: 1.99,
+      salesTax: 2.61,
+      deliveryFee: 0.00,
+      driverTip: 3.00,
+      driverBenefitsFee: 1.00,
+    },
   },
   {
     id: 'order-26',
