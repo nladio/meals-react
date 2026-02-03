@@ -1,42 +1,69 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Typography */
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
 
-  /* Brand colors */
-  --color-primary: #e07b39;
-  --color-primary-dark: #c46a2e;
-  --color-secondary: #334155;
+  /* Warm Kitchen Palette */
+  --color-primary: #d85a2b;
+  --color-primary-dark: #b94a23;
+  --color-primary-light: #f4a574;
 
-  /* Status colors */
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  /* Backgrounds */
+  --color-bg: #faf7f4;
+  --color-bg-card: #ffffff;
 
-  /* Category accent colors */
-  --color-fresh: #10b981;
-  --color-frozen: #06b6d4;
-  --color-dry: #f59e0b;
-  --color-protein: #3b82f6;
-  --color-fiber: #22c55e;
+  /* Text colors */
+  --color-text: #3d3229;
+  --color-text-muted: #7a6e62;
+  --color-text-light: #a39789;
+  --color-border: #e8e2dc;
 
-  /* Gray scale */
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-400: #9ca3af;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
+  /* Category accents */
+  --color-fresh: #5b9a6f;
+  --color-frozen: #6b99a8;
+  --color-dry: #d4a24c;
+  --color-protein: #5c7cba;
+  --color-fiber: #6b9a6f;
+
+  /* Status */
+  --color-success: #5b9a6f;
+  --color-warning: #d4a24c;
+  --color-danger: #c45a4a;
+
+  /* Legacy gray mappings (for compatibility) */
+  --color-gray-50: #faf7f4;
+  --color-gray-100: #f5f0eb;
+  --color-gray-200: #e8e2dc;
+  --color-gray-400: #a39789;
+  --color-gray-600: #7a6e62;
+  --color-gray-700: #5a4f44;
+  --color-gray-800: #3d3229;
 
   --radius-DEFAULT: 12px;
   --radius-sm: 8px;
 }
 
 body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--color-gray-50);
-  color: var(--color-gray-700);
+  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
   min-height: 100vh;
+}
+
+/* Heading styles with Fraunces */
+h1, h2, h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  color: var(--color-text);
+}
+
+h1 {
+  font-weight: 600;
+  font-optical-sizing: auto;
+}
+
+h2, h3 {
+  font-weight: 500;
 }
