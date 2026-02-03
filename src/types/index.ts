@@ -111,13 +111,25 @@ export interface Macros {
 
 export interface Dish {
   name: string;
-  cost: number;
+  cost: number;           // Unit price
+  quantity: number;       // How many ordered
+  customizations?: string[]; // e.g., ["Cream Sauce", "Add Chicken"]
   tags: DishTags;
-  macros?: Macros;     // Optional macro info
+  macros?: Macros;        // Optional macro info
+}
+
+export interface OrderFees {
+  deliveryFee?: number;      // Final amount charged
+  serviceFee?: number;       // Final amount charged (after any discounts)
+  salesTax?: number;
+  driverTip?: number;
+  driverBenefitsFee?: number; // Final amount charged
+  discount?: number;         // Positive number, subtracted from total
 }
 
 export interface Order {
   id: string;
   restaurant: string;        // Restaurant name
   dishes: Dish[];            // Dishes in this order/meal
+  fees?: OrderFees;          // Optional order-level fees
 }

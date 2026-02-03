@@ -8,6 +8,7 @@ export const orders: Order[] = [
       {
         name: 'Create Your Family Size Pizza (16")',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -23,15 +24,7 @@ export const orders: Order[] = [
       {
         name: 'Chapati',
         cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Indian',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Chapati',
-        cost: 3.99,
+        quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -41,15 +34,7 @@ export const orders: Order[] = [
       {
         name: 'Chili Nan',
         cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Indian',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Chili Nan',
-        cost: 3.99,
+        quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -59,6 +44,7 @@ export const orders: Order[] = [
       {
         name: 'Dal',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -68,6 +54,7 @@ export const orders: Order[] = [
       {
         name: 'Vegetable Samosa',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -83,6 +70,7 @@ export const orders: Order[] = [
       {
         name: 'GO GREEN',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -98,6 +86,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Naan',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -107,6 +96,7 @@ export const orders: Order[] = [
       {
         name: 'Tadka Daal',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -116,6 +106,7 @@ export const orders: Order[] = [
       {
         name: 'Matar Paneer',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -125,6 +116,7 @@ export const orders: Order[] = [
       {
         name: 'Mirchi Naan',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -140,6 +132,7 @@ export const orders: Order[] = [
       {
         name: 'Fettuccini Alfredo',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -149,6 +142,7 @@ export const orders: Order[] = [
       {
         name: 'Muhammara',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -158,6 +152,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Cheese Bread',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -167,6 +162,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Fries',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'American',
@@ -182,33 +178,7 @@ export const orders: Order[] = [
       {
         name: 'Chicken Kabob Stick',
         cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
+        quantity: 4,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -218,51 +188,7 @@ export const orders: Order[] = [
       {
         name: 'Side of Pita',
         cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
+        quantity: 6,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -272,6 +198,7 @@ export const orders: Order[] = [
       {
         name: 'Deluxe Falafel Wrap',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -287,24 +214,7 @@ export const orders: Order[] = [
       {
         name: 'Side of Pita',
         cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
+        quantity: 3,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -314,6 +224,7 @@ export const orders: Order[] = [
       {
         name: 'Chicken Kabab Rice Plate',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -323,6 +234,7 @@ export const orders: Order[] = [
       {
         name: 'Falafel 4 pieces & Lemon Tahini',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -338,6 +250,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Epic Stuffed Crust Pizza',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -347,6 +260,7 @@ export const orders: Order[] = [
       {
         name: 'Cheesesticks',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -356,6 +270,7 @@ export const orders: Order[] = [
       {
         name: 'Jalapeño Papa Bites',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -365,6 +280,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Knots',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -380,6 +296,7 @@ export const orders: Order[] = [
       {
         name: 'Garden Fresh Pizza',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -389,6 +306,7 @@ export const orders: Order[] = [
       {
         name: 'New York Style Crust',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -398,6 +316,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Sauce Trio',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -407,6 +326,7 @@ export const orders: Order[] = [
       {
         name: 'Jalapeño Papa Bites',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -422,6 +342,7 @@ export const orders: Order[] = [
       {
         name: 'Paneer Makhani Curry',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -431,6 +352,7 @@ export const orders: Order[] = [
       {
         name: 'Jeera Rice',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -440,6 +362,7 @@ export const orders: Order[] = [
       {
         name: 'Butter Naan',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -455,6 +378,7 @@ export const orders: Order[] = [
       {
         name: 'Jeera Rice',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -464,6 +388,7 @@ export const orders: Order[] = [
       {
         name: 'Paneer Tikka Kabab',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -473,6 +398,7 @@ export const orders: Order[] = [
       {
         name: 'Dal Makhani Curry',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -482,6 +408,7 @@ export const orders: Order[] = [
       {
         name: 'Methi Paratha',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -497,6 +424,7 @@ export const orders: Order[] = [
       {
         name: 'Veggie Momo- Tandoori',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -506,6 +434,7 @@ export const orders: Order[] = [
       {
         name: 'Paneer Chilli Fry Rice Bowl',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -521,33 +450,7 @@ export const orders: Order[] = [
       {
         name: 'Chicken Kabob Stick',
         cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Chicken Kabob Stick',
-        cost: 5.99,
+        quantity: 4,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -557,15 +460,7 @@ export const orders: Order[] = [
       {
         name: 'Side of Pita',
         cost: 3.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Side',
-        },
-      },
-      {
-        name: 'Side of Pita',
-        cost: 3.99,
+        quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -581,24 +476,7 @@ export const orders: Order[] = [
       {
         name: 'Side Chicken Skewer',
         cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Greek',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Side Chicken Skewer',
-        cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Greek',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Side Chicken Skewer',
-        cost: 5.99,
+        quantity: 3,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -608,6 +486,7 @@ export const orders: Order[] = [
       {
         name: 'Pita Bread',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -623,6 +502,7 @@ export const orders: Order[] = [
       {
         name: 'Cheese Pizza',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -638,6 +518,7 @@ export const orders: Order[] = [
       {
         name: '7 oz. Chicken Kabob Plate',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -647,6 +528,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Cheese Bread',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -656,6 +538,7 @@ export const orders: Order[] = [
       {
         name: 'Hummus',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -671,6 +554,7 @@ export const orders: Order[] = [
       {
         name: 'F10. Kung Pao Chicken',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Chinese',
@@ -686,6 +570,7 @@ export const orders: Order[] = [
       {
         name: '7 oz. Spicy Chicken Tikka Kabob with rice and salad',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -695,15 +580,7 @@ export const orders: Order[] = [
       {
         name: 'Falafel',
         cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Falafel',
-        cost: 5.99,
+        quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -713,6 +590,7 @@ export const orders: Order[] = [
       {
         name: 'Spinach Fatayer',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -728,6 +606,7 @@ export const orders: Order[] = [
       {
         name: 'Chicken Kabab Rice Plate',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -737,6 +616,7 @@ export const orders: Order[] = [
       {
         name: '1 Dozen Falafel & Lemon Tahini',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -752,15 +632,7 @@ export const orders: Order[] = [
       {
         name: 'Falafel',
         cost: 5.99,
-        tags: {
-          mealTime: ['Lunch', 'Dinner'],
-          cuisine: 'Middle Eastern',
-          dishType: 'Appetizer',
-        },
-      },
-      {
-        name: 'Falafel',
-        cost: 5.99,
+        quantity: 2,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -770,6 +642,7 @@ export const orders: Order[] = [
       {
         name: '7 oz. Spicy Chicken Tikka Kabob with rice and salad',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Middle Eastern',
@@ -779,6 +652,7 @@ export const orders: Order[] = [
       {
         name: 'Garlic Cheese Bread',
         cost: 3.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Italian',
@@ -794,6 +668,7 @@ export const orders: Order[] = [
       {
         name: 'Chipotle Chicken Avo Melt',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'American',
@@ -809,6 +684,7 @@ export const orders: Order[] = [
       {
         name: 'Chips & Queso Blanco',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Mexican',
@@ -818,6 +694,7 @@ export const orders: Order[] = [
       {
         name: 'Quesadilla',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Mexican',
@@ -833,6 +710,7 @@ export const orders: Order[] = [
       {
         name: 'Souvlaki Plate',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -848,6 +726,7 @@ export const orders: Order[] = [
       {
         name: 'Greens 1.5 | Spinach Kale Juice',
         cost: 7.99,
+        quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
           cuisine: 'American',
@@ -857,6 +736,7 @@ export const orders: Order[] = [
       {
         name: 'Greens 2 | Apple Lemon Kale Juice',
         cost: 7.99,
+        quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
           cuisine: 'American',
@@ -866,6 +746,7 @@ export const orders: Order[] = [
       {
         name: 'Hydration + Greens',
         cost: 7.99,
+        quantity: 1,
         tags: {
           mealTime: ['Breakfast', 'Snack'],
           cuisine: 'American',
@@ -881,6 +762,7 @@ export const orders: Order[] = [
       {
         name: 'Souvlaki Plate',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -890,6 +772,7 @@ export const orders: Order[] = [
       {
         name: 'Side Gyro or Falafel',
         cost: 5.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Greek',
@@ -905,6 +788,7 @@ export const orders: Order[] = [
       {
         name: 'Choila',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -914,6 +798,7 @@ export const orders: Order[] = [
       {
         name: 'Paneer Momos (6 pcs) Steamed',
         cost: 12.99,
+        quantity: 1,
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -925,8 +810,24 @@ export const orders: Order[] = [
 ];
 
 /**
- * Calculate the total cost of all dishes in an order
+ * Calculate the subtotal of all dishes in an order (cost × quantity)
+ */
+export function getDishesSubtotal(order: Order): number {
+  return order.dishes.reduce((sum, dish) => sum + dish.cost * dish.quantity, 0);
+}
+
+/**
+ * Calculate the total fees for an order
+ */
+export function getFeesTotal(order: Order): number {
+  if (!order.fees) return 0;
+  const { deliveryFee = 0, serviceFee = 0, salesTax = 0, driverTip = 0, driverBenefitsFee = 0, discount = 0 } = order.fees;
+  return deliveryFee + serviceFee + salesTax + driverTip + driverBenefitsFee - discount;
+}
+
+/**
+ * Calculate the total cost of an order (dishes + fees)
  */
 export function getOrderTotal(order: Order): number {
-  return order.dishes.reduce((sum, dish) => sum + dish.cost, 0);
+  return getDishesSubtotal(order) + getFeesTotal(order);
 }

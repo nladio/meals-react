@@ -14,10 +14,24 @@ The Food Ordering section provides a view-only display of previously ordered dis
 
 ### FR-FOOD-002: Cost Tracking and Totals
 
-- Each dish shall display its name and cost
-- The system shall compute and display the total cost per restaurant
-- The system shall compute and display a grand total across all restaurants
+- Each dish shall display its name and unit cost
+- Dishes have a quantity field indicating how many were ordered
+- Line totals are calculated as: `cost × quantity`
+- The system shall compute and display the total cost per order (subtotal + fees)
+- The system shall compute and display a grand total across all orders
 - Costs shall be displayed with `$` prefix and 2 decimal places
+
+### FR-FOOD-002a: Order-Level Fees
+
+- Orders may include additional fees beyond dish costs:
+  - **Delivery fee**: Flat delivery charge (may be $0.00 for free delivery)
+  - **Service fee**: Platform service charge (final amount after discounts)
+  - **Sales tax**: Tax amount
+  - **Driver tip**: Optional tip amount
+  - **Driver benefits fee**: Driver-related fee (final amount after discounts)
+  - **Discount**: Order-level discounts (positive number, subtracted from total)
+- Order total = dishes subtotal + fees - discounts
+- Fees are optional and only displayed when present
 
 ### FR-FOOD-003: Dish Tagging System
 
@@ -26,6 +40,13 @@ The Food Ordering section provides a view-only display of previously ordered dis
   - **Cuisine**: Indian, Chinese, American, Mexican, Italian, Thai, Japanese
   - **Dish type**: Appetizer, Main, Dessert, Drink, Side
 - Tags shall be color-coded for easy visual identification
+
+### FR-FOOD-003a: Dish Customizations
+
+- Dishes may include customizations (modifications made when ordering)
+- Examples: "Cream Sauce", "Add Chicken", "No Onions"
+- Customizations are stored as an array of strings
+- Displayed below the dish name when present
 
 ### FR-FOOD-004: Optional Macro Tracking
 
@@ -74,11 +95,19 @@ The Food Ordering section provides a view-only display of previously ordered dis
 ### UI-FOOD-005: Dish Item Display
 
 - Each dish shall display:
-  - Dish name
-  - Cost (right-aligned)
+  - Dish name with quantity (e.g., "Fettuccini Alfredo ×2" when quantity > 1)
+  - Customizations (when present, in gray text below name)
+  - Cost: unit price × quantity = line total (e.g., "$13.50 × 2 = $27.00")
   - Tags (color-coded)
   - Macros (when present, in compact format)
 - Dish items shall have a left border accent for visual hierarchy
+
+### UI-FOOD-006: Order Fees Display
+
+- When an order has fees, display them below the dishes
+- Show subtotal (sum of dish line totals) and individual fee items
+- Only display fee items that are present (skip undefined fees)
+- Display order total prominently
 
 ## Out of Scope (MVP)
 

@@ -2,12 +2,11 @@ import type { Dish } from '../../types';
 
 interface DishItemProps {
   dish: Dish;
-  count?: number;
 }
 
-export function DishItem({ dish, count = 1 }: DishItemProps) {
-  const { name, cost, tags, macros } = dish;
-  const lineTotal = cost * count;
+export function DishItem({ dish }: DishItemProps) {
+  const { name, cost, quantity, customizations, tags, macros } = dish;
+  const lineTotal = cost * quantity;
 
   // Format macros as compact string
   const formatMacros = () => {
@@ -27,12 +26,12 @@ export function DishItem({ dish, count = 1 }: DishItemProps) {
       {/* Name and Cost Row */}
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-gray-800">
-          {name}{count > 1 && <span className="text-gray-500"> ×{count}</span>}
+          {name}{quantity > 1 && <span className="text-gray-500"> ×{quantity}</span>}
         </span>
         <span className="text-sm font-semibold text-gray-700">
-          {count > 1 ? (
+          {quantity > 1 ? (
             <span>
-              <span className="text-gray-400 font-normal">${cost.toFixed(2)} × {count} = </span>
+              <span className="text-gray-400 font-normal">${cost.toFixed(2)} × {quantity} = </span>
               ${lineTotal.toFixed(2)}
             </span>
           ) : (
@@ -40,6 +39,11 @@ export function DishItem({ dish, count = 1 }: DishItemProps) {
           )}
         </span>
       </div>
+
+      {/* Customizations (if present) */}
+      {customizations && customizations.length > 0 && (
+        <div className="text-xs text-gray-500">{customizations.join(', ')}</div>
+      )}
 
       {/* Macros (if present) */}
       {macroString && (
