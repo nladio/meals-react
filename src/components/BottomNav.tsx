@@ -54,9 +54,9 @@ function InventoryIcon({ active }: { active: boolean }) {
 const navItems = [
   { id: 'dashboard', label: 'Home', Icon: HomeIcon },
   { id: 'inventory', label: 'Inventory', Icon: InventoryIcon },
+  { id: 'recipes', label: 'Recipes', Icon: RecipesIcon },
   { id: 'shopping', label: 'Shopping', Icon: ShoppingIcon },
   { id: 'nutrition', label: 'Nutrition', Icon: NutritionIcon },
-  { id: 'recipes', label: 'Recipes', Icon: RecipesIcon },
 ];
 
 export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
