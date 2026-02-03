@@ -61,7 +61,7 @@ const navItems = [
 
 export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 pb-[max(8px,env(safe-area-inset-bottom))] z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-200/60 flex justify-around py-2 pb-[max(8px,env(safe-area-inset-bottom))] z-50">
       {navItems.map(item => {
         const isActive = currentPage === item.id;
         return (
@@ -72,14 +72,27 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
               e.preventDefault();
               onNavigate(item.id);
             }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 no-underline transition-all active:scale-95 ${
+            className={`group flex flex-col items-center gap-1 px-2 py-2 no-underline transition-all active:scale-95 ${
               isActive ? 'text-primary' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
-            <div className={`p-1.5 rounded-full transition-colors ${isActive ? 'bg-primary/10' : ''}`}>
-              <item.Icon active={isActive} />
+            <div
+              className={`relative p-1.5 rounded-full transition-all ${
+                isActive
+                  ? 'bg-primary/10'
+                  : 'group-hover:bg-gray-100'
+              }`}
+            >
+              <div className="transition-transform group-hover:scale-110">
+                <item.Icon active={isActive} />
+              </div>
+              {isActive && (
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary animate-pop-in" />
+              )}
             </div>
-            <span className={`text-[11px] ${isActive ? 'font-semibold' : 'font-medium'}`}>{item.label}</span>
+            <span className={`text-[11px] transition-all ${isActive ? 'font-semibold' : 'font-medium'}`}>
+              {item.label}
+            </span>
           </a>
         );
       })}
