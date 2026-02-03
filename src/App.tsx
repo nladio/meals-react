@@ -35,7 +35,7 @@ function App() {
   };
 
   return (
-    <Layout currentPage={page} onNavigate={handleNavigate} wide={page === 'shopping'}>
+    <Layout currentPage={page} onNavigate={handleNavigate} wide={page === 'shopping' || page === 'recipes'}>
       {renderPage()}
     </Layout>
   );
