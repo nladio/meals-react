@@ -32,13 +32,19 @@ export function ThemePopover({ isOpen, currentTheme, onSelectTheme, onClose }: T
       ref={popoverRef}
       className="absolute bottom-full mb-2 right-0 bg-white rounded-xl shadow-lg border border-gray-200 p-3 animate-scale-in"
     >
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         {themeList.map((theme) => (
           <button
             key={theme.id}
             onClick={() => onSelectTheme(theme.id)}
             className="relative w-10 h-10 rounded-full transition-transform hover:scale-110 active:scale-95"
-            style={{ backgroundColor: theme.color }}
+            style={{
+              background: `conic-gradient(
+                ${theme.primary} 0deg 120deg,
+                ${theme.secondary} 120deg 240deg,
+                ${theme.accent} 240deg 360deg
+              )`,
+            }}
             aria-label={theme.name}
             title={theme.name}
           >

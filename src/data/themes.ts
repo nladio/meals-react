@@ -184,9 +184,9 @@ export const themes: Record<ThemeName, ThemeDefinition> = {
   },
 };
 
-export const themeList: { id: ThemeName; name: string; color: string }[] = [
-  { id: 'bright-playful', name: 'Bright & Playful', color: '#FF6B6B' },
-  { id: 'modern-bold', name: 'Modern & Bold', color: '#E91E63' },
-  { id: 'warm-energetic', name: 'Warm & Energetic', color: '#FF5722' },
-  { id: 'cool-fresh', name: 'Cool & Fresh', color: '#0EA5E9' },
+export const themeList: { id: ThemeName; name: string; primary: string; secondary: string; accent: string }[] = [
+  { id: 'bright-playful', name: 'Bright & Playful', primary: '#FF6B6B', secondary: '#4ECDC4', accent: '#FFE66D' },
+  { id: 'modern-bold', name: 'Modern & Bold', primary: '#E91E63', secondary: '#00BCD4', accent: '#FFC107' },
+  { id: 'warm-energetic', name: 'Warm & Energetic', primary: '#FF5722', secondary: '#009688', accent: '#FFEB3B' },
+  { id: 'cool-fresh', name: 'Cool & Fresh', primary: '#0EA5E9', secondary: '#10B981', accent: '#F59E0B' },
 ];
