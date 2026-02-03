@@ -6,7 +6,7 @@ import { SubcategoryGroup, RestockControls } from '../../components/inventory';
 
 function NutritionLegend() {
   return (
-    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+    <div className="flex items-center gap-4 mb-4 text-xs text-text-muted">
       <span className="font-medium">Legend:</span>
       <div className="flex items-center gap-1.5">
         <span className="w-4 h-4 rounded bg-protein-light border border-protein-border"></span>
@@ -72,7 +72,7 @@ function InventorySection({ section, title, items, knownItems }: InventorySectio
 
   return (
     <section className="bg-white rounded-[12px] p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-      <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide">
+      <h2 className="text-base font-semibold text-text-muted mb-4 uppercase tracking-wide">
         {title}
       </h2>
 
@@ -101,9 +101,9 @@ export function Inventory() {
   const mergedKnownItems = getMergedKnownItems(state);
   const totalServings = getTotalServings(state);
 
-  let statusClass = 'bg-green-50 border border-success';
-  if (totalServings <= 2) statusClass = 'bg-red-50 border border-danger';
-  else if (totalServings <= 6) statusClass = 'bg-orange-50 border border-warning';
+  let statusClass = 'bg-success/10 border border-success';
+  if (totalServings <= 2) statusClass = 'bg-danger/10 border border-danger';
+  else if (totalServings <= 6) statusClass = 'bg-warning/10 border border-warning';
 
   return (
     <div>
@@ -113,7 +113,7 @@ export function Inventory() {
       {/* Total Summary */}
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
         <div className={`flex justify-between items-center p-4 rounded-sm ${statusClass}`}>
-          <span className="font-medium text-gray-600">Total Food Available</span>
+          <span className="font-medium text-text-muted">Total Food Available</span>
           <span className="font-semibold text-base">{totalServings} servings</span>
         </div>
       </section>

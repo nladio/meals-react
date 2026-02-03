@@ -7,7 +7,7 @@ import { RecipeCard } from './RecipeCard';
 
 function NutritionLegend() {
   return (
-    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+    <div className="flex items-center gap-4 mb-4 text-xs text-text-muted">
       <span className="font-medium">Legend:</span>
       <div className="flex items-center gap-1.5">
         <span className="w-4 h-4 rounded bg-protein-light border border-protein-border"></span>
@@ -35,7 +35,7 @@ function RecipeSection({ title, matches }: RecipeSectionProps) {
 
   return (
     <section className="mb-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-3">{title}</h2>
+      <h2 className="text-lg font-semibold text-text mb-3">{title}</h2>
       <div className="flex flex-col gap-3">
         {matches.map(match => (
           <RecipeCard key={match.recipe.id} match={match} />
@@ -59,8 +59,8 @@ export function Recipes() {
       <NutritionLegend />
 
       <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
-        <div className="flex justify-between items-center p-4 rounded-sm bg-green-50 border border-success">
-          <span className="font-medium text-gray-600">Recipes You Can Make</span>
+        <div className="flex justify-between items-center p-4 rounded-sm bg-success/10 border border-success">
+          <span className="font-medium text-text-muted">Recipes You Can Make</span>
           <span className="font-semibold text-base">{fullMatches.length}</span>
         </div>
       </section>

@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: { DEFAULT: '#e07b39', dark: '#c46a2e' },
+        primary: { DEFAULT: '#d85a2b', dark: '#b94a23', light: '#f4a574' },
         secondary: '#4a90a4',
-        success: '#4caf50',
-        warning: '#ff9800',
-        danger: '#f44336',
+        success: '#5b9a6f',
+        warning: '#d4a24c',
+        danger: '#c45a4a',
       },
       borderRadius: {
         DEFAULT: '12px',

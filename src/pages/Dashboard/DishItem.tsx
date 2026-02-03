@@ -69,9 +69,9 @@ export function DishItem({ dish }: DishItemProps) {
           </span>
         )}
 
-        {/* Dish Type Tag - Amber */}
+        {/* Dish Type Tag - Dry category accent */}
         {tags.dishType && (
-          <span className="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700">
+          <span className="px-2 py-0.5 text-xs rounded-full bg-dry/10 text-dry">
             {tags.dishType}
           </span>
         )}

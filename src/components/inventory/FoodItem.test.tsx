@@ -44,7 +44,7 @@ describe('FoodItem', () => {
 
     const expiredText = screen.getByText('Expired');
     expect(expiredText).toBeInTheDocument();
-    expect(expiredText).toHaveClass('text-red-500');
+    expect(expiredText).toHaveClass('text-danger');
   });
 
   it('renders expiring-soon item with amber indicator', () => {
@@ -57,7 +57,7 @@ describe('FoodItem', () => {
 
     const expiryText = screen.getByText(/Expires:/);
     expect(expiryText).toBeInTheDocument();
-    expect(expiryText).toHaveClass('text-amber-500');
+    expect(expiryText).toHaveClass('text-warning');
   });
 
   it('renders normal expiry with gray text', () => {
@@ -70,6 +70,6 @@ describe('FoodItem', () => {
 
     const expiryText = screen.getByText(/Expires:/);
     expect(expiryText).toBeInTheDocument();
-    expect(expiryText).toHaveClass('text-gray-400');
+    expect(expiryText).toHaveClass('text-text-light');
   });
 });

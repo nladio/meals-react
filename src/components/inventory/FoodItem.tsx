@@ -4,9 +4,9 @@ import { useAppState } from '../../hooks/useAppState';
 
 function getExpiryColorClass(status: ExpiryStatus): string {
   switch (status) {
-    case 'expired': return 'text-red-500';
-    case 'expiring-soon': return 'text-amber-500';
-    default: return 'text-gray-400';
+    case 'expired': return 'text-danger';
+    case 'expiring-soon': return 'text-warning';
+    default: return 'text-text-light';
   }
 }
 
@@ -55,7 +55,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
     >
       <button
         onClick={() => dispatch({ type: 'DECREMENT_ITEM', section, id: item.id })}
-        className="w-11 h-11 flex items-center justify-center bg-red-50 text-danger rounded-full text-xl font-semibold hover:bg-red-100 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-danger/10 text-danger rounded-full text-xl font-semibold hover:bg-danger/20 transition-all active:scale-95 shrink-0"
       >
         -
       </button>
@@ -72,7 +72,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
             </span>
           )}
         </div>
-        <span className="text-xs text-gray-400">{relativeDate}</span>
+        <span className="text-xs text-text-light">{relativeDate}</span>
         {item.expiryDate && (
           <span className={`text-xs ${getExpiryColorClass(expiryStatus)}`}>
             {expiryStatus === 'expired' ? 'Expired' : `Expires: ${new Date(item.expiryDate).toLocaleDateString()}`}
@@ -82,7 +82,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
 
       <button
         onClick={handleAddToShoppingList}
-        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-blue-50 rounded-full transition-all shrink-0"
+        className="w-8 h-8 flex items-center justify-center text-text-light hover:text-primary hover:bg-primary/10 rounded-full transition-all shrink-0"
         aria-label={`Add ${item.name} to shopping list`}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
 
       <button
         onClick={() => dispatch({ type: 'INCREMENT_ITEM', section, id: item.id })}
-        className="w-11 h-11 flex items-center justify-center bg-green-50 text-success rounded-full text-xl font-semibold hover:bg-green-100 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-success/10 text-success rounded-full text-xl font-semibold hover:bg-success/20 transition-all active:scale-95 shrink-0"
       >
         +
       </button>

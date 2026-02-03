@@ -13,15 +13,15 @@ interface ShoppingItemProps {
 }
 
 const URGENCY_STYLES: Record<Urgency, string> = {
-  restock: 'bg-red-50 border-l-[3px] border-l-danger',
-  low: 'bg-amber-50 border-l-[3px] border-l-warning',
-  variety: 'bg-gray-100 border-l-[3px] border-l-gray-300',
+  restock: 'bg-danger/10 border-l-[3px] border-l-danger',
+  low: 'bg-warning/10 border-l-[3px] border-l-warning',
+  variety: 'bg-gray-100 border-l-[3px] border-l-border',
 };
 
 const VARIANT_STYLES: Record<Variant, string> = {
-  'user-list': 'bg-blue-50 border-l-[3px] border-l-primary',
-  staple: 'bg-gray-100 border-l-[3px] border-l-gray-300',
-  suggestion: 'bg-gray-100 border-l-[3px] border-l-gray-300',
+  'user-list': 'bg-primary/10 border-l-[3px] border-l-primary',
+  staple: 'bg-gray-100 border-l-[3px] border-l-border',
+  suggestion: 'bg-gray-100 border-l-[3px] border-l-border',
 };
 
 function getNutritionHighlightStyle(tags?: NutritionTag[]): string | null {
@@ -40,7 +40,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
   const nutritionStyle = variant === 'staple' ? getNutritionHighlightStyle(nutritionTags) : null;
   const baseStyle = variant === 'suggestion' && urgency ? URGENCY_STYLES[urgency] : VARIANT_STYLES[variant];
   const style = nutritionStyle
-    ? `${nutritionStyle} border-l-[3px] border-l-gray-300`
+    ? `${nutritionStyle} border-l-[3px] border-l-border`
     : baseStyle;
 
   return (
@@ -48,14 +48,14 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
         <span className="font-medium text-[15px] truncate">{item.name}</span>
         {item.currentQty > 0 && (
-          <span className="text-xs text-gray-400">{item.currentQty} left</span>
+          <span className="text-xs text-text-light">{item.currentQty} left</span>
         )}
       </div>
 
       {variant === 'user-list' && onRemove && (
         <button
           onClick={onRemove}
-          className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-danger hover:bg-red-50 rounded-full transition-all"
+          className="w-8 h-8 flex items-center justify-center text-text-light hover:text-danger hover:bg-danger/10 rounded-full transition-all"
           aria-label={`Remove ${item.name} from list`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
       {(variant === 'staple' || variant === 'suggestion') && onAddToList && (
         <button
           onClick={onAddToList}
-          className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-blue-50 rounded-full transition-all"
+          className="w-8 h-8 flex items-center justify-center text-text-light hover:text-primary hover:bg-primary/10 rounded-full transition-all"
           aria-label={`Add ${item.name} to shopping list`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

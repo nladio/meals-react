@@ -35,8 +35,8 @@ export function AlertBanner() {
 
   const bgClass =
     alertLevel === 'danger'
-      ? 'bg-gradient-to-r from-danger to-red-700'
-      : 'bg-gradient-to-r from-warning to-orange-600';
+      ? 'bg-danger'
+      : 'bg-warning';
 
   return (
     <div

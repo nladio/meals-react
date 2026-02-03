@@ -254,7 +254,7 @@ function getNutritionGoalsByStore(
 
 function NutritionLegend() {
   return (
-    <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
+    <div className="flex items-center gap-4 mb-4 text-xs text-text-muted">
       <span className="font-medium">Legend:</span>
       <div className="flex items-center gap-1.5">
         <span className="w-4 h-4 rounded bg-protein-light border border-protein-border"></span>
@@ -347,16 +347,16 @@ export function Shopping() {
               key={store}
               className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
             >
-              <h2 className="text-base font-semibold text-gray-600 mb-4 uppercase tracking-wide">
+              <h2 className="text-base font-semibold text-text-muted mb-4 uppercase tracking-wide">
                 {STORE_LABELS[store]}
               </h2>
 
               <div className="flex flex-col gap-3">
                 {/* Your List section - always visible */}
                 <div className="mb-3">
-                  <div className="flex items-center justify-between px-3 py-2 bg-blue-50 rounded-t-lg">
-                    <span className="font-medium text-sm text-blue-700">Your List</span>
-                    <span className="text-xs text-blue-600 bg-white px-2 py-0.5 rounded-full">
+                  <div className="flex items-center justify-between px-3 py-2 bg-primary/10 rounded-t-lg">
+                    <span className="font-medium text-sm text-primary">Your List</span>
+                    <span className="text-xs text-primary bg-white px-2 py-0.5 rounded-full">
                       {userItems.length}
                     </span>
                   </div>
@@ -401,9 +401,9 @@ export function Shopping() {
                 {/* Staples section */}
                 {staples.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-amber-50 rounded-t-lg">
-                      <span className="font-medium text-sm text-amber-700">Staples</span>
-                      <span className="text-xs text-amber-600 bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2 bg-warning/10 rounded-t-lg">
+                      <span className="font-medium text-sm text-warning">Staples</span>
+                      <span className="text-xs text-warning bg-white px-2 py-0.5 rounded-full">
                         {staples.length}
                       </span>
                     </div>
@@ -454,9 +454,9 @@ export function Shopping() {
                 {/* Suggestions section */}
                 {suggestions.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-green-50 rounded-t-lg">
-                      <span className="font-medium text-sm text-green-700">Suggestions</span>
-                      <span className="text-xs text-green-600 bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2 bg-success/10 rounded-t-lg">
+                      <span className="font-medium text-sm text-success">Suggestions</span>
+                      <span className="text-xs text-success bg-white px-2 py-0.5 rounded-full">
                         {suggestions.length}
                       </span>
                     </div>
