@@ -28,7 +28,7 @@ export function RecipeCard({ match }: RecipeCardProps) {
   const bgColor = getNutritionBgColor(recipe.nutritionTags);
 
   return (
-    <div className={`${bgColor} rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] ${borderColor}`}>
+    <div className={`${bgColor} rounded-lg p-4 shadow-sm border-l-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.99] h-full ${borderColor}`}>
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-text">{recipe.name}</h3>
         <span className="text-xs bg-gray-100 text-text-muted px-2 py-1 rounded-full shrink-0">

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { RecipeMatch } from '../../types';
 import { useAppState } from '../../hooks/useAppState';
 import { defaultRecipes } from '../../data/recipes';
@@ -31,16 +32,36 @@ interface RecipeSectionProps {
 }
 
 function RecipeSection({ title, matches }: RecipeSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const sectionId = `recipe-section-${title.toLowerCase().replace(/\s+/g, '-')}`;
+
   if (matches.length === 0) return null;
 
   return (
     <section className="mb-6">
-      <h2 className="text-lg font-semibold text-text mb-3">{title}</h2>
-      <div className="flex flex-col gap-3">
-        {matches.map(match => (
-          <RecipeCard key={match.recipe.id} match={match} />
-        ))}
-      </div>
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+        aria-controls={sectionId}
+        className="flex items-center gap-2 w-full text-left mb-3 group"
+      >
+        <span
+          className={`text-text-muted transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+        >
+          ▶
+        </span>
+        <h2 className="text-lg font-semibold text-text">
+          {title}
+          <span className="ml-2 text-sm font-normal text-text-muted">({matches.length})</span>
+        </h2>
+      </button>
+      {isExpanded && (
+        <div id={sectionId} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {matches.map(match => (
+            <RecipeCard key={match.recipe.id} match={match} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
