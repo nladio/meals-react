@@ -4,7 +4,7 @@ import type { Order } from '../../types';
 import { OrderCard } from './OrderCard';
 
 export function FoodOrderSection() {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Group orders by restaurant, sorted by order count (descending)
   const ordersByRestaurant = useMemo(() => {
