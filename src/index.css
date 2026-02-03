@@ -24,8 +24,22 @@
   --color-fresh: #5b9a6f;
   --color-frozen: #6b99a8;
   --color-dry: #d4a24c;
+
+  /* Nutrition badge colors (warm versions) */
   --color-protein: #5c7cba;
+  --color-protein-light: #edf1f7;
+  --color-protein-text: #4a6491;
+  --color-protein-border: #c5d1e3;
+
   --color-fiber: #6b9a6f;
+  --color-fiber-light: #eef4ef;
+  --color-fiber-text: #4d7350;
+  --color-fiber-border: #c3d6c5;
+
+  --color-both: #9a7b8f;
+  --color-both-light: #f4eff2;
+  --color-both-text: #7a5d6e;
+  --color-both-border: #ddd0d7;
 
   /* Status */
   --color-success: #5b9a6f;

@@ -16,9 +16,9 @@ function getNutritionBgColor(tags?: NutritionTag[]): string {
   const hasProtein = tags.includes('high-protein');
   const hasFiber = tags.includes('high-fiber');
 
-  if (hasProtein && hasFiber) return 'bg-violet-50';
-  if (hasProtein) return 'bg-blue-100';
-  if (hasFiber) return 'bg-green-100';
+  if (hasProtein && hasFiber) return 'bg-both-light';
+  if (hasProtein) return 'bg-protein-light';
+  if (hasFiber) return 'bg-fiber-light';
   return 'bg-gray-100';
 }
 
@@ -65,7 +65,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
           <span className="font-medium text-[15px] truncate">{item.name}</span>
           {isDualUse && (
             <span
-              className="text-[10px] px-1.5 py-0.5 bg-purple-100 text-purple-600 rounded-full font-medium shrink-0"
+              className="text-[10px] px-1.5 py-0.5 bg-both-light text-both-text rounded-full font-medium shrink-0"
               title="This item appears in both Ready to eat and Ingredients"
             >
               2x

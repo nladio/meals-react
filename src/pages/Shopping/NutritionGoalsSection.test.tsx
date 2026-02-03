@@ -52,10 +52,10 @@ describe('NutritionGoalsSection', () => {
     const { container } = render(
       <NutritionGoalsSection items={sampleItems} store="grocery" onAddToList={mockOnAddToList} />
     );
-    // Toor Dal (both) = violet, Spinach (fiber) = green, Chicken (protein) = blue
-    expect(container.querySelector('.bg-violet-50')).toBeInTheDocument();
-    expect(container.querySelector('.bg-green-100')).toBeInTheDocument();
-    expect(container.querySelector('.bg-blue-100')).toBeInTheDocument();
+    // Toor Dal (both) = both-light, Spinach (fiber) = fiber-light, Chicken (protein) = protein-light
+    expect(container.querySelector('.bg-both-light')).toBeInTheDocument();
+    expect(container.querySelector('.bg-fiber-light')).toBeInTheDocument();
+    expect(container.querySelector('.bg-protein-light')).toBeInTheDocument();
   });
 
   it('calls onAddToList when cart button is clicked', async () => {

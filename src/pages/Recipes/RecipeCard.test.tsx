@@ -30,7 +30,7 @@ describe('RecipeCard', () => {
     expect(screen.getByText('20 min')).toBeInTheDocument();
   });
 
-  it('applies violet background for recipes with both protein and fiber', () => {
+  it('applies both-light background for recipes with both protein and fiber', () => {
     const matchWithBothTags: RecipeMatch = {
       ...baseMatch,
       recipe: {
@@ -40,7 +40,7 @@ describe('RecipeCard', () => {
     };
 
     const { container } = render(<RecipeCard match={matchWithBothTags} />);
-    expect(container.firstChild).toHaveClass('bg-violet-50');
+    expect(container.firstChild).toHaveClass('bg-both-light');
   });
 
   it('applies white background when recipe has no nutritionTags', () => {
@@ -48,7 +48,7 @@ describe('RecipeCard', () => {
     expect(container.firstChild).toHaveClass('bg-white');
   });
 
-  it('applies green background for high-fiber recipe', () => {
+  it('applies fiber-light background for high-fiber recipe', () => {
     const matchWithFiberTag: RecipeMatch = {
       ...baseMatch,
       recipe: {
@@ -58,7 +58,7 @@ describe('RecipeCard', () => {
     };
 
     const { container } = render(<RecipeCard match={matchWithFiberTag} />);
-    expect(container.firstChild).toHaveClass('bg-green-100');
+    expect(container.firstChild).toHaveClass('bg-fiber-light');
   });
 
   it('renders available ingredients with checkmark', () => {

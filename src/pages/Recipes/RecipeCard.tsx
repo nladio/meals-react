@@ -10,9 +10,9 @@ function getNutritionBgColor(tags?: NutritionTag[]): string {
   const hasProtein = tags.includes('high-protein');
   const hasFiber = tags.includes('high-fiber');
 
-  if (hasProtein && hasFiber) return 'bg-violet-50';
-  if (hasProtein) return 'bg-blue-100';
-  if (hasFiber) return 'bg-green-100';
+  if (hasProtein && hasFiber) return 'bg-both-light';
+  if (hasProtein) return 'bg-protein-light';
+  if (hasFiber) return 'bg-fiber-light';
   return 'bg-white';
 }
 

@@ -10,12 +10,12 @@ const BADGE_CONFIG: Record<NutritionTag, BadgeConfig> = {
   'high-protein': {
     label: 'P',
     title: 'High Protein',
-    colors: 'bg-blue-100 text-blue-600',
+    colors: 'bg-protein-light text-protein-text',
   },
   'high-fiber': {
     label: 'F',
     title: 'High Fiber',
-    colors: 'bg-green-100 text-green-600',
+    colors: 'bg-fiber-light text-fiber-text',
   },
 };
 

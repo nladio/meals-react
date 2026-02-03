@@ -10,25 +10,25 @@ interface NutritionStyle {
 
 const NUTRITION_STYLES: Record<'protein' | 'fiber' | 'both', NutritionStyle> = {
   protein: {
-    bg: 'bg-blue-100',
-    border: 'border-l-blue-400',
-    text: 'text-blue-400',
-    hoverText: 'hover:text-blue-600',
-    hoverBg: 'hover:bg-blue-200',
+    bg: 'bg-protein-light',
+    border: 'border-l-protein',
+    text: 'text-protein-text',
+    hoverText: 'hover:text-protein',
+    hoverBg: 'hover:bg-protein-light',
   },
   fiber: {
-    bg: 'bg-green-100',
-    border: 'border-l-green-400',
-    text: 'text-green-400',
-    hoverText: 'hover:text-green-600',
-    hoverBg: 'hover:bg-green-200',
+    bg: 'bg-fiber-light',
+    border: 'border-l-fiber',
+    text: 'text-fiber-text',
+    hoverText: 'hover:text-fiber',
+    hoverBg: 'hover:bg-fiber-light',
   },
   both: {
-    bg: 'bg-violet-50',
-    border: 'border-l-violet-400',
-    text: 'text-violet-400',
-    hoverText: 'hover:text-violet-600',
-    hoverBg: 'hover:bg-violet-100',
+    bg: 'bg-both-light',
+    border: 'border-l-both',
+    text: 'text-both-text',
+    hoverText: 'hover:text-both',
+    hoverBg: 'hover:bg-both-light',
   },
 };
 
@@ -58,9 +58,9 @@ export function NutritionGoalsSection({ items, store, onAddToList }: NutritionGo
 
   return (
     <div className="mb-3">
-      <div className="flex items-center justify-between px-3 py-2 bg-purple-50 rounded-t-lg">
-        <span className="font-medium text-sm text-purple-700">For Your Nutrition Goals</span>
-        <span className="text-xs text-purple-600 bg-white px-2 py-0.5 rounded-full">
+      <div className="flex items-center justify-between px-3 py-2 bg-both-light rounded-t-lg">
+        <span className="font-medium text-sm text-both-text">For Your Nutrition Goals</span>
+        <span className="text-xs text-both-text bg-white px-2 py-0.5 rounded-full">
           {items.length}
         </span>
       </div>

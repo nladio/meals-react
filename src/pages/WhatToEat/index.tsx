@@ -8,15 +8,15 @@ function NutritionLegend() {
     <div className="flex items-center gap-4 mb-4 text-xs text-gray-600">
       <span className="font-medium">Legend:</span>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-blue-100 border border-blue-300"></span>
+        <span className="w-4 h-4 rounded bg-protein-light border border-protein-border"></span>
         <span>Protein</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-green-100 border border-green-300"></span>
+        <span className="w-4 h-4 rounded bg-fiber-light border border-fiber-border"></span>
         <span>Fiber</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="w-4 h-4 rounded bg-violet-50 border border-violet-200"></span>
+        <span className="w-4 h-4 rounded bg-both-light border border-both-border"></span>
         <span>Both</span>
       </div>
     </div>
@@ -27,9 +27,9 @@ function getNutritionBgColor(tags: NutritionTag[]): string {
   const hasProtein = tags.includes('high-protein');
   const hasFiber = tags.includes('high-fiber');
 
-  if (hasProtein && hasFiber) return 'bg-violet-50';
-  if (hasProtein) return 'bg-blue-100';
-  if (hasFiber) return 'bg-green-100';
+  if (hasProtein && hasFiber) return 'bg-both-light';
+  if (hasProtein) return 'bg-protein-light';
+  if (hasFiber) return 'bg-fiber-light';
   return 'bg-gray-100';
 }
 
@@ -102,10 +102,10 @@ const PROTEIN_CONFIG: NutritionSectionConfig = {
   title: 'High Protein',
   emptyMessage: 'No high-protein items in stock',
   emptyIcon: '🥚',
-  badgeBg: 'bg-blue-100',
-  badgeText: 'text-blue-600',
-  borderColor: 'border-l-blue-500',
-  quantityColors: 'text-blue-600 border-blue-500',
+  badgeBg: 'bg-protein-light',
+  badgeText: 'text-protein-text',
+  borderColor: 'border-l-protein',
+  quantityColors: 'text-protein-text border-protein',
 };
 
 const FIBER_CONFIG: NutritionSectionConfig = {
@@ -113,10 +113,10 @@ const FIBER_CONFIG: NutritionSectionConfig = {
   title: 'High Fiber',
   emptyMessage: 'No high-fiber items in stock',
   emptyIcon: '🥬',
-  badgeBg: 'bg-green-100',
-  badgeText: 'text-green-600',
-  borderColor: 'border-l-green-500',
-  quantityColors: 'text-green-600 border-green-500',
+  badgeBg: 'bg-fiber-light',
+  badgeText: 'text-fiber-text',
+  borderColor: 'border-l-fiber',
+  quantityColors: 'text-fiber-text border-fiber',
 };
 
 function hasTag(item: NutritionItem, tag: NutritionTag): boolean {

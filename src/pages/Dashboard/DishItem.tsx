@@ -52,19 +52,19 @@ export function DishItem({ dish }: DishItemProps) {
 
       {/* Tags Row */}
       <div className="flex flex-wrap gap-1 mt-1">
-        {/* Meal Time Tags - Blue */}
+        {/* Meal Time Tags - Protein color */}
         {tags.mealTime?.map((time) => (
           <span
             key={time}
-            className="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700"
+            className="px-2 py-0.5 text-xs rounded-full bg-protein-light text-protein-text"
           >
             {time}
           </span>
         ))}
 
-        {/* Cuisine Tag - Purple */}
+        {/* Cuisine Tag - Both color */}
         {tags.cuisine && (
-          <span className="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-700">
+          <span className="px-2 py-0.5 text-xs rounded-full bg-both-light text-both-text">
             {tags.cuisine}
           </span>
         )}
