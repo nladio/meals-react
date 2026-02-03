@@ -345,7 +345,7 @@ export function Shopping() {
           return (
             <section
               key={store}
-              className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
+              className="bg-white rounded-[12px] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-shadow"
             >
               <h2 className="text-base font-semibold text-text-muted mb-4 uppercase tracking-wide">
                 {STORE_LABELS[store]}
@@ -354,9 +354,9 @@ export function Shopping() {
               <div className="flex flex-col gap-3">
                 {/* Your List section - always visible */}
                 <div className="mb-3">
-                  <div className="flex items-center justify-between px-3 py-2 bg-primary/10 rounded-t-lg">
-                    <span className="font-medium text-sm text-primary">Your List</span>
-                    <span className="text-xs text-primary bg-white px-2 py-0.5 rounded-full">
+                  <div className="flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg">
+                    <span className="font-semibold text-sm text-primary">Your List</span>
+                    <span className="text-xs font-semibold text-primary bg-white px-2.5 py-1 rounded-full shadow-sm">
                       {userItems.length}
                     </span>
                   </div>
@@ -401,9 +401,9 @@ export function Shopping() {
                 {/* Staples section */}
                 {staples.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-warning/10 rounded-t-lg">
-                      <span className="font-medium text-sm text-warning">Staples</span>
-                      <span className="text-xs text-warning bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-warning/10 to-warning/5 rounded-lg">
+                      <span className="font-semibold text-sm text-warning">Staples</span>
+                      <span className="text-xs font-semibold text-warning bg-white px-2.5 py-1 rounded-full shadow-sm">
                         {staples.length}
                       </span>
                     </div>
@@ -454,9 +454,9 @@ export function Shopping() {
                 {/* Suggestions section */}
                 {suggestions.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between px-3 py-2 bg-success/10 rounded-t-lg">
-                      <span className="font-medium text-sm text-success">Suggestions</span>
-                      <span className="text-xs text-success bg-white px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-success/10 to-success/5 rounded-lg">
+                      <span className="font-semibold text-sm text-success">Suggestions</span>
+                      <span className="text-xs font-semibold text-success bg-white px-2.5 py-1 rounded-full shadow-sm">
                         {suggestions.length}
                       </span>
                     </div>

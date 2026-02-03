@@ -44,7 +44,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
     : baseStyle;
 
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-sm ${style}`}>
+    <div className={`flex items-center gap-3 p-3 rounded-sm transition-all hover:shadow-md ${style}`}>
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
         <span className="font-medium text-[15px] truncate">{item.name}</span>
         {item.currentQty > 0 && (
@@ -55,7 +55,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
       {variant === 'user-list' && onRemove && (
         <button
           onClick={onRemove}
-          className="w-8 h-8 flex items-center justify-center text-text-light hover:text-danger hover:bg-danger/10 rounded-full transition-all"
+          className="w-9 h-9 flex items-center justify-center text-text-light hover:text-danger hover:bg-danger/10 rounded-full transition-all active:scale-90"
           aria-label={`Remove ${item.name} from list`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export function ShoppingItem({ item, urgency, variant, nutritionTags, onAddToLis
       {(variant === 'staple' || variant === 'suggestion') && onAddToList && (
         <button
           onClick={onAddToList}
-          className="w-8 h-8 flex items-center justify-center text-text-light hover:text-primary hover:bg-primary/10 rounded-full transition-all"
+          className="w-9 h-9 flex items-center justify-center text-text-light hover:text-primary hover:bg-primary/10 hover:shadow-sm rounded-full transition-all active:scale-90"
           aria-label={`Add ${item.name} to shopping list`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
