@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Typography */
-  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-serif: 'Fraunces', Georgia, serif;
+  /* Typography - Quirky & Fun */
+  --font-sans: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Fredoka', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Warm Kitchen Palette - Enhanced for dopamine */
-  --color-primary: #e85d2c;
-  --color-primary-dark: #c94d20;
-  --color-primary-light: #f4a574;
-  --color-primary-vibrant: #ff6b35;
-  --color-secondary: #4a90a4;
+  /* Bright & Playful Palette */
+  --color-primary: #FF6B6B;
+  --color-primary-dark: #e85555;
+  --color-primary-light: #ff9999;
+  --color-primary-vibrant: #ff5252;
+  --color-secondary: #4ECDC4;
+  --color-accent: #FFE66D;
 
   /* Backgrounds */
-  --color-bg: #faf7f4;
+  --color-bg: #FFF9F0;
   --color-bg-card: #ffffff;
 
   /* Text colors */
@@ -72,22 +73,22 @@
 }
 
 body {
-  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;
   min-height: 100vh;
 }
 
-/* Heading styles with Fraunces */
+/* Heading styles with Fredoka */
 h1, h2, h3 {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--color-text);
 }
 
 h1 {
   font-weight: 600;
-  font-optical-sizing: auto;
 }
 
 h2, h3 {
@@ -117,7 +118,7 @@ h2, h3 {
 
 /* Glow shadows */
 .shadow-glow-primary {
-  box-shadow: 0 4px 14px -2px rgba(232, 93, 44, 0.4);
+  box-shadow: 0 4px 14px -2px rgba(255, 107, 107, 0.4);
 }
 
 .shadow-glow-success {
@@ -257,5 +258,5 @@ h2, h3 {
 }
 
 .btn-glow:hover {
-  box-shadow: 0 4px 14px -2px rgba(232, 93, 44, 0.4);
+  box-shadow: 0 4px 14px -2px rgba(255, 107, 107, 0.4);
 }
