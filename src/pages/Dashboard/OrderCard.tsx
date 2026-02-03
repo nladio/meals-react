@@ -24,23 +24,26 @@ export function OrderCard({ order }: OrderCardProps) {
     <div className="mb-3">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-colors text-left"
+        className="w-full flex items-center justify-between px-3 py-2.5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all active:scale-[0.99] text-left"
       >
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <span className={`text-gray-400 transition-transform duration-200 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}>
+          <span
+            className={`text-gray-400 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}
+            style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+          >
             ▶
           </span>
           <span className="text-xs text-gray-600 truncate">
             {preview}{remaining > 0 && <span className="text-gray-400">, +{remaining}</span>}
           </span>
         </div>
-        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full flex-shrink-0 ml-2">
+        <span className="text-xs font-medium text-gray-600 bg-white px-2.5 py-1 rounded-full flex-shrink-0 ml-2 shadow-sm">
           ${total.toFixed(2)}
         </span>
       </button>
 
       {isExpanded && (
-        <div className="flex flex-col gap-2 pt-2 pl-4">
+        <div className="flex flex-col gap-2 pt-2 pl-4 animate-slide-down">
           {order.dishes.map((dish, index) => (
             <DishItem key={`${dish.name}-${dish.cost}-${index}`} dish={dish} />
           ))}
