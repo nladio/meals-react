@@ -93,4 +93,26 @@ describe('RecipeSection', () => {
     // Omelette only needs Egg
     expect(screen.getByText('Omelette')).toBeInTheDocument();
   });
+
+  it('sorts recipes by nutrition: Both, Fiber, Protein, then Others', () => {
+    render(<Recipes />);
+
+    // Get all recipe card headings across all sections
+    const allHeadings = screen.getAllByRole('heading', { level: 3 });
+    const recipeNames = allHeadings.map(h => h.textContent);
+
+    // Find recipes with different nutrition tags in the "Need Ingredients" section
+    // Dal Palak has Both tags (high-fiber + high-protein)
+    // Falafel Wrap has Fiber only
+    // Chicken Tikka Kebab has Protein only
+    const dalPalakIndex = recipeNames.indexOf('Dal Palak');
+    const falafelWrapIndex = recipeNames.indexOf('Falafel Wrap');
+    const chickenTikkaIndex = recipeNames.indexOf('Chicken Tikka Kebab');
+
+    // Both should appear before Fiber only
+    expect(dalPalakIndex).toBeLessThan(falafelWrapIndex);
+
+    // Fiber only should appear before Protein only
+    expect(falafelWrapIndex).toBeLessThan(chickenTikkaIndex);
+  });
 });

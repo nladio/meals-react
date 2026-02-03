@@ -6,6 +6,21 @@ import { getAllRecipeMatches } from '../../utils/recipeMatching';
 import { PageHeader } from '../../components/PageHeader';
 import { RecipeCard } from './RecipeCard';
 
+function getNutritionPriority(match: RecipeMatch): number {
+  const tags = match.recipe.nutritionTags ?? [];
+  const hasProtein = tags.includes('high-protein');
+  const hasFiber = tags.includes('high-fiber');
+
+  if (hasProtein && hasFiber) return 0; // Both - highest priority
+  if (hasFiber) return 1;               // Fiber only
+  if (hasProtein) return 2;             // Protein only
+  return 3;                             // Neither - lowest priority
+}
+
+function sortByNutrition(matches: RecipeMatch[]): RecipeMatch[] {
+  return [...matches].sort((a, b) => getNutritionPriority(a) - getNutritionPriority(b));
+}
+
 function NutritionLegend() {
   return (
     <div className="flex items-center gap-4 mb-4 text-xs text-text-muted">
@@ -86,9 +101,9 @@ export function Recipes() {
         </div>
       </section>
 
-      <RecipeSection title="Ready to Make" matches={fullMatches} />
-      <RecipeSection title="Almost There" matches={partialMatches} />
-      <RecipeSection title="Need Ingredients" matches={noneMatches} />
+      <RecipeSection title="Ready to Make" matches={sortByNutrition(fullMatches)} />
+      <RecipeSection title="Almost There" matches={sortByNutrition(partialMatches)} />
+      <RecipeSection title="Need Ingredients" matches={sortByNutrition(noneMatches)} />
     </div>
   );
 }
