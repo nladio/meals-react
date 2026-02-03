@@ -21,6 +21,7 @@ const mockState: AppState = {
   purchaseHistory: [],
   shoppingList: [],
   theme: 'bright-playful',
+  font: 'quirky-fun',
 };
 
 vi.mock('../../hooks/useAppState', () => ({

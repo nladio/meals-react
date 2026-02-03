@@ -8,13 +8,15 @@ import { WhatToEat } from './pages/WhatToEat';
 import { ThemePreview } from './pages/ThemePreview';
 import { useAppState } from './hooks/useAppState';
 import { useTheme } from './hooks/useTheme';
+import { useFont } from './hooks/useFont';
 
 function App() {
   const { state } = useAppState();
   const [page, setPage] = useState(() => window.location.hash.slice(1) || 'dashboard');
 
-  // Apply theme on mount and when theme changes
+  // Apply theme and font on mount and when they change
   useTheme(state.theme);
+  useFont(state.font);
 
   useEffect(() => {
     const handler = () => setPage(window.location.hash.slice(1) || 'dashboard');

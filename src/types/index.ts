@@ -2,6 +2,8 @@ export type Section = 'fresh' | 'frozen' | 'dry';
 
 export type ThemeName = 'bright-playful' | 'modern-bold' | 'warm-energetic' | 'cool-fresh';
 
+export type FontName = 'quirky-fun' | 'clean-modern' | 'classic-elegant' | 'rounded-friendly';
+
 export type ItemUsage = 'meal' | 'ingredient';
 
 export type NutritionTag = 'high-protein' | 'high-fiber';
@@ -61,6 +63,7 @@ export interface AppState {
   purchaseHistory: PurchaseHistoryEntry[];
   shoppingList: ShoppingListEntry[]; // User-added shopping items
   theme: ThemeName;
+  font: FontName;
 }
 
 export interface ShoppingListItem {

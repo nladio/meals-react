@@ -1,15 +1,18 @@
 import { useEffect, useRef } from 'react';
-import type { ThemeName } from '../types';
+import type { ThemeName, FontName } from '../types';
 import { themeList } from '../data/themes';
+import { fontList } from '../data/fonts';
 
 interface ThemePopoverProps {
   isOpen: boolean;
   currentTheme: ThemeName;
+  currentFont: FontName;
   onSelectTheme: (theme: ThemeName) => void;
+  onSelectFont: (font: FontName) => void;
   onClose: () => void;
 }
 
-export function ThemePopover({ isOpen, currentTheme, onSelectTheme, onClose }: ThemePopoverProps) {
+export function ThemePopover({ isOpen, currentTheme, currentFont, onSelectTheme, onSelectFont, onClose }: ThemePopoverProps) {
   const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,7 +35,8 @@ export function ThemePopover({ isOpen, currentTheme, onSelectTheme, onClose }: T
       ref={popoverRef}
       className="absolute bottom-full mb-2 right-0 bg-white rounded-xl shadow-lg border border-gray-200 p-3 animate-scale-in"
     >
-      <div className="flex gap-3">
+      {/* Color themes */}
+      <div className="flex gap-3 justify-center">
         {themeList.map((theme) => (
           <button
             key={theme.id}
@@ -51,6 +55,26 @@ export function ThemePopover({ isOpen, currentTheme, onSelectTheme, onClose }: T
             {currentTheme === theme.id && (
               <span className="absolute inset-0 rounded-full ring-2 ring-offset-2 ring-gray-800" />
             )}
+          </button>
+        ))}
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-gray-200 my-3" />
+
+      {/* Font selection */}
+      <div className="flex flex-col gap-1.5">
+        {fontList.map((font) => (
+          <button
+            key={font.id}
+            onClick={() => onSelectFont(font.id)}
+            className={`relative px-3 py-1.5 rounded-lg text-sm text-left transition-all hover:bg-gray-100 active:scale-98 ${
+              currentFont === font.id ? 'bg-gray-100 ring-2 ring-gray-800 ring-offset-1' : ''
+            }`}
+            style={{ fontFamily: font.displayFont }}
+            aria-label={font.name}
+          >
+            {font.name}
           </button>
         ))}
       </div>

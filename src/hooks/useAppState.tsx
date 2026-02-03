@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage, Store, ShoppingListEntry, ThemeName } from '../types';
+import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage, Store, ShoppingListEntry, ThemeName, FontName } from '../types';
 import { generateId } from '../utils/helpers';
 import { defaultKnownItems, getDefaultItemNames } from '../data/defaultKnownItems';
 
@@ -19,6 +19,7 @@ const DEFAULT_STATE: AppState = {
   purchaseHistory: [],
   shoppingList: [],
   theme: 'bright-playful',
+  font: 'quirky-fun',
 };
 
 // Selector: Merge default items with custom items for display
@@ -78,7 +79,8 @@ type Action =
   | { type: 'LOAD_STATE'; state: AppState }
   | { type: 'ADD_TO_SHOPPING_LIST'; entry: ShoppingListEntry }
   | { type: 'REMOVE_FROM_SHOPPING_LIST'; name: string; store: Store }
-  | { type: 'SET_THEME'; theme: ThemeName };
+  | { type: 'SET_THEME'; theme: ThemeName }
+  | { type: 'SET_FONT'; font: FontName };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -299,6 +301,13 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     }
 
+    case 'SET_FONT': {
+      return {
+        ...state,
+        font: action.font,
+      };
+    }
+
     default:
       return state;
   }
@@ -325,6 +334,7 @@ function loadState(): AppState {
         purchaseHistory: parsed.purchaseHistory || [],
         shoppingList: parsed.shoppingList || [],
         theme: parsed.theme || 'bright-playful',
+        font: parsed.font || 'quirky-fun',
       };
     }
 
@@ -364,6 +374,7 @@ function loadState(): AppState {
         purchaseHistory: parsed.purchaseHistory || [],
         shoppingList: [],
         theme: 'bright-playful',
+        font: 'quirky-fun',
       };
     }
   } catch (e) {

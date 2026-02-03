@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useAppState } from '../hooks/useAppState';
 import { applyTheme } from '../hooks/useTheme';
+import { applyFont } from '../hooks/useFont';
 import { ThemePopover } from './ThemePopover';
-import type { ThemeName } from '../types';
+import type { ThemeName, FontName } from '../types';
 
 interface BottomNavProps {
   currentPage: string;
@@ -81,7 +82,11 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
   const handleSelectTheme = (theme: ThemeName) => {
     dispatch({ type: 'SET_THEME', theme });
     applyTheme(theme);
-    setIsPopoverOpen(false);
+  };
+
+  const handleSelectFont = (font: FontName) => {
+    dispatch({ type: 'SET_FONT', font });
+    applyFont(font);
   };
 
   return (
@@ -139,7 +144,9 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
         <ThemePopover
           isOpen={isPopoverOpen}
           currentTheme={state.theme}
+          currentFont={state.font}
           onSelectTheme={handleSelectTheme}
+          onSelectFont={handleSelectFont}
           onClose={() => setIsPopoverOpen(false)}
         />
       </div>

@@ -34,6 +34,7 @@ describe('categorizeByPrepTime', () => {
     purchaseHistory: [],
     shoppingList: [],
     theme: 'bright-playful',
+    font: 'quirky-fun',
   });
 
   it('returns empty arrays when no inventory items', () => {
