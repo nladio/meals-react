@@ -15,7 +15,6 @@ const createEmptyState = (): AppState => ({
   },
   shoppingChecked: {},
   purchaseHistory: [],
-  historyViewMonth: null,
   shoppingList: [],
 });
 

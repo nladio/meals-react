@@ -32,7 +32,6 @@ describe('categorizeByPrepTime', () => {
     inventory,
     shoppingChecked: {},
     purchaseHistory: [],
-    historyViewMonth: null,
     shoppingList: [],
   });
 

@@ -17,7 +17,6 @@ const DEFAULT_STATE: AppState = {
   },
   shoppingChecked: {},
   purchaseHistory: [],
-  historyViewMonth: null,
   shoppingList: [],
 };
 
@@ -75,7 +74,6 @@ type Action =
   | { type: 'CLEAR_SHOPPING_CHECKED' }
   | { type: 'RECORD_PURCHASE'; date: string; items: PurchaseItem[] }
   | { type: 'UPDATE_KNOWN_ITEM_PURCHASE'; section: Section; name: string; qty: number }
-  | { type: 'SET_HISTORY_MONTH'; month: string }
   | { type: 'LOAD_STATE'; state: AppState }
   | { type: 'ADD_TO_SHOPPING_LIST'; entry: ShoppingListEntry }
   | { type: 'REMOVE_FROM_SHOPPING_LIST'; name: string; store: Store };
@@ -266,13 +264,6 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     }
 
-    case 'SET_HISTORY_MONTH': {
-      return {
-        ...state,
-        historyViewMonth: action.month,
-      };
-    }
-
     case 'LOAD_STATE': {
       return action.state;
     }
@@ -323,7 +314,6 @@ function loadState(): AppState {
         inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
-        historyViewMonth: parsed.historyViewMonth || null,
         shoppingList: parsed.shoppingList || [],
       };
     }
@@ -362,7 +352,6 @@ function loadState(): AppState {
         inventory: { ...DEFAULT_STATE.inventory, ...parsed.inventory },
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
-        historyViewMonth: parsed.historyViewMonth || null,
         shoppingList: [],
       };
     }

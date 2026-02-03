@@ -57,7 +57,6 @@ export interface AppState {
   inventory: Record<Section, InventoryItem[]>;
   shoppingChecked: Record<string, boolean | number>;
   purchaseHistory: PurchaseHistoryEntry[];
-  historyViewMonth: string | null;
   shoppingList: ShoppingListEntry[]; // User-added shopping items
 }
 

@@ -19,7 +19,6 @@ const mockState: AppState = {
   },
   shoppingChecked: {},
   purchaseHistory: [],
-  historyViewMonth: null,
   shoppingList: [],
 };
 

@@ -3,7 +3,6 @@ import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Inventory } from './pages/Inventory';
 import { Shopping } from './pages/Shopping';
-import { History } from './pages/History';
 import { Recipes } from './pages/Recipes';
 import { WhatToEat } from './pages/WhatToEat';
 
@@ -26,8 +25,6 @@ function App() {
         return <Inventory />;
       case 'shopping':
         return <Shopping />;
-      case 'history':
-        return <History />;
       case 'recipes':
         return <Recipes />;
       case 'nutrition':
