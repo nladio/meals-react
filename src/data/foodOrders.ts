@@ -787,8 +787,9 @@ export const orders: Order[] = [
     dishes: [
       {
         name: 'Choila',
-        cost: 12.99,
+        cost: 14.50,
         quantity: 1,
+        customizations: ['Chicken (Gluten-Free)'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -797,8 +798,9 @@ export const orders: Order[] = [
       },
       {
         name: 'Paneer Momos (6 pcs) Steamed',
-        cost: 12.99,
+        cost: 13.50,
         quantity: 1,
+        customizations: ['Please provide the spicy achaar.'],
         tags: {
           mealTime: ['Lunch', 'Dinner'],
           cuisine: 'Indian',
@@ -806,6 +808,14 @@ export const orders: Order[] = [
         },
       },
     ],
+    fees: {
+      discount: 6.00,
+      serviceFee: 1.76,
+      salesTax: 2.45,
+      deliveryFee: 0.00,
+      driverTip: 3.00,
+      driverBenefitsFee: 2.00,
+    },
   },
 ];
 
