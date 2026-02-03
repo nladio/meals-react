@@ -5,7 +5,6 @@ import { Inventory } from './pages/Inventory';
 import { Shopping } from './pages/Shopping';
 import { Recipes } from './pages/Recipes';
 import { WhatToEat } from './pages/WhatToEat';
-import { ThemePreview } from './pages/ThemePreview';
 import { useAppState } from './hooks/useAppState';
 import { useTheme } from './hooks/useTheme';
 import { useFont } from './hooks/useFont';
@@ -38,8 +37,6 @@ function App() {
         return <Recipes />;
       case 'nutrition':
         return <WhatToEat />;
-      case 'theme-preview':
-        return <ThemePreview />;
       default:
         return <Dashboard />;
     }
