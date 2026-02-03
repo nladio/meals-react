@@ -11,6 +11,8 @@ export function applyTheme(themeName: ThemeName): void {
   root.style.setProperty('--color-primary-light', theme.primaryLight);
   root.style.setProperty('--color-primary-vibrant', theme.primaryVibrant);
   root.style.setProperty('--color-secondary', theme.secondary);
+  root.style.setProperty('--color-secondary-light', theme.secondaryLight);
+  root.style.setProperty('--color-secondary-text', theme.secondaryText);
   root.style.setProperty('--color-accent', theme.accent);
   root.style.setProperty('--color-bg', theme.bg);
   root.style.setProperty('--color-bg-card', theme.bgCard);

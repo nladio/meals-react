@@ -7,6 +7,8 @@ export interface ThemeDefinition {
   primaryLight: string;
   primaryVibrant: string;
   secondary: string;
+  secondaryLight: string;
+  secondaryText: string;
   accent: string;
   bg: string;
   bgCard: string;
@@ -45,6 +47,8 @@ export const themes: Record<ThemeName, ThemeDefinition> = {
     primaryLight: '#ff9999',
     primaryVibrant: '#ff5252',
     secondary: '#4ECDC4',
+    secondaryLight: '#e0f7f5',
+    secondaryText: '#2a9d8f',
     accent: '#FFE66D',
     bg: '#FFF9F0',
     bgCard: '#ffffff',
@@ -81,6 +85,8 @@ export const themes: Record<ThemeName, ThemeDefinition> = {
     primaryLight: '#f48fb1',
     primaryVibrant: '#ff1744',
     secondary: '#00BCD4',
+    secondaryLight: '#e0f7fa',
+    secondaryText: '#00838f',
     accent: '#FFC107',
     bg: '#FAFAFA',
     bgCard: '#ffffff',
@@ -117,6 +123,8 @@ export const themes: Record<ThemeName, ThemeDefinition> = {
     primaryLight: '#ff8a65',
     primaryVibrant: '#ff3d00',
     secondary: '#009688',
+    secondaryLight: '#e0f2f1',
+    secondaryText: '#00695c',
     accent: '#FFEB3B',
     bg: '#FFF8E1',
     bgCard: '#ffffff',
@@ -153,6 +161,8 @@ export const themes: Record<ThemeName, ThemeDefinition> = {
     primaryLight: '#7dd3fc',
     primaryVibrant: '#0ea5e9',
     secondary: '#10B981',
+    secondaryLight: '#ecfdf5',
+    secondaryText: '#047857',
     accent: '#F59E0B',
     bg: '#F0F9FF',
     bgCard: '#ffffff',
