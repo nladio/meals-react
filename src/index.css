@@ -5,10 +5,11 @@
   --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Fraunces', Georgia, serif;
 
-  /* Warm Kitchen Palette */
-  --color-primary: #d85a2b;
-  --color-primary-dark: #b94a23;
+  /* Warm Kitchen Palette - Enhanced for dopamine */
+  --color-primary: #e85d2c;
+  --color-primary-dark: #c94d20;
   --color-primary-light: #f4a574;
+  --color-primary-vibrant: #ff6b35;
   --color-secondary: #4a90a4;
 
   /* Backgrounds */
@@ -58,6 +59,16 @@
 
   --radius-DEFAULT: 12px;
   --radius-sm: 8px;
+
+  /* Animation timing */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animation durations */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-pop: 350ms;
 }
 
 body {
@@ -81,4 +92,170 @@ h1 {
 
 h2, h3 {
   font-weight: 500;
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-vibrant) 100%);
+}
+
+.gradient-primary-hover {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--color-success) 0%, #6fb57f 100%);
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg, var(--color-danger) 0%, #d96c5c 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #5ca3b8 100%);
+}
+
+/* Glow shadows */
+.shadow-glow-primary {
+  box-shadow: 0 4px 14px -2px rgba(232, 93, 44, 0.4);
+}
+
+.shadow-glow-success {
+  box-shadow: 0 4px 14px -2px rgba(91, 154, 111, 0.4);
+}
+
+.shadow-glow-danger {
+  box-shadow: 0 4px 14px -2px rgba(196, 90, 74, 0.4);
+}
+
+/* Keyframe animations */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bump {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Utility animation classes */
+.animate-pop-in {
+  animation: pop-in var(--duration-pop) var(--ease-bounce);
+}
+
+.animate-slide-down {
+  animation: slide-down var(--duration-slow) var(--ease-smooth);
+}
+
+.animate-bump {
+  animation: bump var(--duration-normal) var(--ease-bounce);
+}
+
+.animate-wiggle {
+  animation: wiggle var(--duration-slow) var(--ease-smooth);
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-normal) var(--ease-smooth);
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-slow) var(--ease-bounce);
+}
+
+/* Interactive state utilities */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.press-scale {
+  transition: transform var(--duration-fast) var(--ease-bounce);
+}
+
+.press-scale:active {
+  transform: scale(0.96);
+}
+
+/* Button glow on hover */
+.btn-glow {
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 4px 14px -2px rgba(232, 93, 44, 0.4);
 }
