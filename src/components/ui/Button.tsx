@@ -14,20 +14,25 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    'inline-flex items-center justify-center font-medium rounded-sm transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center font-semibold rounded-sm transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.96]';
 
   const variantClasses = {
-    primary: 'bg-primary text-white hover:bg-primary-dark',
-    secondary: 'bg-secondary text-white hover:opacity-90',
-    danger: 'bg-danger text-white hover:opacity-90',
-    success: 'bg-success text-white hover:opacity-90',
-    ghost: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
+    primary:
+      'gradient-primary text-white hover:shadow-glow-primary hover:brightness-110',
+    secondary:
+      'gradient-secondary text-white hover:brightness-110',
+    danger:
+      'gradient-danger text-white hover:shadow-glow-danger hover:brightness-110',
+    success:
+      'gradient-success text-white hover:shadow-glow-success hover:brightness-110',
+    ghost:
+      'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:shadow-sm',
   };
 
   const sizeClasses = {
-    sm: 'px-2.5 py-1.5 text-sm',
-    md: 'px-3.5 py-2.5 text-sm',
-    lg: 'px-5 py-3.5 text-base',
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2.5 text-sm',
+    lg: 'px-6 py-3.5 text-base',
   };
 
   return (
