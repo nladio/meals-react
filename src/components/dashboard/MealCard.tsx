@@ -9,7 +9,7 @@ interface MealCardProps {
 
 export function MealCard({ name, prepTimeMinutes, nutritionTags }: MealCardProps) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-primary">
+    <div className="flex items-center gap-3 p-3 rounded-sm bg-gray-100 border-l-[3px] border-l-primary transition-all hover:-translate-y-0.5 hover:shadow-md active:scale-[0.99] active:shadow-sm">
       <div className="flex items-center gap-1.5 flex-1 min-w-0">
         <span className="font-medium text-[15px] truncate">{name}</span>
         <NutritionBadges tags={nutritionTags} />

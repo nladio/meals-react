@@ -49,15 +49,15 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
 
   return (
     <div
-      className={`flex items-center gap-3 p-3 rounded-sm transition-all ${bgColor} ${
+      className={`flex items-center gap-3 p-3 rounded-sm transition-all hover:shadow-md ${bgColor} ${
         isLow ? 'border-l-[3px] border-l-warning' : 'border-l-[3px] border-l-success'
       }`}
     >
       <button
         onClick={() => dispatch({ type: 'DECREMENT_ITEM', section, id: item.id })}
-        className="w-11 h-11 flex items-center justify-center bg-danger/10 text-danger rounded-full text-xl font-semibold hover:bg-danger/20 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-danger/10 text-danger rounded-full text-xl font-bold hover:bg-danger/20 hover:shadow-md transition-all active:scale-90 active:shadow-none shrink-0"
       >
-        -
+        −
       </button>
 
       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
@@ -100,7 +100,7 @@ export function FoodItem({ item, section, isDualUse = false, nutritionTags, stor
 
       <button
         onClick={() => dispatch({ type: 'INCREMENT_ITEM', section, id: item.id })}
-        className="w-11 h-11 flex items-center justify-center bg-success/10 text-success rounded-full text-xl font-semibold hover:bg-success/20 transition-all active:scale-95 shrink-0"
+        className="w-11 h-11 flex items-center justify-center bg-success/10 text-success rounded-full text-xl font-bold hover:bg-success/20 hover:shadow-md transition-all active:scale-90 active:shadow-none shrink-0"
       >
         +
       </button>
