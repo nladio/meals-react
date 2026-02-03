@@ -14,19 +14,27 @@ export function OrderCard({ order }: OrderCardProps) {
   const feesTotal = getFeesTotal(order);
   const hasFees = order.fees && feesTotal !== 0;
 
+  // Create short preview of dishes
+  const dishNames = order.dishes.map(d => d.name);
+  const previewCount = 2;
+  const preview = dishNames.slice(0, previewCount).join(', ');
+  const remaining = dishNames.length - previewCount;
+
   return (
     <div className="mb-3">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-colors text-left"
       >
-        <div className="flex items-center gap-2">
-          <span className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <span className={`text-gray-400 transition-transform duration-200 flex-shrink-0 ${isExpanded ? 'rotate-90' : ''}`}>
             ▶
           </span>
-          <span className="text-xs text-gray-500">Order</span>
+          <span className="text-xs text-gray-600 truncate">
+            {preview}{remaining > 0 && <span className="text-gray-400">, +{remaining}</span>}
+          </span>
         </div>
-        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full flex-shrink-0 ml-2">
           ${total.toFixed(2)}
         </span>
       </button>
