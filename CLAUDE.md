@@ -1,11 +1,5 @@
 # meals-react Development Guidelines
 
-## Development Environment
-
-- **Base URL**: http://localhost:5173/meals-react/
-- **Assume the dev server is always running** (`npm run dev`)
-- Do not start the server; it is managed externally
-
 ## MANDATORY Workflow Order
 
 ```
@@ -30,6 +24,12 @@ For ANY feature work, follow this exact order:
    - Validate the feature using the playright plugin
    - Make a small, focused commit using the commit-commands skill
 
+4. **Validation**
+   - Use the playright skill
+   - **Base URL**: http://localhost:5173/meals-react/
+   - **Assume the dev server is always running** (`npm run dev`)
+   - Do not start or kill the server; it is managed externally
+
 ## Slice Workflow
 
 ```
@@ -38,6 +38,6 @@ Code → Tests → Typecheck → Simplify → Validate -> Commit
 
 Repeat for each logical slice of the feature.
 
-
+**Make use of Tasks to divide the work into slices**
 **NEVER write implementation code before updating requirements.**
 **ALWAYS commit after completing each slice (code + tests + simplify).**
