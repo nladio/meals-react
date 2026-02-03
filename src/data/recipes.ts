@@ -189,8 +189,7 @@ export const defaultRecipes: Recipe[] = [
       { name: 'Mozzarella', required: true },
       { name: 'Ciabatta', required: true },
       { name: 'Tomato', required: true },
-      { name: 'Basil', required: false },
-      { name: 'Olive Oil', required: true},
+      { name: 'Pesto Sauce', required: true},
       { name: 'Oregano Seasoning', required: true}
     ],
   },
