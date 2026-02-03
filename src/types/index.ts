@@ -1,5 +1,7 @@
 export type Section = 'fresh' | 'frozen' | 'dry';
 
+export type ThemeName = 'bright-playful' | 'modern-bold' | 'warm-energetic' | 'cool-fresh';
+
 export type ItemUsage = 'meal' | 'ingredient';
 
 export type NutritionTag = 'high-protein' | 'high-fiber';
@@ -58,6 +60,7 @@ export interface AppState {
   shoppingChecked: Record<string, boolean | number>;
   purchaseHistory: PurchaseHistoryEntry[];
   shoppingList: ShoppingListEntry[]; // User-added shopping items
+  theme: ThemeName;
 }
 
 export interface ShoppingListItem {

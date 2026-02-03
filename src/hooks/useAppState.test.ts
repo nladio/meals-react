@@ -16,6 +16,7 @@ const createEmptyState = (): AppState => ({
   shoppingChecked: {},
   purchaseHistory: [],
   shoppingList: [],
+  theme: 'bright-playful',
 });
 
 describe('ADD_TO_INVENTORY with expiryDate', () => {

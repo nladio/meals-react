@@ -1,3 +1,9 @@
+import { useState } from 'react';
+import { useAppState } from '../hooks/useAppState';
+import { applyTheme } from '../hooks/useTheme';
+import { ThemePopover } from './ThemePopover';
+import type { ThemeName } from '../types';
+
 interface BottomNavProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -51,6 +57,15 @@ function InventoryIcon({ active }: { active: boolean }) {
   );
 }
 
+function SettingsIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  );
+}
+
 const navItems = [
   { id: 'dashboard', label: 'Home', Icon: HomeIcon },
   { id: 'inventory', label: 'Inventory', Icon: InventoryIcon },
@@ -60,6 +75,15 @@ const navItems = [
 ];
 
 export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
+  const { state, dispatch } = useAppState();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const handleSelectTheme = (theme: ThemeName) => {
+    dispatch({ type: 'SET_THEME', theme });
+    applyTheme(theme);
+    setIsPopoverOpen(false);
+  };
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-200/60 flex justify-around py-2 pb-[max(8px,env(safe-area-inset-bottom))] z-50">
       {navItems.map(item => {
@@ -96,6 +120,29 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
           </a>
         );
       })}
+
+      {/* Settings button with theme popover */}
+      <div className="relative flex flex-col items-center gap-1 px-2 py-2">
+        <button
+          onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+          className="group flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition-all active:scale-95"
+          aria-label="Settings"
+        >
+          <div className="relative p-1.5 rounded-full transition-all group-hover:bg-gray-100">
+            <div className="transition-transform group-hover:scale-110">
+              <SettingsIcon />
+            </div>
+          </div>
+          <span className="text-[11px] font-medium">Theme</span>
+        </button>
+
+        <ThemePopover
+          isOpen={isPopoverOpen}
+          currentTheme={state.theme}
+          onSelectTheme={handleSelectTheme}
+          onClose={() => setIsPopoverOpen(false)}
+        />
+      </div>
     </nav>
   );
 }

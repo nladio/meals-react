@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage, Store, ShoppingListEntry } from '../types';
+import type { AppState, Section, PurchaseItem, KnownItem, InventoryItem, ItemUsage, Store, ShoppingListEntry, ThemeName } from '../types';
 import { generateId } from '../utils/helpers';
 import { defaultKnownItems, getDefaultItemNames } from '../data/defaultKnownItems';
 
@@ -18,6 +18,7 @@ const DEFAULT_STATE: AppState = {
   shoppingChecked: {},
   purchaseHistory: [],
   shoppingList: [],
+  theme: 'bright-playful',
 };
 
 // Selector: Merge default items with custom items for display
@@ -76,7 +77,8 @@ type Action =
   | { type: 'UPDATE_KNOWN_ITEM_PURCHASE'; section: Section; name: string; qty: number }
   | { type: 'LOAD_STATE'; state: AppState }
   | { type: 'ADD_TO_SHOPPING_LIST'; entry: ShoppingListEntry }
-  | { type: 'REMOVE_FROM_SHOPPING_LIST'; name: string; store: Store };
+  | { type: 'REMOVE_FROM_SHOPPING_LIST'; name: string; store: Store }
+  | { type: 'SET_THEME'; theme: ThemeName };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -290,6 +292,13 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     }
 
+    case 'SET_THEME': {
+      return {
+        ...state,
+        theme: action.theme,
+      };
+    }
+
     default:
       return state;
   }
@@ -315,6 +324,7 @@ function loadState(): AppState {
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
         shoppingList: parsed.shoppingList || [],
+        theme: parsed.theme || 'bright-playful',
       };
     }
 
@@ -353,6 +363,7 @@ function loadState(): AppState {
         shoppingChecked: parsed.shoppingChecked || {},
         purchaseHistory: parsed.purchaseHistory || [],
         shoppingList: [],
+        theme: 'bright-playful',
       };
     }
   } catch (e) {
