@@ -138,7 +138,7 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
               <SettingsIcon />
             </div>
           </div>
-          <span className="text-[11px] font-medium">Theme</span>
+          <span className="text-[11px] font-medium">Settings</span>
         </button>
 
         <ThemePopover

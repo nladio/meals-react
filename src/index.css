@@ -76,7 +76,7 @@
 }
 
 body {
-  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 500;
   background-color: var(--color-bg);
   color: var(--color-text);
@@ -84,9 +84,9 @@ body {
   min-height: 100vh;
 }
 
-/* Heading styles with Fredoka */
+/* Heading styles with display font */
 h1, h2, h3 {
-  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-display);
   color: var(--color-text);
 }
 
