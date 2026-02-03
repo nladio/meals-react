@@ -18,6 +18,7 @@ A React food inventory/meal planning app with:
 - `src/components/ui/` - Reusable UI components (Button, Modal, etc.)
 - `src/pages/` - Route-level components
 - `requirements/` - Feature documentation (read before coding)
+- `architecture/` - Deep-dive documentation (state, types, components, data layer)
 
 ## Core Concepts
 - **Section**: 'fresh' | 'frozen' | 'dry' - primary data organization
