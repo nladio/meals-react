@@ -6,7 +6,7 @@ import { OrderCard } from './OrderCard';
 export function FoodOrderSection() {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  // Group orders by restaurant (preserve order of first appearance)
+  // Group orders by restaurant, sorted by order count (descending)
   const ordersByRestaurant = useMemo(() => {
     const map = new Map<string, Order[]>();
     orders.forEach((order) => {
@@ -17,7 +17,9 @@ export function FoodOrderSection() {
         map.set(order.restaurant, [order]);
       }
     });
-    return map;
+    // Sort by order count descending
+    const sorted = Array.from(map.entries()).sort((a, b) => b[1].length - a[1].length);
+    return new Map(sorted);
   }, []);
 
   return (
