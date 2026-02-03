@@ -2,10 +2,12 @@ import type { Dish } from '../../types';
 
 interface DishItemProps {
   dish: Dish;
+  count?: number;
 }
 
-export function DishItem({ dish }: DishItemProps) {
+export function DishItem({ dish, count = 1 }: DishItemProps) {
   const { name, cost, tags, macros } = dish;
+  const lineTotal = cost * count;
 
   // Format macros as compact string
   const formatMacros = () => {
@@ -24,8 +26,19 @@ export function DishItem({ dish }: DishItemProps) {
     <div className="flex flex-col gap-1 pl-3 py-2 border-l-2 border-gray-200">
       {/* Name and Cost Row */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-gray-800">{name}</span>
-        <span className="text-sm font-semibold text-gray-700">${cost.toFixed(2)}</span>
+        <span className="text-sm font-medium text-gray-800">
+          {name}{count > 1 && <span className="text-gray-500"> ×{count}</span>}
+        </span>
+        <span className="text-sm font-semibold text-gray-700">
+          {count > 1 ? (
+            <span>
+              <span className="text-gray-400 font-normal">${cost.toFixed(2)} × {count} = </span>
+              ${lineTotal.toFixed(2)}
+            </span>
+          ) : (
+            `$${cost.toFixed(2)}`
+          )}
+        </span>
       </div>
 
       {/* Macros (if present) */}

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { Order } from '../../types';
+import { useState, useMemo } from 'react';
+import type { Order, Dish } from '../../types';
 import { getOrderTotal } from '../../data/foodOrders';
 import { DishItem } from './DishItem';
 
@@ -10,6 +10,20 @@ interface OrderCardProps {
 export function OrderCard({ order }: OrderCardProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const total = getOrderTotal(order);
+
+  const aggregatedDishes = useMemo(() => {
+    const map = new Map<string, { dish: Dish; count: number }>();
+    order.dishes.forEach((dish) => {
+      const key = `${dish.name}-${dish.cost}`;
+      const existing = map.get(key);
+      if (existing) {
+        existing.count++;
+      } else {
+        map.set(key, { dish, count: 1 });
+      }
+    });
+    return Array.from(map.values());
+  }, [order.dishes]);
 
   return (
     <div className="mb-3">
@@ -30,8 +44,8 @@ export function OrderCard({ order }: OrderCardProps) {
 
       {isExpanded && (
         <div className="flex flex-col gap-2 pt-2 pl-4">
-          {order.dishes.map((dish) => (
-            <DishItem key={dish.name} dish={dish} />
+          {aggregatedDishes.map(({ dish, count }) => (
+            <DishItem key={`${dish.name}-${dish.cost}`} dish={dish} count={count} />
           ))}
         </div>
       )}
