@@ -8,7 +8,7 @@ interface OrderCardProps {
 }
 
 export function OrderCard({ order }: OrderCardProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const total = getOrderTotal(order);
   const subtotal = getDishesSubtotal(order);
   const feesTotal = getFeesTotal(order);
