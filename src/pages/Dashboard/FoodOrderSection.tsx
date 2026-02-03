@@ -52,9 +52,9 @@ export function FoodOrderSection() {
           {Array.from(ordersByRestaurant.entries()).map(([restaurant, restaurantOrders]) => (
             <div key={restaurant} className="mb-4">
               {/* Restaurant Header */}
-              <div className="flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-warning/10 to-warning/5 rounded-lg mb-2">
-                <span className="font-semibold text-warning">{restaurant}</span>
-                <span className="text-xs font-medium text-warning">{restaurantOrders.length} order(s)</span>
+              <div className="flex items-center justify-between px-3 py-2.5 bg-warning-light rounded-lg mb-2">
+                <span className="font-semibold text-warning-text">{restaurant}</span>
+                <span className="text-xs font-medium text-warning-text">{restaurantOrders.length} order(s)</span>
               </div>
               {/* Order Cards */}
               {restaurantOrders.map((order) => (

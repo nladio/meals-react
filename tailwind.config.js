@@ -13,7 +13,12 @@ export default {
         secondary: 'var(--color-secondary)',
         accent: 'var(--color-accent)',
         success: 'var(--color-success)',
-        warning: 'var(--color-warning)',
+        warning: {
+          DEFAULT: 'var(--color-warning)',
+          light: 'var(--color-warning-light)',
+          text: 'var(--color-warning-text)',
+          border: 'var(--color-warning-border)',
+        },
         danger: 'var(--color-danger)',
         // Category colors
         fresh: 'var(--color-fresh)',

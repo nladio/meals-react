@@ -47,6 +47,9 @@
   /* Status (Bright & Playful) */
   --color-success: #4ECDC4;
   --color-warning: #FFE66D;
+  --color-warning-light: #fff9e6;
+  --color-warning-text: #b8860b;
+  --color-warning-border: #ffe066;
   --color-danger: #FF6B6B;
 
   /* Legacy gray mappings (for compatibility) */
