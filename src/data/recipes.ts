@@ -218,17 +218,6 @@ export const defaultRecipes: Recipe[] = [
     ],
   },
   {
-    id: 'akkha masoor',
-    name: 'Akkha masoor',
-    prepTimeMinutes: 10,
-    nutritionTags: ['high-fiber', 'high-protein'],
-    ingredients: [
-      { name: 'Masoor', required: true },
-      { name: 'Onion', required: true },
-      { name: 'Tomato', required: false },
-    ],
-  },
-  {
     id: 'dal khichdi',
     name: 'Dal Khichdi',
     prepTimeMinutes: 10,
