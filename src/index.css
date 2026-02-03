@@ -23,31 +23,31 @@
   --color-text-light: #a39789;
   --color-border: #e8e2dc;
 
-  /* Category accents */
-  --color-fresh: #5b9a6f;
-  --color-frozen: #6b99a8;
-  --color-dry: #d4a24c;
+  /* Category accents (Bright & Playful) */
+  --color-fresh: #4ECDC4;
+  --color-frozen: #74b9ff;
+  --color-dry: #FFE66D;
 
-  /* Nutrition badge colors (warm versions) */
-  --color-protein: #5c7cba;
-  --color-protein-light: #edf1f7;
-  --color-protein-text: #4a6491;
-  --color-protein-border: #c5d1e3;
+  /* Nutrition badge colors (Bright & Playful) */
+  --color-protein: #4ECDC4;
+  --color-protein-light: #e0f7f5;
+  --color-protein-text: #2a9d8f;
+  --color-protein-border: #a8e6e0;
 
-  --color-fiber: #6b9a6f;
-  --color-fiber-light: #eef4ef;
-  --color-fiber-text: #4d7350;
-  --color-fiber-border: #c3d6c5;
+  --color-fiber: #95D85F;
+  --color-fiber-light: #f0fbe8;
+  --color-fiber-text: #5a9a2e;
+  --color-fiber-border: #c5e8a8;
 
-  --color-both: #9a7b8f;
-  --color-both-light: #f4eff2;
-  --color-both-text: #7a5d6e;
-  --color-both-border: #ddd0d7;
+  --color-both: #FF6B6B;
+  --color-both-light: #ffe8e8;
+  --color-both-text: #d94545;
+  --color-both-border: #ffb8b8;
 
-  /* Status */
-  --color-success: #5b9a6f;
-  --color-warning: #d4a24c;
-  --color-danger: #c45a4a;
+  /* Status (Bright & Playful) */
+  --color-success: #4ECDC4;
+  --color-warning: #FFE66D;
+  --color-danger: #FF6B6B;
 
   /* Legacy gray mappings (for compatibility) */
   --color-gray-50: #faf7f4;
@@ -113,7 +113,7 @@ h2, h3 {
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, #5ca3b8 100%);
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #3dbdb3 100%);
 }
 
 /* Glow shadows */
