@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { orders } from '../../data/foodOrders';
+import type { Order } from '../../types';
 import { OrderCard } from './OrderCard';
 
 export function FoodOrderSection() {
   const [isExpanded, setIsExpanded] = useState(true);
+
+  // Group orders by restaurant (preserve order of first appearance)
+  const ordersByRestaurant = useMemo(() => {
+    const map = new Map<string, Order[]>();
+    orders.forEach((order) => {
+      const existing = map.get(order.restaurant);
+      if (existing) {
+        existing.push(order);
+      } else {
+        map.set(order.restaurant, [order]);
+      }
+    });
+    return map;
+  }, []);
 
   return (
     <section className="bg-white rounded-[12px] p-5 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
@@ -26,11 +41,21 @@ export function FoodOrderSection() {
         </span>
       </button>
 
-      {/* Order Cards */}
+      {/* Order Cards grouped by restaurant */}
       {isExpanded && (
         <div className="mt-2">
-          {orders.map((order) => (
-            <OrderCard key={order.id} order={order} />
+          {Array.from(ordersByRestaurant.entries()).map(([restaurant, restaurantOrders]) => (
+            <div key={restaurant} className="mb-4">
+              {/* Restaurant Header */}
+              <div className="flex items-center justify-between px-3 py-2 bg-amber-50 rounded-lg mb-2">
+                <span className="font-semibold text-amber-800">{restaurant}</span>
+                <span className="text-xs text-amber-600">{restaurantOrders.length} order(s)</span>
+              </div>
+              {/* Order Cards */}
+              {restaurantOrders.map((order) => (
+                <OrderCard key={order.id} order={order} />
+              ))}
+            </div>
           ))}
         </div>
       )}

@@ -35,7 +35,7 @@ export function OrderCard({ order }: OrderCardProps) {
           <span className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
             ▶
           </span>
-          <span className="font-medium text-sm text-gray-700">{order.restaurant}</span>
+          <span className="text-xs text-gray-500">Order</span>
         </div>
         <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
           ${total.toFixed(2)}
