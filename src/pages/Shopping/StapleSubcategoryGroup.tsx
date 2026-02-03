@@ -29,23 +29,24 @@ export function ShoppingSubcategoryGroup({
     <div className="mb-3">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-all active:scale-[0.98] text-left"
+        className="w-full flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-gray-50 to-gray-100/50 rounded-lg hover:from-gray-100 hover:to-gray-50 transition-all active:scale-[0.99] text-left"
       >
         <div className="flex items-center gap-2">
           <span
-            className={`text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+            className={`text-primary/60 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}
+            style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
           >
             ▶
           </span>
           <span className="font-medium text-sm text-gray-700">{category}</span>
         </div>
-        <span className="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-full">
+        <span className="text-xs font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full">
           {items.length}
         </span>
       </button>
 
       {isExpanded && (
-        <div className="flex flex-col gap-2 pt-2">
+        <div className="flex flex-col gap-2 pt-2 animate-slide-down">
           {items.map(item => (
             <ShoppingItem
               key={`${variant}-${store}-${category}-${item.name}`}
