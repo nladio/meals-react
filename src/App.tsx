@@ -5,6 +5,7 @@ import { Inventory } from './pages/Inventory';
 import { Shopping } from './pages/Shopping';
 import { Recipes } from './pages/Recipes';
 import { WhatToEat } from './pages/WhatToEat';
+import { ThemePreview } from './pages/ThemePreview';
 
 function App() {
   const [page, setPage] = useState(() => window.location.hash.slice(1) || 'dashboard');
@@ -29,6 +30,8 @@ function App() {
         return <Recipes />;
       case 'nutrition':
         return <WhatToEat />;
+      case 'theme-preview':
+        return <ThemePreview />;
       default:
         return <Dashboard />;
     }
